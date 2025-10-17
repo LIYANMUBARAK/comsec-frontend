@@ -1,0 +1,342 @@
+<app-header></app-header>
+<div
+  class="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[250px_1fr]">
+  <app-sidebar></app-sidebar>
+  <div>
+    <section class="py-6 container space-y-6">
+      <div class="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
+        <div
+          class="rounded-lg border bg-card text-card-foreground shadow transition-all hover:shadow-lg"
+          x-chunk="dashboard-01-chunk-1">
+          <div
+            class="p-6 flex flex-row items-center justify-between space-y-0 pb-2">
+            <h3 class="tracking-tight text-sm font-medium">
+              Total Account Users
+            </h3>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-users h-4 w-4 text-muted-foreground">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <div class="p-6 pt-0">
+            <div class="text-2xl font-bold">{{invitedUsers.length}}</div>
+            <p class="text-xs text-muted-foreground">
+              Total Account Users Active
+            </p>
+          </div>
+        </div>
+        <div
+          class="rounded-lg border bg-card text-card-foreground shadow transition-all hover:shadow-lg"
+          x-chunk="dashboard-01-chunk-2">
+          <div
+            class="p-6 flex flex-row items-center justify-between space-y-0 pb-2">
+            <h3 class="tracking-tight text-sm font-medium">Total Companies</h3>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-building2 h-4 w-4 text-muted-foreground">
+              <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
+              <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path>
+              <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path>
+              <path d="M10 6h4"></path>
+              <path d="M10 10h4"></path>
+              <path d="M10 14h4"></path>
+              <path d="M10 18h4"></path>
+            </svg>
+          </div>
+          <div class="p-6 pt-0">
+            <div class="text-2xl font-bold">5</div>
+            <p class="text-xs text-muted-foreground">
+              Total companies registered at ComSec360
+            </p>
+          </div>
+        </div>
+        <div
+          class="rounded-lg border bg-card text-card-foreground shadow transition-all hover:shadow-lg"
+          x-chunk="dashboard-01-chunk-3">
+          <div
+            class="p-6 flex flex-row items-center justify-between space-y-0 pb-2">
+            <h3 class="tracking-tight text-sm font-medium">Total Projects</h3>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-presentation h-4 w-4 text-muted-foreground">
+              <path d="M2 3h20"></path>
+              <path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"></path>
+              <path d="m7 21 5-5 5 5"></path>
+            </svg>
+          </div>
+          <div class="p-6 pt-0">
+            <div class="text-2xl font-bold">30</div>
+            <p class="text-xs text-muted-foreground">
+              Total Projects registered at ComSec360
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex justify-center items-start gap-6 md:flex-row flex-col-reverse">
+        <div class="relative w-full overflow-auto">
+          <table class="w-full caption-bottom text-sm">
+            <caption class="mt-4 text-sm text-muted-foreground">
+              A list of Invites Sent to New Account Users.
+            </caption>
+            <thead class="[&amp;_tr]:border-b">
+              <tr
+                class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                <th
+                  class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                  First Name
+                </th>
+                <th
+                  class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                  Last Name
+                </th>
+                <th
+                  class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                  Email
+                </th>
+                <th
+                  class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                  Update
+                </th>
+                <th
+                  class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                  Delete
+                </th>
+              </tr>
+            </thead>
+            <tbody class="[&amp;_tr:last-child]:border-0">
+              <tr *ngFor="let user of invitedUsers"
+                class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                <td
+                  class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">
+                  {{ user.firstName }}
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  {{ user.lastName }}
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  {{ user.email }}
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <button (click)="updateUser(user)"
+                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                      height="24" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round"
+                      class="lucide lucide-pencil">
+                      <path
+                        d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
+                      <path d="m15 5 4 4"></path>
+                    </svg>
+                  </button>
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <button (click)="deleteUser(user._id)"
+                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-10 w-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                      height="24" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round"
+                      class="lucide lucide-trash">
+                      <path d="M3 6h18"></path>
+                      <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                      <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                    </svg>
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="invitedUsers.length === 0">
+                <td colspan="5" class="p-4 text-center">No invited users
+                  found.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div
+          class="rounded-lg border bg-card text-card-foreground shadow-sm max-w-7xl mx-auto">
+          <div class="flex flex-col space-y-1.5 p-6">
+            <h3 class="text-2xl font-semibold leading-none tracking-tight">
+              Invite an Account User
+            </h3>
+            <p class="text-sm text-muted-foreground">
+              Fill in the information to invite Account User
+            </p>
+          </div>
+          <div class="p-6 pt-0">
+            <form [formGroup]="inviteUserForm" (ngSubmit)="onSubmit()"
+              class="grid gap-4">
+              <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-2">
+                  <label class="text-sm font-medium leading-none">First
+                    Name</label>
+                  <input formControlName="firstName"
+                    class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
+                    placeholder="James" aria-invalid="false" />
+                </div>
+                <div class="space-y-2">
+                  <label class="text-sm font-medium leading-none">Last
+                    Name</label>
+                  <input formControlName="lastName"
+                    class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
+                    placeholder="Bond" aria-invalid="false" />
+                </div>
+              </div>
+              <div class="space-y-2">
+                <label class="text-sm font-medium leading-none">E-mail</label>
+                <input type="email" formControlName="email"
+                  class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
+                  placeholder="example@email.com" aria-invalid="false" />
+              </div>
+              <div class="space-y-2">
+                <label class="text-sm font-medium leading-none">Password</label>
+                <div class="flex gap-2">
+                  <input type="text" formControlName="password"
+                    class="flex h-10 w-full rounded-md border border-input bg-gray-50 px-3 py-2 text-sm ring-offset-background"
+                    placeholder="Click generate to create password"
+                    readonly
+                    aria-invalid="false" />
+                  <button type="button"
+                    (click)="generatePassword()"
+                    class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium bg-slate-800 text-white h-10 rounded-md px-4 hover:bg-slate-900 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                      height="16" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round"
+                      class="mr-2">
+                      <rect width="18" height="11" x="3" y="11" rx="2"
+                        ry="2"></rect>
+                      <circle cx="12" cy="16" r="1"></circle>
+                      <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    Generate
+                  </button>
+                </div>
+              </div>
+              <!-- <div class="space-y-2">
+      <label class="text-sm font-medium leading-none">Confirm Password</label>
+      <input type="text" formControlName="confirmPassword"
+        class="flex h-10 w-full rounded-md border border-input bg-gray-50 px-3 py-2 text-sm ring-offset-background"
+        placeholder="Password will be auto-filled" 
+        readonly 
+        aria-invalid="false" />
+    </div> -->
+              <button
+                class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium bg-black text-white h-11 rounded-md px-8 w-full disabled:pointer-events-none disabled:opacity-50"
+                type="submit" [disabled]="inviteUserForm.invalid || isLoading">
+                <span *ngIf="isLoading" class="mr-2">
+                  <svg class="animate-spin h-4 w-4 text-white"
+                    xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10"
+                      stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                    </path>
+                  </svg>
+                </span>
+                {{ isLoading ? 'Processing...' : 'Create an Account User' }}
+                <svg *ngIf="!isLoading" xmlns="http://www.w3.org/2000/svg"
+                  width="24" height="24"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-user-round ml-3 size-5 my-auto">
+                  <circle cx="12" cy="8" r="5"></circle>
+                  <path d="M20 21a8 8 0 0 0-16 0"></path>
+                </svg>
+              </button>
+            </form>
+          </div>
+          <!-- Edit Email Modal -->
+          <div *ngIf="isEditModalOpen"
+            class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div
+              class="rounded-lg border bg-card text-card-foreground shadow-sm max-w-md w-full mx-auto bg-white">
+              <div class="flex flex-col space-y-1.5 p-6">
+                <h3 class="text-2xl font-semibold leading-none tracking-tight">
+                  Edit User Email
+                </h3>
+                <p class="text-sm text-muted-foreground">
+                  Update the email address for this user
+                </p>
+              </div>
+              <div class="p-6 pt-0">
+                <form [formGroup]="editEmailForm"
+                  (ngSubmit)="onSubmitEditEmail()" class="grid gap-4">
+                  <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-2">
+                      <label class="text-sm font-medium leading-none">First
+                        Name</label>
+                      <input formControlName="firstName"
+                        class="flex h-10 w-full rounded-md border border-input bg-white px-3 py-2 text-sm !bg-opacity-100 focus:!bg-opacity-100"
+                        style="background-color: white !important"
+                        aria-invalid="false" />
+                    </div>
+                    <div class="space-y-2">
+                      <label class="text-sm font-medium leading-none">Last
+                        Name</label>
+                      <input formControlName="lastName"
+                        class="flex h-10 w-full rounded-md border border-input bg-white px-3 py-2 text-sm !bg-opacity-100 focus:!bg-opacity-100"
+                        style="background-color: white !important"
+                        aria-invalid="false" />
+                    </div>
+                  </div>
+                  <div class="space-y-2">
+                    <label
+                      class="text-sm font-medium leading-none">E-mail</label>
+                    <input type="email" formControlName="email"
+                      class="flex h-10 w-full rounded-md border border-input bg-white px-3 py-2 text-sm !bg-opacity-100 focus:!bg-opacity-100"
+                      style="background-color: white !important"
+                      placeholder="example@email.com" aria-invalid="false" />
+                  </div>
+                  <div class="flex justify-end space-x-4 mt-4">
+                    <button type="button" (click)="closeEditModal()"
+                      class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium bg-gray-200 text-gray-800 h-11 rounded-md px-8">
+                      Cancel
+                    </button>
+                    <button
+                      class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium bg-black text-white h-11 rounded-md px-8 disabled:pointer-events-none disabled:opacity-50"
+                      type="submit"
+                      [disabled]="editEmailForm.invalid || isLoading">
+                      <span *ngIf="isLoading" class="mr-2">
+                        <svg
+                          class="animate-spin h-4 w-4 text-white"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24">
+                          <circle
+                            class="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            stroke-width="4"></circle>
+                          <path
+                            class="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                      </span>
+                      {{ isLoading ? 'Processing...' : 'Update User' }}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

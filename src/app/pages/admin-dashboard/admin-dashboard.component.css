@@ -1,0 +1,9 @@
+input {
+    background-color: white !important;
+    opacity: 1 !important;
+  }
+  
+  input:focus {
+    background-color: white !important;
+    opacity: 1 !important;
+  }

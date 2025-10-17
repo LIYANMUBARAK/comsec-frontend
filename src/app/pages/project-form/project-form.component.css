@@ -1,0 +1,132 @@
+/* General Error Messages */
+.text-danger {
+  color: red;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Select Dropdown */
+select {
+  width: 100%;
+  min-width: 100px;
+}
+
+/* Primary Theme Colors */
+.border-primary {
+  border-color: #3b82f6;
+}
+
+.bg-primary {
+  background-color: #3b82f6;
+  color: white; /* Ensure good contrast */
+}
+
+/* Dark Mode Styles */
+.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+/* Muted text in dark mode */
+.dark-mode .text-muted-foreground {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Ensure high contrast for selected elements */
+.dark-mode .bg-primary.text-primary-foreground {
+  color: white;
+}
+
+/* Dark Mode Dropdown Fix */
+.dark-mode select,
+.dark-mode .p-dropdown,
+.dark-mode .p-dropdown-panel {
+  background-color: #1a1a1a !important;
+  color: white !important;
+  border-color: #444 !important;
+}
+
+/* Dropdown Item Styles */
+.dark-mode .p-dropdown-item {
+  background-color: #1a1a1a !important;
+  color: white !important;
+}
+
+.dark-mode .p-dropdown-item:hover {
+  background-color: #333 !important;
+}
+
+/* Input Field Styling */
+.dark-mode input,
+.dark-mode textarea {
+  background-color: #1a1a1a;
+  color: white;
+  border: 1px solid #444;
+}
+
+/* Placeholder Text */
+.dark-mode ::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Button Styling */
+.dark-mode button {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+}
+
+.dark-mode button:hover {
+  background-color: #2563eb;
+}
+
+/* Improve readability in dark mode */
+.dark-mode label {
+  color: rgba(255, 255, 255, 0.9);
+}
+/* Update your dark mode styles to target p-select specifically */
+.dark-mode .p-select,
+.dark-mode .p-select-panel,
+.dark-mode p-select .p-component,
+.dark-mode .p-dropdown-panel,
+.dark-mode .p-dropdown,
+.dark-mode .p-dropdown-items-wrapper,
+.dark-mode .p-dropdown-items {
+  background-color: #1a1a1a !important;
+  color: white !important;
+  border-color: #444 !important;
+}
+
+/* Add styles for the dropdown items too */
+.dark-mode .p-dropdown-item,
+.dark-mode .p-select-item {
+  background-color: #1a1a1a !important;
+  color: white !important;
+}
+.dark-mode .p-dropdown-item:hover,
+.dark-mode .p-select-item:hover {
+  background-color: #333 !important;
+}
+
+/* Make sure to target the overlay panel that appears */
+.dark-mode .p-dropdown-panel .p-dropdown-items-wrapper,
+.dark-mode .p-select-panel .p-select-items-wrapper {
+  background-color: #1a1a1a !important;
+  color: white !important;
+}
+
+select option {
+  padding: 4px 8px;
+  font-size: 14px;
+}
+
+select {
+  text-align: center;
+  text-align-last: center; /* Center align selected code */
+}

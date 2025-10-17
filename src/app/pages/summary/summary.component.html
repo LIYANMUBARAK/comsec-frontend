@@ -1,0 +1,498 @@
+<div class="container-fluid">
+    <div class="container">
+        <div class="flex flex-1 justify-center">
+            <div class="rounded-lg border bg-card text-card-foreground shadow-sm container my-6">
+                <div class="flex flex-col space-y-1.5 p-6">
+                    <h3 class="text-2xl font-semibold leading-none tracking-tight">
+                        Summary
+                    </h3>
+                    <p class="text-sm text-muted-foreground">
+                        Please Review your details here.
+                    </p>
+                </div>
+                <div class="p-6 pt-0 space-y-6">
+                    <div *ngFor="let companyData of companyInformation" class="rounded-lg border bg-card text-card-foreground shadow-sm">
+                        <div class="flex flex-col space-y-1.5 p-6">
+                            <h3 class="text-2xl font-semibold leading-none tracking-tight *:my-2">
+                                <img alt="logo" loading="lazy" width="58" height="58" decoding="async" class="object-contain" 
+                                     [src]="companyData.company_logo" style="color: transparent" />
+                                <span>{{ companyData.business_name }}</span>
+                            </h3>
+                            <p class="text-sm text-muted-foreground">
+                                Here are the details of your Company Info.
+                            </p>
+                        </div>
+                        <div class="p-6 pt-0 space-y-5">
+                            <div class="flex items-center gap-3">
+                                <p class="font-medium text-base">
+                                    Business Registration Number:
+                                </p>
+                                <p class="text-base">{{companyData.reference_no}}</p>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="flex items-center gap-3">
+                                    <p class="font-medium text-base">Incorporate Date:</p>
+                                    <p class="text-base">{{ companyData.createdAt | date:'dd/MM/yyyy' }}</p>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <p class="font-medium text-base">Financial Date:</p>
+                                    <p class="text-base">-</p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="flex items-center gap-3">
+                                    <p class="font-medium text-base">Company Name (English):</p>
+                                    <p class="text-base">{{companyData.trading_name}}</p>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <p class="font-medium text-base">Company Name (Chinese):</p>
+                                    <p class="text-base">{{companyData.business_name_chinese}}</p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="flex items-center gap-3">
+                                    <p class="font-medium text-base">Type of Company:</p>
+                                    <p class="text-base">{{companyData.type_of_business}}</p>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <p class="font-medium text-base">Nature of Business:</p>
+                                    <p class="text-base">{{companyData.natureOfBusiness}}</p>
+                                </div>
+                            </div>
+                            <div class="space-y-4">
+                                <h1 class="text-xl font-medium">Address Details:</h1>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div class="flex items-center gap-3">
+                                        <p class="font-medium text-base">Flat / Floor / Block:</p>
+                                        <p class="text-base">{{companyData.office_address}}</p>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <p class="font-medium text-base">Building:</p>
+                                        <p class="text-base">{{companyData.office_address1}}</p>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <p class="font-medium text-base">Street:</p>
+                                        <p class="text-base">{{companyData.office_city}}</p>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <p class="font-medium text-base">District:</p>
+                                        <p class="text-base">{{companyData.office_state}}</p>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <p class="font-medium text-base">Country:</p>
+                                        <p class="text-base">{{companyData.office_country}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <p class="font-medium text-base">Company E-mail:</p>
+                                <p class="text-base">{{companyData.email_id}}</p>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="flex items-center gap-3">
+                                    <p class="font-medium text-base">Company Telephone :</p>
+                                    <p class="text-base">{{companyData.mobile_number}}</p>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <p class="font-medium text-base">Company FaxNo:</p>
+                                    <p class="text-base">{{companyData.fax}}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <p class="font-medium text-base">
+                                    Time period of business administration fee:
+                                </p>
+                                <p class="text-base">{{companyData.subscriptionDuration}}</p>
+                            </div>
+                            <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+                                <div class="flex flex-col space-y-1.5 p-6">
+                                    <h3 class="text-2xl font-semibold leading-none tracking-tight">
+                                        Presentor’s Referance
+                                    </h3>
+                                    <p class="text-sm text-muted-foreground">
+                                        Here are the details of Presentor‘s Referance
+                                    </p>
+                                </div>
+                                <div class="p-6 pt-0 space-y-5">
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <div class="flex items-center gap-3">
+                                            <p class="font-medium text-base">Name (English):</p>
+                                            <p class="text-base">{{companyData.presentorName}}</p>
+                                        </div>
+                                        <div class="flex items-center gap-3">
+                                            <p class="font-medium text-base">Name (Chinese):</p>
+                                            <p class="text-base">{{companyData.presentorChiName}}</p>
+                                        </div>
+                                    </div>
+                                        <h1 class="text-xl font-medium">Address Details:</h1>
+                                        <div class="grid grid-cols-2 gap-3">
+                                            <div class="flex items-center gap-3">
+                                                <p class="font-medium text-base">Flat / Floor / Block:</p>
+                                                <p class="text-base">{{companyData.presentorAddress}}</p>
+                                            </div>
+                                            <div class="flex items-center gap-3">
+                                                <p class="font-medium text-base">Building:</p>
+                                                <p class="text-base">{{companyData.presentorBuilding}}</p>
+                                            </div>
+                                            <div class="flex items-center gap-3">
+                                                <p class="font-medium text-base">Street:</p>
+                                                <p class="text-base">{{companyData.presentorStreet}}</p>
+                                            </div>
+                                            <div class="flex items-center gap-3">
+                                                <p class="font-medium text-base">District:</p>
+                                                <p class="text-base">{{companyData.presentorDistrict}}</p>
+                                            </div>
+                                            <div class="flex items-center gap-3">
+                                                <p class="font-medium text-base">Country:</p>
+                                                <p class="text-base">{{companyData.office_country}}</p>
+                                            </div>
+                                        </div>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <div class="flex items-center gap-3">
+                                            <p class="font-medium text-base">Company Telephone :</p>
+                                            <p class="text-base">{{companyData.presentorTel}}</p>
+                                        </div>
+                                        <div class="flex items-center gap-3">
+                                            <p class="font-medium text-base">Company FaxNo:</p>
+                                            <p class="text-base">{{companyData.presentorFax}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <p class="font-medium text-base">E-mail:</p>
+                                        <p class="text-base">{{companyData.presentorEmail}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+                        <div class="flex flex-col space-y-1.5 p-6">
+                            <h3 class="text-2xl font-semibold leading-none tracking-tight">
+                                Share Capital
+                            </h3>
+                            <p class="text-sm text-muted-foreground">
+                                Here are the details on ShareCapital
+                            </p>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <div class="relative w-full overflow-auto">
+                                <table class="w-full caption-bottom text-sm">
+                                    <thead class="[&amp;_tr]:border-b">
+                                      <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                          Class of Shares
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                          Total Shares Proposed
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                          Currency
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                          Unit Price of Share
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                          Total Amount
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                          Total Capital Subscribed
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                          Unpaid Amount
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                          Particulars of Rights Attached
+                                        </th>
+                                      </tr>
+                                    </thead>
+                                    <tbody class="[&amp;_tr:last-child]:border-0">
+                                        <ng-container *ngIf="ShareCapitalList.length > 0; else noDataTemplate">
+                                            <tr *ngFor="let shareCapital of ShareCapitalList" class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                                                    {{ shareCapital.share_class }}
+                                                </td>
+                                                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                                                    {{ shareCapital.total_share }}
+                                                </td>
+                                                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                                                    HKD 
+                                                </td>
+                                                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                                                    {{ shareCapital.amount_share }}
+                                                </td>
+                                                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                                                    {{ calculateTotalShareAmount(shareCapital.total_share, shareCapital.amount_share) }}
+                                                </td>
+                                                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                                                    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary underline-offset-4 hover:underline h-10 px-4 py-2"
+                                                            type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:rm9:" data-state="closed">
+                                                        {{ shareCapital.total_capital_subscribed }} 
+                                                    </button>
+                                                </td>
+                                                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                                                    {{ shareCapital.unpaid_amount }}
+                                                </td>
+                                                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                                                    {{ shareCapital.share_right }} 
+                                                </td>
+                                            </tr>
+                                        </ng-container>
+                                        <ng-template #noDataTemplate>
+                                            <tr>
+                                                <td colspan="8" class="p-4 text-center text-muted-foreground">Shareholders data not found.</td>
+                                            </tr>
+                                        </ng-template>
+                                    </tbody>
+                                    
+                                  </table>
+                                  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+                        <div class="flex flex-col space-y-1.5 p-6">
+                            <h3 class="text-2xl font-semibold leading-none tracking-tight">
+                                Shareholders
+                            </h3>
+                            <p class="text-sm text-muted-foreground">
+                                Here are the details on Shareholders
+                            </p>
+                        </div>
+                        <div class="relative w-full overflow-auto">
+                            <table class="caption-bottom text-sm w-full">
+                                <thead class="[&amp;_tr]:border-b">
+                                    <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                            Person/Company
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                            Surname
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                            Name
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                            ID/Company No.
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                            Address
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                            Email
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                            Phone
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 hidden">
+                                            Class of Shares
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 hidden">
+                                            No. of Shares
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                            Share Details
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="[&amp;_tr:last-child]:border-0">
+                                    <ng-container *ngIf="shareholders.length > 0; else noShareholders">
+                                      <tr *ngFor="let shareholder of shareholders" class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ shareholder.userType }}</td>
+                                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ shareholder.surname }}</td>
+                                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ shareholder.name }}</td>
+                                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ shareholder.idNo }}</td>
+                                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ shareholder.address }}</td>
+                                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ shareholder.email }}</td>
+                                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ shareholder.phone }}</td>
+                                        <td class="p-4 align-middle">
+                                            <!-- Button to open modal -->
+                                            <button class="h-10 px-4 py-2 hover:bg-accent" (click)="viewShareDetails(shareholder)">View Shares</button>
+            
+                                            <!-- Modal (only shown when isModalOpen is true) -->
+                                            <div *ngIf="isViewModalOpen" class="fixed inset-0 flex items-center justify-center z-50">
+                                              <div class="fixed inset-0 bg-black opacity-50" (click)="closeShareModal()"></div>
+                                              <div class="bg-white rounded-lg p-6 max-w-md w-full relative z-10">
+                                                <!-- Close button -->
+                                                <button (click)="closeShareModal()" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+                                                  <!-- X icon -->
+                                                </button>
+                                                
+                                                <!-- Modal content -->
+                                                <h2 class="text-xl font-semibold mb-2">{{ selectedShareholder.name }} {{ selectedShareholder.surname }}</h2>
+                                                <p class="text-gray-600 mb-4">Here are the share details of {{ selectedShareholder.name }} {{ selectedShareholder.surname }}:</p>
+                                                
+                                                <!-- Share details table -->
+                                                <div class="grid grid-cols-2 gap-2 mb-4">
+                                                  <div class="py-2 px-4 font-medium text-gray-600 border-b">Class of Shares</div>
+                                                  <div class="py-2 px-4 font-medium text-gray-600 border-b">No of Shares</div>
+                                                  
+                                                  <div class="py-2 px-4 border-b">Ordinary</div>
+                                                  <div class="py-2 px-4 border-b">{{ selectedShareholder.shareDetailsClassOfShares === 'Ordinary' ? selectedShareholder.shareDetailsNoOfShares : 0 }}</div>
+                                                  
+                                                  <div class="py-2 px-4">Preference</div>
+                                                  <div class="py-2 px-4">{{ selectedShareholder.shareDetailsClassOfShares === 'Preferance' ? selectedShareholder.shareDetailsNoOfShares : 0 }}</div>
+                                                </div>
+                                                
+                                                <p class="text-center text-gray-600">Share Details of {{ selectedShareholder.name }} {{ selectedShareholder.surname }}</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                      </tr>
+                                    </ng-container>
+                                    
+                                    <ng-template #noShareholders>
+                                      <tr>
+                                        <td colspan="8" class="p-4 text-center">No shareholders found.</td>
+                                      </tr>
+                                    </ng-template>
+                                  </tbody>
+                                  
+                            </table>
+                        </div>
+                    </div>
+                    <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+                        <div class="flex flex-col space-y-1.5 p-6">
+                            <h3 class="text-2xl font-semibold leading-none tracking-tight">
+                                Directors
+                            </h3>
+                            <p class="text-sm text-muted-foreground">
+                                Here are the details on Directors
+                            </p>
+                        </div>
+                        <div class="relative w-full overflow-auto">
+                            <table class="caption-bottom text-sm w-full">
+                                <thead class="[&amp;_tr]:border-b">
+                                    <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                            Person/Company
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                            Surname
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                            Name
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                            ID/Company No.
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                            Address
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                            Email
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                            Phone
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 hidden">
+                                            Class of Shares
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 hidden">
+                                            No. of Shares
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="[&amp;_tr:last-child]:border-0">
+                                    <tr *ngIf="directorsData.length === 0">
+                                      <td colspan="7" class="p-4 text-center">No directors found</td>
+                                    </tr>
+                                    <tr *ngFor="let director of directorsData" class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                      <td class="p-4 align-middle">{{ director.type }}</td>
+                                      <td class="p-4 align-middle">{{ director.surname }}</td>
+                                      <td class="p-4 align-middle">{{ director.name }}</td>
+                                      <td class="p-4 align-middle">{{ director.idNo }}</td>
+                                      <td class="p-4 align-middle">{{ director.address }}</td>
+                                      <td class="p-4 align-middle">{{ director.email }}</td>
+                                      <td class="p-4 align-middle">{{ director.phone }}</td>
+                                    </tr>
+                                  </tbody>
+                                  
+                            </table>
+                        </div>
+                    </div>
+                    <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+                        <div class="flex flex-col space-y-1.5 p-6">
+                            <h3 class="text-2xl font-semibold leading-none tracking-tight">
+                                Company Secretary
+                            </h3>
+                            <p class="text-sm text-muted-foreground">
+                                Here are the details on Company Secretary
+                            </p>
+                        </div>
+                        <div class="relative w-full overflow-auto">
+                            <table class="caption-bottom text-sm w-full">
+                                <thead class="[&amp;_tr]:border-b">
+                                    <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                            Person/Company
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                            Surname
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                            Name
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 hidden">
+                                            ID/Company No.
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                            Address
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                            Email
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                            Phone
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 hidden">
+                                            Class of Shares
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 hidden">
+                                            No. of Shares
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                            TCSP License No.
+                                        </th>
+                                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                            TCSP License Reason
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="[&amp;_tr:last-child]:border-0">
+                                    <!-- Check if directorsData is empty -->
+                                    <ng-container *ngIf="secretoryData.length > 0; else noDataTemplate">
+                                        <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted" *ngFor="let director of secretoryData">
+                                            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ secretoryData[0].type }}</td>
+                                            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ secretoryData[0].surname }}</td>
+                                            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ secretoryData[0].name }}</td>
+                                            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 hidden">{{ secretoryData[0].idNo }}</td>
+                                            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ secretoryData[0].address }}</td>
+                                            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ secretoryData[0].email }}</td>
+                                            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ secretoryData[0].phone }}</td>
+                                            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 hidden">{{ secretoryData[0].classOfShares }}</td>
+                                            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 hidden">{{ director.noOfShares }}</td>
+                                            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ secretoryData[0].tcspLicenseNo }}</td>
+                                            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ secretoryData[0].tcspReason }}</td>
+                                        </tr>
+                                    </ng-container>
+                                    <!-- Template for no data -->
+                                    <ng-template #noDataTemplate>
+                                        <tr>
+                                            <td colspan="11" class="p-4 text-center text-muted-foreground">No company secretary found.</td>
+                                        </tr>
+                                    </ng-template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="items-center p-6 pt-0 flex justify-between">
+                    <a class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-white h-10 px-4 py-2 cursor-pointer"
+                        href="/">Edit</a
+          >    <a class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-red-500 text-white h-10 px-4 py-2 cursor-pointer"
+          (click)="confirmNavigation()">Confirm</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,143 @@
+<app-header></app-header>
+<div class="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[250px_1fr]">
+  <app-sidebar></app-sidebar>
+<div class="documents-container">
+  <!-- Header -->
+  <div class="header">
+    <div class="header-content">
+      <h1>Document Templates</h1>
+      <p class="subtitle">This is the preview of Document Templates</p>
+    </div>
+  </div>
+
+  <!-- Error Alert -->
+  <div class="alert alert-danger" *ngIf="error">
+    {{ error }}
+    <button class="alert-close" (click)="error = null">&times;</button>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div class="loading-spinner" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Loading documents...</p>
+  </div>
+
+  <!-- Documents Table -->
+  <div class="table-container" *ngIf="!loading">
+    <table class="documents-table">
+      <thead>
+        <tr>
+          <th>Sr No.</th>
+          <th>Documents</th>
+          <th>Templates</th>
+          <!-- <th>Actions</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let document of documents; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td class="document-name">{{ document.documentName }}</td>
+          <td>
+            <button 
+              class="custom-preview-btn" 
+              (click)="previewDocument(document)"
+              *ngIf="document.templateUrl">
+              Preview
+            </button>
+            <span *ngIf="!document.templateUrl" class="no-template">No template</span>
+          </td>
+          <!-- <td class="actions">
+            <button 
+              class="btn btn-sm btn-outline-secondary" 
+              (click)="openEditForm(document)"
+              title="Edit">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button 
+              class="btn btn-sm btn-outline-info" 
+              (click)="downloadDocument(document)"
+              *ngIf="document.templateUrl"
+              title="Download">
+              <i class="fas fa-download"></i>
+            </button>
+            <button 
+              class="btn btn-sm btn-outline-danger" 
+              (click)="deleteDocument(document)"
+              title="Delete">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td> -->
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="documents.length === 0">
+      <i class="fas fa-file-alt"></i>
+      <h3>No documents found</h3>
+      <p>Start by adding your first document template</p>
+      <button class="btn btn-primary" (click)="openAddForm()">
+        Add Document
+      </button>
+    </div>
+
+    <!-- Footer -->
+    <div class="table-footer">
+      <p>A list of All Document Templates.</p>
+    </div>
+  </div>
+
+  <!-- Add/Edit Form Modal -->
+  <!-- <div class="modal-overlay" *ngIf="showAddForm" (click)="closeForm()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>{{ editingDocument ? 'Edit Document' : 'Add New Document' }}</h2>
+        <button class="modal-close" (click)="closeForm()">&times;</button>
+      </div>
+      
+      <form (ngSubmit)="saveDocument()" class="document-form">
+        <div class="form-group">
+          <label for="documentName">Document Name *</label>
+          <input 
+            type="text" 
+            id="documentName" 
+            class="form-control"
+            [(ngModel)]="formData.documentName"
+            name="documentName"
+            placeholder="Enter document name"
+            required>
+        </div>
+
+        <div class="form-group">
+          <label for="documentFile">
+            {{ editingDocument ? 'Replace Document File' : 'Document File *' }}
+          </label>
+          <input 
+            type="file" 
+            id="documentFile" 
+            class="form-control"
+            (change)="onFileSelected($event)"
+            accept=".pdf,.doc,.docx">
+          <small class="form-text">Supported formats: PDF, DOC, DOCX</small>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" (click)="closeForm()">
+            Cancel
+          </button>
+          <button 
+            type="submit" 
+            class="btn btn-primary"
+            [disabled]="loading">
+            {{ loading ? 'Saving...' : (editingDocument ? 'Update' : 'Add') }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div> -->
+</div>
+
+  </div>
+
+
+

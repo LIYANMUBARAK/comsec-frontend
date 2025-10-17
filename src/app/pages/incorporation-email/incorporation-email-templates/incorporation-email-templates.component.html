@@ -1,0 +1,66 @@
+<app-header></app-header>
+<div class="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[250px_1fr]">
+  <app-sidebar></app-sidebar>
+
+  <div class="documents-container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-content">
+        <h1>Email Templates</h1>
+        <p class="subtitle">This is the preview of Email Templates</p>
+      </div>
+    </div>
+
+    @if (error) {
+      <div class="alert alert-danger">
+        {{ error }}
+        <button class="alert-close" (click)="error = null">&times;</button>
+      </div>
+    }
+
+    @if (loading) {
+      <div class="loading-spinner">
+        <div class="spinner"></div>
+        <p>Loading templates...</p>
+      </div>
+    }
+
+    @if (!loading) {
+      <div class="table-container">
+        <table class="documents-table">
+          <thead>
+            <tr>
+              <th>Sr No.</th>
+              <th>Emails</th>
+              <th>Templates</th>
+            </tr>
+          </thead>
+          <tbody>
+           @for (template of templates; track template.id) {
+  <tr>
+    <td>{{ $index + 1 }}</td>
+    <td class="document-name">{{ template.name }}</td>
+    <td>
+      <button class="custom-preview-btn" (click)="previewTemplate(template.id)">
+        Preview
+      </button>
+    </td>
+  </tr>
+}
+          </tbody>
+        </table>
+
+        @if (templates.length === 0) {
+          <div class="empty-state">
+            <h3>No templates found</h3>
+            <p>Start by adding your first email template</p>
+          </div>
+        }
+
+        <div class="table-footer">
+          <p>A list of All Email Templates.</p>
+        </div>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<app-header></app-header>
+<div class="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[250px_1fr]">
+  <app-sidebar></app-sidebar>
+
+  <div class="documents-container">
+    <div class="header">
+      <div class="header-content">
+        <h1>E-mail Template Preview</h1>
+        <p class="subtitle">This is the preview of E-mail Template which will be sent to new account users</p>
+      </div>
+    </div>
+
+  <div class="email-preview-card">
+  <div *ngIf="loading">Loading preview...</div>
+  <div *ngIf="error" class="text-red-500">{{ error }}</div>
+
+  <div *ngIf="!loading && !error">
+    <h2 class="text-xl font-semibold mb-2">{{ subject }}</h2>
+    <div [innerHTML]="emailHtml"></div>
+  </div>
+
+  <hr />
+  <p>
+    For any further queries contact at: 
+<a href="mailto:support&#64;comsec360.com">support&#64;comsec360.com</a>
+  </p>
+  <p class="footer-note">
+    Note: This is only a preview of the E-mail Template
+  </p>
+</div>
+
+  </div>
+</div>

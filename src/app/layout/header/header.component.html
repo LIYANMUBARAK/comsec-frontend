@@ -1,0 +1,125 @@
+<nav class="border-b" [ngClass]="{'bg-white border-gray-200': !isDarkTheme, 'bg-black border-gray-800': isDarkTheme}">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="relative flex h-16 items-center justify-between">
+      <!-- Mobile menu button-->
+      <div class="flex items-center sm:hidden">
+        <button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-inset" 
+                [ngClass]="{'text-gray-400 hover:bg-gray-100 hover:text-gray-600 focus:ring-gray-300': !isDarkTheme, 'text-gray-400 hover:bg-gray-700 hover:text-white focus:ring-white': isDarkTheme}" 
+                aria-controls="mobile-menu" aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+          <svg class="block size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+          <svg class="hidden size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Logo and Brand -->
+      <div class="flex-1 flex items-center justify-center sm:justify-start">
+        <div class="flex-shrink-0">
+          <a class="flex items-center space-x-2" href="/">
+            <img alt="logo" width="28" height="28" class="object-contain" src="assets/logos/logo.png">
+            <span class="text-xl md:text-2xl font-bold hidden sm:block" [ngClass]="{'text-gray-900': !isDarkTheme, 'text-white': isDarkTheme}">ComSec360</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right side icons and profile -->
+      <div class="flex items-center space-x-3">
+        <!-- Theme Toggle - Exact design match -->
+        <button type="button" (click)="toggleTheme()" class="relative rounded-lg p-2.5 focus:outline-none focus:ring-2" 
+                [ngClass]="{'bg-gray-100 text-gray-800 hover:bg-gray-200 focus:ring-gray-300': !isDarkTheme, 'bg-gray-900 text-white hover:bg-gray-800 focus:ring-gray-600 border border-gray-700': isDarkTheme}">
+          <span class="sr-only">Toggle theme</span>
+          <!-- Sun icon for light mode - matching your design -->
+          <svg *ngIf="!isDarkTheme" class="size-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <circle cx="12" cy="12" r="5"/>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+          <!-- Moon icon for dark mode -->
+          <svg *ngIf="isDarkTheme" class="size-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/>
+          </svg>
+        </button>
+
+        <!-- <div class="relative">
+          <button type="button" (click)="toggleNotificationDropdown()" class="relative p-2 focus:outline-none focus:ring-2 focus:ring-offset-2" 
+                  [ngClass]="{'text-gray-700 hover:text-gray-900 focus:ring-gray-500': !isDarkTheme, 'text-gray-300 hover:text-white focus:ring-gray-500': isDarkTheme}">
+            <span class="sr-only">View notifications</span>
+            <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+            </svg>
+            <span class="absolute -top-0.5 -right-0.5 h-3 w-3 bg-red-500 rounded-full"></span>
+          </button>
+
+          <div *ngIf="isNotificationDropdownOpen" class="absolute right-0 z-10 mt-2 w-80 origin-top-right rounded-md shadow-lg ring-1 ring-black/5 focus:outline-none"
+               [ngClass]="{'bg-white': !isDarkTheme, 'bg-gray-800': isDarkTheme}">
+            <div class="py-1">
+              <div class="px-4 py-2 text-sm font-medium border-b" [ngClass]="{'text-gray-900 border-gray-200': !isDarkTheme, 'text-white border-gray-700': isDarkTheme}">
+                Notifications
+              </div>
+              <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-50" [ngClass]="{'text-gray-700 hover:bg-gray-50': !isDarkTheme, 'text-gray-300 hover:bg-gray-700': isDarkTheme}">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0">
+                    <div class="h-2 w-2 bg-blue-500 rounded-full"></div>
+                  </div>
+                  <div class="ml-3">
+                    <p class="text-sm font-medium">New system update available</p>
+                    <p class="text-xs text-gray-500">2 minutes ago</p>
+                  </div>
+                </div>
+              </a>
+              <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-50" [ngClass]="{'text-gray-700 hover:bg-gray-50': !isDarkTheme, 'text-gray-300 hover:bg-gray-700': isDarkTheme}">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0">
+                    <div class="h-2 w-2 bg-green-500 rounded-full"></div>
+                  </div>
+                  <div class="ml-3">
+                    <p class="text-sm font-medium">Security scan completed</p>
+                    <p class="text-xs text-gray-500">1 hour ago</p>
+                  </div>
+                </div>
+              </a>
+              <div class="border-t px-4 py-2" [ngClass]="{'border-gray-200': !isDarkTheme, 'border-gray-700': isDarkTheme}">
+                <a href="#" class="block text-sm text-center font-medium" [ngClass]="{'text-blue-600 hover:text-blue-500': !isDarkTheme, 'text-blue-400 hover:text-blue-300': isDarkTheme}">
+                  View all notifications
+                </a>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- Profile Dropdown -->
+        <div class="relative">
+          <button (click)="toggleDropdown()" class="flex items-center space-x-3 focus:outline-none">
+            <div class="hidden sm:flex flex-col items-end">
+              <span class="text-sm font-medium" [ngClass]="{'text-gray-900': !isDarkTheme, 'text-white': isDarkTheme}">{{userData?.name}}</span>
+              <span class="text-xs" [ngClass]="{'text-gray-600': !isDarkTheme, 'text-gray-400': isDarkTheme}">{{userData?.roles}}</span>
+            </div>
+            <div class="w-8 h-8 rounded-full bg-gray-200 overflow-hidden">
+              <img class="size-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+            </div>
+          </button>
+
+          <div *ngIf="isDropdownOpen" class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md py-1 shadow-lg ring-1 ring-black/5 focus:outline-none"
+               [ngClass]="{'bg-white': !isDarkTheme, 'bg-gray-800': isDarkTheme}">
+            <a href="#" (click)="showFeatureNotAvailable('Profile'); $event.preventDefault()" class="block px-4 py-2 text-sm" [ngClass]="{'text-gray-700 hover:bg-gray-100': !isDarkTheme, 'text-gray-300 hover:bg-gray-700': isDarkTheme}">Your Profile</a>
+            <a href="#" (click)="showFeatureNotAvailable('Settings'); $event.preventDefault()" class="block px-4 py-2 text-sm" [ngClass]="{'text-gray-700 hover:bg-gray-100': !isDarkTheme, 'text-gray-300 hover:bg-gray-700': isDarkTheme}">Settings</a>
+            <a href="#" (click)="logout()" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50">Sign out</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="sm:hidden" id="mobile-menu">
+    <div class="space-y-1 px-2 pb-3 pt-2">
+      <a href="#"  class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white">Dashboard</a>
+      <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Team</a>
+      <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Projects</a>
+      <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Calendar</a>
+    </div>
+  </div>
+</nav>

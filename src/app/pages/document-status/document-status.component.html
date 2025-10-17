@@ -1,0 +1,425 @@
+<div class="container-fluid">
+    <div class="container">
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm my-6 container">
+            <nav aria-label="breadcrumb" class="py-4 px-3">
+                <ol class="flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5">
+                    <li class="inline-flex items-center gap-1.5">
+                        <a class="transition-colors hover:text-foreground" href="/">ABCD</a>
+                    </li>
+                    <li role="presentation" aria-hidden="true" class="[&amp;>svg]:size-3.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-slash">
+              <path d="M22 2 2 22"></path>
+            </svg>
+                    </li>
+                    <li class="inline-flex items-center gap-1.5">
+                        <a class="transition-colors hover:text-foreground">Project -
+              <!-- -->Incorporation<!-- -->
+              (id:
+              <!-- -->m5gr84i9<!-- -->)</a
+            >
+          </li>
+        </ol>
+      </nav>
+      <div
+        class="space-y-1.5 p-6 flex justify-between items-center w-full flex-row"
+      >
+        <div class="space-y-2">
+          <h3 class="text-2xl font-semibold leading-none tracking-tight">
+            Document Status
+          </h3>
+          <p class="text-sm text-muted-foreground">
+            This is the status of documents prepared by the project of your
+            company.
+          </p>
+        </div>
+        <button
+  class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-white h-11 px-8"
+  (click)="confirmAndSendData()"
+>
+  Confirm
+</button>
+
+      </div>
+      <div class="p-6 pt-0 space-y-6">
+        <div class="relative w-full overflow-auto">
+          <table class="w-full caption-bottom text-sm">
+            <thead class="[&amp;_tr]:border-b">
+              <tr
+                class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+              >
+                <th
+                  class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                >
+                  Sr No.
+                </th>
+                <th
+                  class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                >
+                  Documents
+                </th>
+                <th
+                  class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                >
+                  Generated
+                </th>
+                <th
+                  class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                >
+                  Status
+                </th>
+              </tr>
+            </thead>
+            <tbody class="[&amp;_tr:last-child]:border-0">
+              <tr
+                class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+              >
+                <td
+                  class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium"
+                >
+                  1
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  NNC1 Form
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <a
+                  *ngIf="pdfUrl"
+                  class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 cursor-pointer"
+                  [href]="pdfUrl"
+                  target="_blank"
+                >
+                  Preview
+                </a>
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <button
+                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+                    type="button"
+                    aria-haspopup="dialog"
+                    aria-expanded="false"
+                    aria-controls="radix-:R11jrrrqla:"
+                    data-state="closed"
+                  >
+                    <span class="text-foreground">  {{ getTotalSignedCount() }} Signed</span>
+                  </button>
+                </td>
+              </tr>
+              <tr
+                class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+              >
+                <td
+                  class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium"
+                >
+                  2
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  Article of Association (A &amp; A)
+                </td>
+                <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                  <a
+                    *ngIf="pdfAoAUrl"
+                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 cursor-pointer"
+                    [href]="pdfAoAUrl"
+                    target="_blank"
+                  >
+                    Preview
+                  </a>
+                  <button
+                    *ngIf="!pdfAoAUrl"
+                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background h-10 px-4 py-2"
+                    disabled
+                  >
+                    Private only
+                  </button>
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <a (click)="downloadShareCertificate()"
+                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 cursor-pointer"
+                    target="_blank"
+                    >Print</a
+                  >
+                </td>
+              </tr>
+              <tr
+                class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+              >
+                <td
+                  class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium"
+                >
+                  3
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  Ordinary Share Agreement
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <a
+                  *ngIf="pdfShareUrl"
+                  class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 cursor-pointer"
+                  [href]="pdfShareUrl"
+                  target="_blank"
+                >
+                  Preview
+                </a>
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <button
+                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+                    type="button"
+                    aria-haspopup="dialog"
+                    aria-expanded="false"
+                    aria-controls="radix-:R13jrrrqla:"
+                    data-state="closed"
+                  >
+                    <span class="text-foreground">{{ getTotalSignedCount() }} Signed</span>
+                  </button>
+                </td>
+              </tr>
+              <tr
+                class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+              >
+                <td
+                  class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium"
+                >
+                  4
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  Minutes
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <a
+                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 cursor-pointer"
+                    href="/documents/MOM.pdf"
+                    >Preview</a
+                  >
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <button
+                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+                    type="button"
+                    aria-haspopup="dialog"
+                    aria-expanded="false"
+                    aria-controls="radix-:R14jrrrqla:"
+                    data-state="closed"
+                  >
+                    <span class="text-foreground">2 Signed</span>
+                  </button>
+                </td>
+              </tr>
+              <tr
+                class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+              >
+                <td
+                  class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium"
+                >
+                  5
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  IRBRI
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <a
+                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 cursor-pointer"
+                    target="_blank"
+                    href="/documents/IRBR1.pdf"
+                    >Preview</a
+                  >
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <a
+                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 cursor-pointer"
+                    target="_blank"
+                    href="/documents/IRBR1.pdf"
+                    >Print</a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+          <div class="flex flex-col space-y-1.5 p-6">
+            <h3 class="text-2xl font-semibold leading-none tracking-tight">
+              User Details
+            </h3>
+            <p class="text-sm text-muted-foreground">Details about Users</p>
+          </div>
+          <div class="p-6 pt-0">
+            <div class="relative w-full overflow-auto">
+              <!-- document-management.component.html -->
+<table class="w-full caption-bottom text-sm">
+  <thead class="[&_tr]:border-b">
+    <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+      <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+        Sr No.
+      </th>
+      <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+        Documents
+      </th>
+      <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+        Position
+      </th>
+      <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+        Type
+      </th>
+      <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+        Print
+      </th>
+      <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+        Upload Signed NNC1
+      </th>
+    </tr>
+  </thead>
+  <tbody class="[&_tr:last-child]:border-0">
+    <!-- Shareholders Rows -->
+    <ng-container *ngFor="let shareholder of data.shareholders; let i = index">
+      <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+        <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0 font-medium">
+          {{ i + 1 }}
+        </td>
+        <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+          {{ shareholder.surname }} {{ shareholder.name }}
+        </td>
+        <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+          Shareholder {{ i + 1 }}
+        </td>
+        <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+          {{ shareholder.userType === 'person' ? 'Person' : 'Company' }}
+        </td>
+        <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0 space-x-1.5">
+          <button *ngIf="shareholder.idProof" 
+            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+            (click)="previewDocument(shareholder.idProof)">
+            ID Proof
+          </button>
+          <button *ngIf="shareholder.addressProof" 
+            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+            (click)="previewDocument(shareholder.addressProof)">
+            Address Proof
+          </button>
+        </td>
+        <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+          <button 
+            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+            (click)="openUploadModal(shareholder._id)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-upload">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" x2="12" y1="3" y2="15"></line>
+            </svg>
+          </button>
+        </td>
+      </tr>
+    </ng-container>
+
+    <!-- Directors Rows -->
+    <ng-container *ngFor="let director of data.directors; let i = index">
+      <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+        <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0 font-medium">
+          {{ data.shareholders.length + i + 1 }}
+        </td>
+        <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+          {{ director.surname }} {{ director.name }}
+        </td>
+        <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+          Director {{ i + 1 }}
+        </td>
+        <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+          {{ director.type === 'person' ? 'Person' : 'Company' }}
+        </td>
+        <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0 space-x-1.5">
+          <button *ngIf="director.idProof" 
+            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+            (click)="previewDocument(director.idProof)">
+            ID Proof
+          </button>
+          <button *ngIf="director.addressProof" 
+            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+            (click)="previewDocument(director.addressProof)">
+            Address Proof
+          </button>
+        </td>
+        <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+          <button 
+            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+            (click)="openUploadModal(director._id)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-upload">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" x2="12" y1="3" y2="15"></line>
+            </svg>
+          </button>
+        </td>
+      </tr>
+    </ng-container>
+
+    <!-- Secretary Row -->
+    <ng-container *ngFor="let sec of data.secretary; let i = index">
+      <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+        <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0 font-medium">
+          {{ data.shareholders.length + data.directors.length + i + 1 }}
+        </td>
+        <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+          {{ sec.surname }} {{ sec.name }}
+        </td>
+        <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+          Company Secretary
+        </td>
+        <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+          {{ sec.type === 'person' ? 'Person' : 'Company' }}
+        </td>
+        <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0 space-x-1.5">
+          <button *ngIf="sec.idProof" 
+            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+            (click)="previewDocument(sec.idProof)">
+            ID Proof
+          </button>
+          <button *ngIf="sec.addressProof" 
+            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+            (click)="previewDocument(sec.addressProof)">
+            Address Proof
+          </button>
+        </td>
+        <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+          <button 
+            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+            (click)="openUploadModal(sec._id)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-upload">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" x2="12" y1="3" y2="15"></line>
+            </svg>
+          </button>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+
+<!-- Upload Modal -->
+<div *ngIf="showUploadModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white p-6 rounded-lg w-96">
+    <h3 class="text-lg font-medium mb-4">Upload Signed NNC1 Document</h3>
+    <p class="mb-4 text-sm text-gray-600">Please upload a PDF or DOC file.</p>
+    
+    <input type="file" (change)="uploadFile($event)" accept=".pdf,.doc,.docx" class="mb-4 w-full">
+    
+    <div class="flex justify-end space-x-2">
+      <button 
+        class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+        (click)="closeUploadModal()">
+        Cancel
+      </button>
+      <button 
+        class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-primary text-white hover:bg-primary/90 h-10 px-4 py-2">
+        Upload
+      </button>
+    </div>
+  </div>
+</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

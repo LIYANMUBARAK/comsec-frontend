@@ -1,0 +1,139 @@
+<div class="register-div container my-6 login-div">
+    <div class="flex justify-content-center align-item-center">
+      <div class="">
+        <div class="card shadow-sm border-color min-w-[370px]">
+          <div class="card-body">
+            <div class="isolate bg-white px-3 lg:px-5 border-inherit">
+              <div
+                class="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]"
+                aria-hidden="true"
+              ></div>
+              <div class="d-flex" style="align-items: center;">
+                <img
+                  src="assets/logos/logo.png"
+                  alt=""
+                  style="width: 12%; height: 13%;"
+                />
+                <div class="mx-auto max-w-2xl">
+                  <h2 class="text-balance text-2xl font-semibold tracking-tight text-gray-900 sm:text-2xl">
+                    ComSec360
+                  </h2>
+                  <p class="text-sm text-gray-600">
+                    Company Secretarial Management
+                  </p>
+                </div>
+              </div>
+              <div class="text-center text-black my-3" style="font-weight: 600;">
+                Create an Account
+              </div>
+              <form
+              [formGroup]="registerForm"
+              (ngSubmit)="onRegister()"
+              class="mx-auto mt-8 max-w-lg rounded-lg bg-white p-6 shadow-lg"
+            >
+              <!-- Full Name -->
+              <div class="mb-4">
+                <label for="name" class="block text-sm font-medium text-gray-800">Full Name</label>
+                <input
+                  type="text"
+                  formControlName="name"
+                  placeholder="Enter your full name"
+                  class="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring focus:ring-indigo-300"
+                  [ngClass]="{
+                    'border-red-500': registerForm.get('name')?.invalid && (registerForm.get('name')?.touched || registerForm.get('name')?.dirty)
+                  }"
+                />
+                <p class="mt-1 text-sm text-red-600">{{ nameError }}</p>
+              </div>
+            
+              <!-- Role -->
+              <div class="mb-4">
+                <label for="roles" class="block text-sm font-medium text-gray-800">Role</label>
+                <select
+                  formControlName="roles"
+                  class="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring focus:ring-indigo-300"
+                  [ngClass]="{
+                    'border-red-500': registerForm.get('roles')?.invalid && (registerForm.get('roles')?.touched || registerForm.get('roles')?.dirty)
+                  }"
+                >
+                  <option value="" disabled>Select Role</option>
+                  <option value="Shareholder">Shareholder</option>
+                  <option value="Director">Director</option>
+                  <option value="Company Secretary">Company Secretary</option>
+                  <option value="Employee">Employee</option>
+                </select>
+                <p class="mt-1 text-sm text-red-600">{{ rolesError }}</p>
+              </div>
+            
+              <!-- Email -->
+              <div class="mb-4">
+                <label for="email" class="block text-sm font-medium text-gray-800">Email</label>
+                <input
+                  type="email"
+                  formControlName="email"
+                  placeholder="xyz@gmail.com"
+                  class="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring focus:ring-indigo-300"
+                  [ngClass]="{
+                    'border-red-500': registerForm.get('email')?.invalid && (registerForm.get('email')?.touched || registerForm.get('email')?.dirty)
+                  }"
+                />
+                <p class="mt-1 text-sm text-red-600">{{ emailError }}</p>
+              </div>
+            
+              <!-- Password -->
+              <div class="mb-4">
+                <label for="password" class="block text-sm font-medium text-gray-800">Password</label>
+                <input
+                  type="password"
+                  formControlName="password"
+                  placeholder="********"
+                  class="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring focus:ring-indigo-300"
+                  [ngClass]="{
+                    'border-red-500': registerForm.get('password')?.invalid && (registerForm.get('password')?.touched || registerForm.get('password')?.dirty)
+                  }"
+                />
+                <p class="mt-1 text-sm text-red-600">{{ passwordError }}</p>
+              </div>
+            
+              <!-- Mobile Number (Optional) -->
+              <div class="mb-4">
+                <label for="mobile" class="block text-sm font-medium text-gray-800">Mobile Number (Optional)</label>
+                <input
+                  type="text"
+                  formControlName="mobile"
+                  placeholder="1234567890"
+                  class="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring focus:ring-indigo-300"
+                  [ngClass]="{
+                    'border-red-500': registerForm.get('mobile')?.invalid && (registerForm.get('mobile')?.touched || registerForm.get('mobile')?.dirty)
+                  }"
+                />
+                <p class="mt-1 text-sm text-red-600">{{ mobileNumberError }}</p>
+              </div>
+            
+              <!-- Submit Button -->
+              <button (click)="onregister()"
+                type="submit"
+                class="w-full rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-md hover:bg-indigo-700 focus:ring focus:ring-indigo-300"
+              >
+                Register
+              </button>
+            
+              <!-- Login Redirect -->
+              <p class="mt-4 text-center text-sm text-gray-600">
+                Already have an account?
+                <a
+                  [routerLink]="['/login']"
+                  class="font-medium text-indigo-600 hover:underline"
+                >
+                  Login here
+                </a>
+              </p>
+            </form>
+            
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

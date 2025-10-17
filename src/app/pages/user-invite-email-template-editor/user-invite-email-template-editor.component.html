@@ -1,0 +1,126 @@
+<app-header></app-header>
+<div class="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[250px_1fr]">
+  <app-sidebar></app-sidebar>
+  
+  <div class="flex flex-col">
+    <main class="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
+      <div class="flex items-center justify-between">
+        <h1 class="text-2xl font-bold tracking-tight">Email Template Editor</h1>
+        <button 
+          (click)="toggleEditMode()"
+          class="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+          </svg>
+          {{ isEditMode ? 'Cancel Edit' : 'Edit Template' }}
+        </button>
+      </div>
+
+      <div class="grid gap-6">
+        <!-- Email Subject Section -->
+        <div class="rounded-lg border bg-white p-6 shadow-sm">
+          <h2 class="text-lg font-semibold mb-4">Email Subject</h2>
+          <div *ngIf="!isEditMode" class="p-4 bg-gray-50 rounded-md">
+            <p class="text-gray-900">{{ template.subject || 'No subject set' }}</p>
+          </div>
+          <div *ngIf="isEditMode" class="space-y-2">
+            <input 
+              [(ngModel)]="template.subject"
+              type="text" 
+              placeholder="Enter email subject"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          </div>
+        </div>
+
+        <!-- Email Template Editor/Preview Section -->
+        <div class="rounded-lg border bg-white shadow-sm">
+          <div class="border-b p-4">
+            <h2 class="text-lg font-semibold">Email Template</h2>
+            <p class="text-sm text-gray-600 mt-1">
+              {{ isEditMode ? 'Edit the HTML template below' : 'Preview of the email template that will be sent to new users' }}
+            </p>
+          </div>
+          
+          <div class="p-6">
+            <!-- Preview Mode -->
+            <div *ngIf="!isEditMode" class="space-y-4">
+              <div class="border rounded-lg p-6 bg-gray-50">
+                <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-sm">
+                  <div [innerHTML]="getPreviewHtml()"></div>
+                </div>
+              </div>
+              <div class="text-sm text-gray-500 text-center">
+                <p>This is a preview of the email template with sample data</p>
+              </div>
+            </div>
+
+            <!-- Edit Mode -->
+            <div *ngIf="isEditMode" class="space-y-4">
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- HTML Editor -->
+                <div class="space-y-2">
+                  <label class="block text-sm font-medium text-gray-700">HTML Template</label>
+                  <textarea 
+                    [(ngModel)]="template.html"
+                    rows="20"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm"
+                    placeholder="Enter your HTML template here...">
+                  </textarea>
+                </div>
+
+                <!-- Live Preview -->
+                <div class="space-y-2">
+                  <label class="block text-sm font-medium text-gray-700">Live Preview</label>
+                  <div class="border rounded-md p-4 bg-gray-50 min-h-[500px]">
+                    <div class="bg-white p-4 rounded shadow-sm">
+                      <div [innerHTML]="getPreviewHtml()"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Available Variables -->
+              <!-- <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+                <h3 class="text-sm font-medium text-blue-900 mb-2">Available Variables</h3>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
+                  <code class="bg-blue-100 px-2 py-1 rounded text-blue-800">{{firstName}}</code>
+                  <code class="bg-blue-100 px-2 py-1 rounded text-blue-800">{{lastName}}</code>
+                  <code class="bg-blue-100 px-2 py-1 rounded text-blue-800">{{email}}</code>
+                  <code class="bg-blue-100 px-2 py-1 rounded text-blue-800">{{password}}</code>
+                  <code class="bg-blue-100 px-2 py-1 rounded text-blue-800">{{loginUrl}}</code>
+                </div>
+              </div> -->
+
+              <!-- Action Buttons -->
+              <div class="flex justify-end space-x-3 pt-4">
+                <button 
+                  (click)="resetTemplate()"
+                  class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                  Reset
+                </button>
+                <button 
+                  (click)="saveTemplate()"
+                  class="inline-flex items-center justify-center rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Save Template
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Loading Overlay -->
+<div *ngIf="isLoading" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white p-6 rounded-lg shadow-lg">
+    <div class="flex items-center space-x-3">
+      <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+      <span class="text-gray-700">{{ loadingMessage }}</span>
+    </div>
+  </div>
+</div>

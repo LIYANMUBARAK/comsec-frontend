@@ -1,0 +1,9 @@
+.dark-mode-modal {
+    background-color: #222; /* Example dark background */
+    color: white;
+  }
+
+  .modal {
+    background-color: var(--modal-bg-color);
+    color: var(--modal-text-color);
+  }

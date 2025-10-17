@@ -1,0 +1,74 @@
+  :root {
+      --background: white;
+      --text-primary: black;
+      --text-secondary: #666;
+      --accent: #484848;
+      --border-color: #e5e7eb;
+    }
+    
+    .dark {
+      --background: #1a1a1a;
+      --text-primary: white;
+      --text-secondary: #b3b3b3;
+      --accent: #707070;
+      --border-color: #374151;
+    }
+    
+    /* Base styles */
+    .bg-white-800 {
+      background-color: var(--background);
+      transition: background-color 0.3s ease;
+    }
+    
+    .text-black {
+      color: var(--text-primary);
+      transition: color 0.3s ease;
+    }
+    
+    .border-color {
+      border-color: var(--border-color);
+      border-bottom-width: 1px;
+    }
+    
+    /* Dark mode overrides */
+    .dark .bg-white {
+      background-color: var(--background);
+    }
+    
+    .dark .text-gray-700 {
+      color: var(--text-secondary);
+    }
+    
+    .dark .text-gray-300 {
+      color: var(--text-secondary);
+    }
+    
+    /* Responsive styles */
+    @media (max-width: 640px) {
+      .nav-content {
+        padding: 0 1rem;
+      }
+      
+      .brand-name {
+        font-size: 1.25rem;
+      }
+    }
+    
+    /* Animation for dropdown */
+    .dropdown-menu {
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    
+    .dropdown-menu.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Remove sticky positioning */
+    :host {
+      display: block;
+      position: relative;
+      z-index: 50;
+    }
