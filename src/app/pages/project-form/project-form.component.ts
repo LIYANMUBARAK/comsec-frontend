@@ -87,6 +87,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
     'Directors',
     'Company Secretary',
   ];
+  
   shareCapitalList: any[] = [];
   shareholders: any[] = [];
   activeTabIndex = 0;

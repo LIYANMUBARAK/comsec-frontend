@@ -24,7 +24,7 @@ export class UserDashboardComponent {
   userId: any;
   dataEnteringCount: number = 0;
   documentationCount: number = 0;
-  finalStageCount: number = 0
+  finalStageCount: number = 0;
   completedCount: number = 0;
   companies: any[] = [];
   displayedCompanies: any[] = [];
@@ -32,10 +32,10 @@ export class UserDashboardComponent {
   itemsPerPage = 5;
   userData: any;
   isRestrictedUser: boolean = false;
-  companyIds: string[] = []
+  companyIds: string[] = [];
 
   ngOnInit(): void {
-    this.getUser()
+    this.getUser();
     this.getUserDatas();
     //this.authService.logout()
     this.loadCompanyData();
@@ -51,10 +51,10 @@ export class UserDashboardComponent {
       next: (response) => {
         if (response) {
           this.companies = response;
-          const filteredCompanies = this.companies.filter(company =>
+          const filteredCompanies = this.companies.filter((company) =>
             this.companyIds.includes(company._id)
           );
-          this.updateDisplayedCompanies()
+          this.updateDisplayedCompanies();
           this.updateStatusCounters(filteredCompanies);
         }
       },
@@ -99,9 +99,8 @@ export class UserDashboardComponent {
     return 'Unknown'; // fallback if stage is missing
   }
 
-
   updateDisplayedCompanies() {
-    const filteredCompanies = this.companies.filter(company =>
+    const filteredCompanies = this.companies.filter((company) =>
       this.companyIds.includes(company._id)
     );
 
@@ -183,7 +182,7 @@ export class UserDashboardComponent {
   }
 
   navigateToProjectForm() {
-    localStorage.removeItem('companyId')
+    localStorage.removeItem('companyId');
     this.router.navigate(['/project-form']);
   }
 
@@ -202,11 +201,10 @@ export class UserDashboardComponent {
       confirmButtonText: 'Yes, Resume',
       cancelButtonText: 'Cancel',
     }).then((result) => {
-
       if (result.isConfirmed) {
-        localStorage.removeItem('companyId')
+        localStorage.removeItem('companyId');
         localStorage.setItem('companyId', company._id);
-        if (company.currentStage >= 1 && company.currentStage <= 4) {
+        if (company.currentStage >= 1 && company.currentStage < 4) {
           // Navigate to project form with company data or specific resume route
           // You can pass company data as route params or query params
 
@@ -227,13 +225,12 @@ export class UserDashboardComponent {
             'Project has been resumed successfully.',
             'success'
           );
-        }
-
-        else if (company.currentStage == 5) {
-          this.router.navigate([`/summary/${company._id}`])
-        }
-        else if (company.currentStage == 6) {
-          this.router.navigate([`/summary/${company._id}`])
+        } else if (company.currentStage == 4) {
+          this.router.navigate([`/summary/${company._id}`]);
+        } else if (company.currentStage == 5) {
+          this.router.navigate([`/summary/${company._id}`]);
+        } else if (company.currentStage == 6) {
+          this.router.navigate([`/summary/${company._id}`]);
         }
       }
     });
@@ -245,10 +242,10 @@ export class UserDashboardComponent {
   }
 
   getUser() {
-    let userId = <string>localStorage.getItem('userId')
+    let userId = <string>localStorage.getItem('userId');
     this.userService.getUserById(userId).subscribe((res) => {
-      this.companyIds.push(...res.companyid)
-    })
+      this.companyIds.push(...res.companyid);
+    });
   }
 
   getNextAnnualReturnDate(incorporateDate: string | Date): Date | null {
@@ -257,5 +254,4 @@ export class UserDashboardComponent {
     date.setFullYear(date.getFullYear() + 1);
     return date;
   }
-
 }

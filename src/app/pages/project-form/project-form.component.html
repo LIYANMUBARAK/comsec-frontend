@@ -2480,20 +2480,14 @@
                                         [ngModelOptions]="{ standalone: true }"
                                         (change)="onShareClassChange($event, i)"
                                         class="flex h-10 w-full items-center rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
-                                        <option value>Select Class of
-                                          Shares</option>
+                                        <option value disabled selected>Select
+                                          Class of Shares</option>
+
                                         <option
-                                          value="Ordinary">Ordinary</option>
-                                        <option
-                                          value="Preference">Preference</option>
-                                        <option
-                                          value="Ordinary Class 1">Ordinary
-                                          Class 1</option>
-                                        <option
-                                          value="Ordinary Class 10">Ordinary
-                                          Class 10</option>
-                                        <option value="Ordinary12">Ordinary
-                                          12</option>
+                                          *ngFor="let share of shareCapitalList"
+                                          [value]="share.share_class">
+                                          {{ share.share_class }}
+                                        </option>
                                       </select>
                                     </td>
 
@@ -2728,27 +2722,13 @@
                                         [ngModelOptions]="{ standalone: true }"
                                         (change)="onShareClassChange2($event, i)"
                                         class="flex h-10 w-full items-center rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
-                                        <!-- <option value>Select Class of
+                                        <option value>Select Class of
                                           Shares</option>
                                         <option
                                           *ngFor="let share of shareCapitalList"
                                           [value]="share.share_class">
                                           {{ share.share_class }}
-                                        </option> -->
-                                        <option value>Select Class of
-                                          Shares</option>
-                                        <option
-                                          value="Ordinary">Ordinary</option>
-                                        <option
-                                          value="Preference">Preference</option>
-                                        <option
-                                          value="Ordinary Class 1">Ordinary
-                                          Class 1</option>
-                                        <option
-                                          value="Ordinary Class 10">Ordinary
-                                          Class 10</option>
-                                        <option value="Ordinary12">Ordinary
-                                          12</option>
+                                        </option>
                                       </select>
                                     </td>
 
