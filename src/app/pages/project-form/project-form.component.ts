@@ -87,7 +87,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
     'Directors',
     'Company Secretary',
   ];
-  
+
   shareCapitalList: any[] = [];
   shareholders: any[] = [];
   activeTabIndex = 0;
@@ -2052,7 +2052,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
           Validators.minLength(8),
         ],
       ],
-      countryCode: ['', Validators.required],
+      countryCode: [''],
       shareDetails: this.fb.group([{
         shareDetailsNoOfShares: ['', Validators.required],
         shareDetailsClassOfShares: ['', Validators.required],
@@ -3246,16 +3246,18 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
 
   getInvideDirectosList() {
     const userId = localStorage.getItem('userId');
-    const companyId = <string>localStorage.getItem('companyId');
-    this.companyService.directorsInvites(companyId).subscribe({
-      next: (response) => {
-        this.invitedDirectors = response.data;
-        console.log('invited directors', this.invitedDirectors);
-      },
-      error: (error) => {
-        console.error('Error fetching invited directors:', error);
-      }
-    })
+    const companyId = localStorage.getItem('companyId');
+    if (companyId) {
+      this.companyService.directorsInvites(companyId).subscribe({
+        next: (response) => {
+          this.invitedDirectors = response.data;
+          console.log('invited directors', this.invitedDirectors);
+        },
+        error: (error) => {
+          console.error('Error fetching invited directors:', error);
+        }
+      })
+    }
   }
 
   initializeCompanySecretaryForm() {
@@ -3277,7 +3279,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
       phone: ['', Validators.required,
         Validators.pattern(/^\d+$/),
         Validators.minLength(8)],
-        countryCode: ['+91', Validators.required],
+      countryCode: ['+91', Validators.required],
     });
     this.comapnySecretaryForm.get('type')?.valueChanges.subscribe((type) => {
       this.updateFormValidation3(type);
@@ -3369,7 +3371,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
       userId: userId,
       companyId: companyId,
     };
-    
+
     this.companyService.companySecretaryCreation(formData).subscribe({
       next: (response) => {
         console.log(
