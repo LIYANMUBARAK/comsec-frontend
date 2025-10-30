@@ -64,7 +64,17 @@ export class ShareholderEditModalComponent implements OnInit {
 
   ngOnChanges(): void {
     if (this.shareholder) {
-      console.log("Editing Shareholder Details:", this.shareholder);
+      const shareDetailsArray = this.editShareholderForm.get('shareDetails') as FormArray;
+      shareDetailsArray.clear();
+      this.shareholder.shareDetails.forEach((detail: any) => {
+        shareDetailsArray.push(
+          this.fb.group({
+            shareDetailsClassOfShares: [detail.shareDetailsClassOfShares],
+            shareDetailsNoOfShares: [detail.shareDetailsNoOfShares],
+          })
+        );
+      });
+
       // Pre-populate the form with shareholder data
       this.editShareholderForm.patchValue({
         surname: this.shareholder.surname || "",
@@ -83,21 +93,7 @@ export class ShareholderEditModalComponent implements OnInit {
         shareDetails: this.shareholder.shareDetails,
       })
 
-      const shareDetailsData = this.shareholder.shareDetails;
-      const formArray = this.editShareholderForm.get('shareDetails') as FormArray;
-      formArray.clear()
-
-      shareDetailsData.forEach((detail: any) => {
-        formArray.push(
-          this.fb.group({
-            shareDetailsNoOfShares: [detail.shareDetailsNoOfShares],
-            shareDetailsClassOfShares: [detail.shareDetailsClassOfShares]
-          })
-        );
-      });
-
-      console.log(this.editShareholderForm.value)
-
+      console.log("Form after patching:", this.editShareholderForm.value);
       // Set image previews if available
       if (this.shareholder.idProof) {
         this.idProofPreview = this.shareholder.idProof

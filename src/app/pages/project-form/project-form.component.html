@@ -1941,29 +1941,34 @@
                                       selectedShareholder.surname }}:</p>
 
                                     <!-- Share details table -->
-                                    <div class="grid grid-cols-2 gap-2 mb-4">
-                                      <div
-                                        class="py-2 px-4 font-medium text-gray-600 border-b">Class
-                                        of Shares</div>
-                                      <div
-                                        class="py-2 px-4 font-medium text-gray-600 border-b">No
-                                        of Shares</div>
-
-                                      <div
-                                        class="py-2 px-4 border-b">Ordinary</div>
-                                      <div class="py-2 px-4 border-b">{{
-                                        selectedShareholder.shareDetailsClassOfShares
-                                        === 'Ordinary' ?
-                                        selectedShareholder.shareDetailsNoOfShares
-                                        : 0 }}</div>
-
-                                      <div class="py-2 px-4">Preference</div>
-                                      <div class="py-2 px-4">{{
-                                        selectedShareholder.shareDetailsClassOfShares
-                                        === 'Preferance' ?
-                                        selectedShareholder.shareDetailsNoOfShares
-                                        : 0 }}</div>
-                                    </div>
+                                    <table
+                                      class="min-w-full border border-gray-200 rounded-md">
+                                      <thead class="bg-gray-100">
+                                        <tr>
+                                          <th
+                                            class="text-left py-2 px-4 font-medium text-gray-600 border-b">
+                                            Class of Shares
+                                          </th>
+                                          <th
+                                            class="text-left py-2 px-4 font-medium text-gray-600 border-b">
+                                            No of Shares
+                                          </th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr
+                                          *ngFor="let share of selectedShareholder.shareDetails"
+                                          class="hover:bg-gray-50 transition-colors">
+                                          <td class="py-2 px-4 border-b">
+                                            {{ share.shareDetailsClassOfShares
+                                            }}
+                                          </td>
+                                          <td class="py-2 px-4 border-b">
+                                            {{ share.shareDetailsNoOfShares }}
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
 
                                     <p class="text-center text-gray-600">Share
                                       Details of {{ selectedShareholder.name }}

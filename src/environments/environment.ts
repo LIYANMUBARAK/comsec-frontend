@@ -7,6 +7,4 @@ export const environment = {
     // baseURL: "https://comsec-backend-2.vercel.app/",
     // baseURL: 'http://65.0.45.189/api/'
     baseURL: '/api/'
-    
-    
 };

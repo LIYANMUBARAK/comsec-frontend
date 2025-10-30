@@ -1335,7 +1335,6 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
 
     return this.companyService.submitCompanyInfo(fromValues).pipe(
       tap((response: any) => {
-
         // Set companyId if it's a new creation
         if (!this.companyId) {
           this.companyId = response.companyId;

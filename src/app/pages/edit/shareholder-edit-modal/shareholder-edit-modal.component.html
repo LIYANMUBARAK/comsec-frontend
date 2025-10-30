@@ -300,14 +300,14 @@
             <!-- Class of Shares Dropdown -->
             <select
               id="editClass-{{ i }}"
-              formControlName="shareDetailsClassOfShares"
+              formControlName="shareDetailsNoOfShares"
               class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm">
-              <option value>Select Class of Shares</option>
-              <option value="Ordinary">Ordinary</option>
-              <option value="Preference">Preference</option>
-              <option value="Ordinary Class 1">Ordinary Class 1</option>
-              <option value="Ordinary Class 10">Ordinary Class 10</option>
-              <option value="Ordinary12">Ordinary 12</option>
+              <option value disabled selected>Select Class of Shares</option>
+              <option
+                *ngFor="let share of shareholder.shareDetails"
+                [value]="share.share_class || share.shareDetailsNoOfShares">
+                {{ share.share_class || share.shareDetailsClassOfShares }}
+              </option>
             </select>
 
             <!-- Number of Shares Input -->
