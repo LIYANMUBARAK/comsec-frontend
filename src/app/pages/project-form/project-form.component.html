@@ -2569,6 +2569,68 @@
                         </div>
                       </div>
                     </div>
+
+                    <div class="py-10">
+                      <h3
+                        class="text-2xl font-semibold leading-none tracking-tight mb-4">
+                        Invited Shareholders
+                      </h3>
+                      <p class="text-sm text-muted-foreground">
+                        Here are the details on invited Shareholders
+                      </p>
+                      <table class="w-full caption-bottom text-sm">
+                        <thead class="[&_tr]:border-b">
+                          <tr
+                            class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                            <th
+                              class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                              <label
+                                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                for="n">
+                                Name
+                              </label>
+                            </th>
+                            <th
+                              class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                              <label
+                                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                for="e">
+                                Email
+                              </label>
+                            </th>
+                            <th
+                              class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                              <label
+                                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                for="s">
+                                Share Details
+                              </label>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody class="[&_tr:last-child]:border-0">
+                          <tr
+                            class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+                            *ngFor="let data of invitedShareholders">
+                            <td
+                              class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                              {{data.name}}
+                            </td>
+                            <td
+                              class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                              {{data.email}}
+                            </td>
+                            <td
+                              class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                              <button class="h-10 px-4 py-2 hover:bg-accent"
+                                (click)="viewShareDetails(data)">View
+                                Shares</button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
                     <div *ngIf="!isInvited"
                       class="flex items-center space-x-2 py-6">
                       <input
@@ -2976,343 +3038,341 @@
                               class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{
                               director.phone || '-' }}</td>
                             <td
-                              class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                              <td
-                                class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                                <button
-                                  class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-transparent hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
-                                  (click)="openDirectorEditModal(director)">
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="lucide lucide-pencil">
-                                    <path
-                                      d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
-                                    <path d="m15 5 4 4"></path>
-                                  </svg>
-                                </button>
+                              class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                              <button
+                                class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-transparent hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+                                (click)="openDirectorEditModal(director)">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="24"
+                                  height="24"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  class="lucide lucide-pencil">
+                                  <path
+                                    d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
+                                  <path d="m15 5 4 4"></path>
+                                </svg>
+                              </button>
 
-                              </td>
-                              <td
-                                class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                                <button
-                                  (click)="OnDeleteDirectorInfo(director._id)"
-                                  class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-10 px-4 py-2">
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="lucide lucide-trash2">
-                                    <path d="M3 6h18"></path>
-                                    <path
-                                      d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
-                                    <path
-                                      d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-                                    <line x1="10" x2="10" y1="11"
-                                      y2="17"></line>
-                                    <line x1="14" x2="14" y1="11"
-                                      y2="17"></line>
-                                  </svg>
-                                </button>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        <app-director-edit-modal
-                          [director]="selectedDirector"
-                          [isOpen]="isDirectorEditModalOpen"
-                          (closeDirectorEditModal)="closeDirectorEditModal()"
-                          (directorUpdated)="onDirectorUpdated($event)">
-                        </app-director-edit-modal>
-                      </div>
+                            </td>
+                            <td
+                              class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                              <button
+                                (click)="OnDeleteDirectorInfo(director._id)"
+                                class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-10 px-4 py-2">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="24"
+                                  height="24"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  class="lucide lucide-trash2">
+                                  <path d="M3 6h18"></path>
+                                  <path
+                                    d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                                  <path
+                                    d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                                  <line x1="10" x2="10" y1="11"
+                                    y2="17"></line>
+                                  <line x1="14" x2="14" y1="11"
+                                    y2="17"></line>
+                                </svg>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <app-director-edit-modal
+                        [director]="selectedDirector"
+                        [isOpen]="isDirectorEditModalOpen"
+                        (closeDirectorEditModal)="closeDirectorEditModal()"
+                        (directorUpdated)="onDirectorUpdated($event)">
+                      </app-director-edit-modal>
                     </div>
-                    <div
-                      role="radiogroup"
-                      aria-required="false"
-                      dir="ltr"
-                      class="grid gap-2"
-                      tabindex="0"
-                      style="outline: none">
-                      <div class="flex items-center space-x-2 py-6">
-                        <input
-                          type="radio"
-                          id="r1"
-                          name="directorType"
-                          value="self"
-                          [checked]="directorsInfoOpen"
-                          (click)="toggleDirectorsInfo()"
-                          class="h-4 w-4 rounded border-2 border-gray-400 bg-white 
+                  </div>
+                  <div
+                    role="radiogroup"
+                    aria-required="false"
+                    dir="ltr"
+                    class="grid gap-2"
+                    tabindex="0"
+                    style="outline: none">
+                    <div class="flex items-center space-x-2 py-6">
+                      <input
+                        type="radio"
+                        id="r1"
+                        name="directorType"
+                        value="self"
+                        [checked]="directorsInfoOpen"
+                        (click)="toggleDirectorsInfo()"
+                        class="h-4 w-4 rounded border-2 border-gray-400 bg-white 
       checked:border-blue-600 checked:bg-blue-600 
       hover:border-blue-500 cursor-pointer
       focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
       transition-colors duration-200" />
-                        <label
-                          for="r1"
-                          class="font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-2xl">
-                          Fill in all the information for this Director
-                        </label>
-                      </div>
-                      <div *ngIf="directorsInfoOpen">
-                        <div
-                          class="rounded-lg border bg-card text-card-foreground shadow-sm">
-                          <div class="flex flex-col space-y-1.5 p-6">
-                            <h3
-                              class="text-2xl font-semibold leading-none tracking-tight">
-                              Directors
-                            </h3>
-                            <p class="text-sm text-muted-foreground">
-                              Please enter information on Directors
-                            </p>
-                          </div>
-                          <div class="p-6 pt-0 space-y-6">
-                            <form
-                              class="space-y-8"
-                              [formGroup]="directorInformationForm"
-                              (ngSubmit)="directorFormSubmission()">
-                              <div class="relative w-full overflow-auto">
-                                <table class="w-full caption-bottom text-sm">
-                                  <thead class="[&_tr]:border-b">
-                                    <tr
-                                      class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                                      <th
-                                        class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                      <label
+                        for="r1"
+                        class="font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-2xl">
+                        Fill in all the information for this Director
+                      </label>
+                    </div>
+                    <div *ngIf="directorsInfoOpen">
+                      <div
+                        class="rounded-lg border bg-card text-card-foreground shadow-sm">
+                        <div class="flex flex-col space-y-1.5 p-6">
+                          <h3
+                            class="text-2xl font-semibold leading-none tracking-tight">
+                            Directors
+                          </h3>
+                          <p class="text-sm text-muted-foreground">
+                            Please enter information on Directors
+                          </p>
+                        </div>
+                        <div class="p-6 pt-0 space-y-6">
+                          <form
+                            class="space-y-8"
+                            [formGroup]="directorInformationForm"
+                            (ngSubmit)="directorFormSubmission()">
+                            <div class="relative w-full overflow-auto">
+                              <table class="w-full caption-bottom text-sm">
+                                <thead class="[&_tr]:border-b">
+                                  <tr
+                                    class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                    <th
+                                      class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                                      <label
+                                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                        for="type">
+                                        Person/Company
+                                      </label>
+                                    </th>
+                                    <th
+                                      *ngIf="directorInformationForm.get('type')?.value === 'person'"
+                                      class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                                      <label
+                                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                        for="surname">
+                                        Surname
+                                      </label>
+                                    </th>
+                                    <th
+                                      class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                                      <label
+                                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                        for="name">
+                                        {{
+                                        directorInformationForm.get('type')?.value
+                                        === 'person' ? 'Name' : 'Company Name'
+                                        }}
+                                      </label>
+                                    </th>
+                                    <th
+                                      *ngIf="directorInformationForm.get('type')?.value === 'person'"
+                                      class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                                      <label
+                                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                        for="chineeseName">
+                                        Chinese Name
+                                      </label>
+                                    </th>
+                                    <th
+                                      class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                                      <label
+                                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                        for="idNo">
+                                        {{
+                                        directorInformationForm.get('type')?.value
+                                        === 'person' ? 'ID/Passport No.' :
+                                        'Company No.' }} / Upload a Copy
+                                      </label>
+                                    </th>
+                                  </tr>
+                                </thead>
+                                <tbody class="[&_tr:last-child]:border-0">
+                                  <tr
+                                    class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                    <td
+                                      class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                                      <div class="space-y-2">
                                         <label
-                                          class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                          for="type">
-                                          Person/Company
+                                          class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 inline-flex items-center gap-2">
+                                          <span>Select User Type:</span>
                                         </label>
-                                      </th>
-                                      <th
-                                        *ngIf="directorInformationForm.get('type')?.value === 'person'"
-                                        class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
-                                        <label
-                                          class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                          for="surname">
-                                          Surname
-                                        </label>
-                                      </th>
-                                      <th
-                                        class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
-                                        <label
-                                          class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                          for="name">
-                                          {{
-                                          directorInformationForm.get('type')?.value
-                                          === 'person' ? 'Name' : 'Company Name'
+                                        <div role="radiogroup"
+                                          class="flex justify-start items-center gap-5">
+                                          <div
+                                            class="space-y-1 flex items-center">
+                                            <label
+                                              class="flex items-center gap-2">
+                                              <input type="radio"
+                                                formControlName="type"
+                                                class="bg-transparent hidden peer"
+                                                value="person" />
+                                              <span
+                                                class="w-5 h-5 border rounded-full flex items-center justify-center peer-checked:bg-blue-600 peer-checked:border-transparent">
+                                                <span
+                                                  class="w-3 h-3 rounded-full bg-white peer-checked:block hidden"></span>
+                                              </span>
+                                              Person
+                                            </label>
+                                          </div>
+                                          <div
+                                            class="space-y-1 flex items-center">
+                                            <label
+                                              class="flex items-center gap-2">
+                                              <input type="radio"
+                                                formControlName="type"
+                                                class="bg-transparent hidden peer"
+                                                value="company" />
+                                              <span
+                                                class="w-5 h-5 border rounded-full flex items-center justify-center peer-checked:bg-blue-600 peer-checked:border-transparent">
+                                                <span
+                                                  class="w-3 h-3 rounded-full bg-white peer-checked:block hidden"></span>
+                                              </span>
+                                              Company
+                                            </label>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </td>
+                                    <td
+                                      *ngIf="directorInformationForm.get('type')?.value === 'person'"
+                                      class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                                      <div class="space-y-2">
+                                        <input
+                                          class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                          placeholder="Surname Eg: Bond"
+                                          formControlName="surname" />
+                                        <div class="error-message"
+                                          *ngIf="getErrorMessage4('surname')">
+                                          {{ getErrorMessage4("surname") }}
+                                        </div>
+                                      </div>
+                                    </td>
+                                    <td
+                                      class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                                      <div class="space-y-2">
+                                        <input
+                                          class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                          [placeholder]="directorInformationForm.get('type')?.value === 'person' ? 'Name Eg: James' : 'Company Name'"
+                                          formControlName="name" />
+                                        <div class="error-message"
+                                          *ngIf="getErrorMessage4('name')">
+                                          {{ getErrorMessage4("name") }}
+                                        </div>
+                                      </div>
+                                    </td>
+                                    <td
+                                      *ngIf="directorInformationForm.get('type')?.value === 'person'"
+                                      class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                                      <div class="space-y-2">
+                                        <input
+                                          class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                          placeholder="Chinese Name (optional)"
+                                          formControlName="chineeseName" />
+                                        <div class="error-message"
+                                          *ngIf="getErrorMessage4('chineeseName')">
+                                          {{ getErrorMessage4("chineeseName")
                                           }}
-                                        </label>
-                                      </th>
-                                      <th
-                                        *ngIf="directorInformationForm.get('type')?.value === 'person'"
-                                        class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
-                                        <label
-                                          class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                          for="chineeseName">
-                                          Chinese Name
-                                        </label>
-                                      </th>
-                                      <th
-                                        class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
-                                        <label
-                                          class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                          for="idNo">
-                                          {{
-                                          directorInformationForm.get('type')?.value
-                                          === 'person' ? 'ID/Passport No.' :
-                                          'Company No.' }} / Upload a Copy
-                                        </label>
-                                      </th>
-                                    </tr>
-                                  </thead>
-                                  <tbody class="[&_tr:last-child]:border-0">
-                                    <tr
-                                      class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                                      <td
-                                        class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                                        <div class="space-y-2">
-                                          <label
-                                            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 inline-flex items-center gap-2">
-                                            <span>Select User Type:</span>
-                                          </label>
-                                          <div role="radiogroup"
-                                            class="flex justify-start items-center gap-5">
-                                            <div
-                                              class="space-y-1 flex items-center">
-                                              <label
-                                                class="flex items-center gap-2">
-                                                <input type="radio"
-                                                  formControlName="type"
-                                                  class="bg-transparent hidden peer"
-                                                  value="person" />
-                                                <span
-                                                  class="w-5 h-5 border rounded-full flex items-center justify-center peer-checked:bg-blue-600 peer-checked:border-transparent">
-                                                  <span
-                                                    class="w-3 h-3 rounded-full bg-white peer-checked:block hidden"></span>
-                                                </span>
-                                                Person
-                                              </label>
-                                            </div>
-                                            <div
-                                              class="space-y-1 flex items-center">
-                                              <label
-                                                class="flex items-center gap-2">
-                                                <input type="radio"
-                                                  formControlName="type"
-                                                  class="bg-transparent hidden peer"
-                                                  value="company" />
-                                                <span
-                                                  class="w-5 h-5 border rounded-full flex items-center justify-center peer-checked:bg-blue-600 peer-checked:border-transparent">
-                                                  <span
-                                                    class="w-3 h-3 rounded-full bg-white peer-checked:block hidden"></span>
-                                                </span>
-                                                Company
-                                              </label>
-                                            </div>
-                                          </div>
                                         </div>
-                                      </td>
-                                      <td
-                                        *ngIf="directorInformationForm.get('type')?.value === 'person'"
-                                        class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                                      </div>
+                                    </td>
+                                    <td
+                                      class="p-4 align-middle [&:has([role=checkbox])]:pr-0 space-y-6">
+                                      <div class="space-y-2">
+                                        <input
+                                          class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                          [placeholder]="directorInformationForm.get('type')?.value === 'person' ? 'ID No. Eg: S313XX31X' : 'Company No. Eg: S313XX31X'"
+                                          formControlName="idNo" />
+                                        <div class="error-message"
+                                          *ngIf="getErrorMessage4('idNo')">
+                                          {{ getErrorMessage4("idNo") }}
+                                        </div>
+                                      </div>
+                                      <div class="space-y-2">
+                                        <input
+                                          class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:me-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                                          placeholder="Upload a Copy"
+                                          type="file"
+                                          accept="image/*"
+                                          formControlName="idProof"
+                                          (change)="imagePreviewOnDirectorsIDProof($event)" />
+                                        <div class="error-message"
+                                          *ngIf="getErrorMessage4('idProof')">
+                                          {{ getErrorMessage4('idProof') }}
+                                        </div>
+                                        <div *ngIf="imagePreviewDirectorsId"
+                                          class="mt-4">
+                                          <img [src]="imagePreviewDirectorsId"
+                                            alt="ID Proof Preview"
+                                            class="h-32 w-32 rounded-md border" />
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div class="relative w-full">
+                              <table class="w-full caption-bottom text-sm">
+                                <thead class="[&amp;_tr]:border-b">
+                                  <tr
+                                    class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                    <th
+                                      class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                      <label
+                                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                        for="address">Address / Upload a
+                                        Copy</label>
+                                    </th>
+                                    <th
+                                      class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                      <label
+                                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                        for="email">Email</label>
+                                    </th>
+                                    <th
+                                      class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                      <label
+                                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                        for="phone">Phone</label>
+                                    </th>
+                                  </tr>
+                                </thead>
+                                <tbody class="[&amp;_tr:last-child]:border-0">
+                                  <tr
+                                    class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                    <td
+                                      class="p-2 align-middle [&amp;:has([role=checkbox])]:pr-0 space-y-6">
+                                      <div class="space-y-3">
+                                        <!-- Address Input -->
                                         <div class="space-y-2">
                                           <input
-                                            class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                            placeholder="Surname Eg: Bond"
-                                            formControlName="surname" />
-                                          <div class="error-message"
-                                            *ngIf="getErrorMessage4('surname')">
-                                            {{ getErrorMessage4("surname") }}
+                                            class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                            placeholder="Flat / Floor / Block"
+                                            formControlName="address"
+                                            id="address"
+                                            name="address"
+                                            value />
+                                          <div
+                                            *ngIf="(directorInformationForm.get('address')?.touched || directorInformationForm.get('address')?.dirty) && directorInformationForm.get('address')?.invalid"
+                                            class="error-message">
+                                            <small>{{
+                                              getErrorMessage4("address")
+                                              }}</small>
                                           </div>
                                         </div>
-                                      </td>
-                                      <td
-                                        class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                                        <div class="space-y-2">
-                                          <input
-                                            class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                            [placeholder]="directorInformationForm.get('type')?.value === 'person' ? 'Name Eg: James' : 'Company Name'"
-                                            formControlName="name" />
-                                          <div class="error-message"
-                                            *ngIf="getErrorMessage4('name')">
-                                            {{ getErrorMessage4("name") }}
-                                          </div>
-                                        </div>
-                                      </td>
-                                      <td
-                                        *ngIf="directorInformationForm.get('type')?.value === 'person'"
-                                        class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                                        <div class="space-y-2">
-                                          <input
-                                            class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                            placeholder="Chinese Name (optional)"
-                                            formControlName="chineeseName" />
-                                          <div class="error-message"
-                                            *ngIf="getErrorMessage4('chineeseName')">
-                                            {{ getErrorMessage4("chineeseName")
-                                            }}
-                                          </div>
-                                        </div>
-                                      </td>
-                                      <td
-                                        class="p-4 align-middle [&:has([role=checkbox])]:pr-0 space-y-6">
-                                        <div class="space-y-2">
-                                          <input
-                                            class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                            [placeholder]="directorInformationForm.get('type')?.value === 'person' ? 'ID No. Eg: S313XX31X' : 'Company No. Eg: S313XX31X'"
-                                            formControlName="idNo" />
-                                          <div class="error-message"
-                                            *ngIf="getErrorMessage4('idNo')">
-                                            {{ getErrorMessage4("idNo") }}
-                                          </div>
-                                        </div>
-                                        <div class="space-y-2">
-                                          <input
-                                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:me-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                                            placeholder="Upload a Copy"
-                                            type="file"
-                                            accept="image/*"
-                                            formControlName="idProof"
-                                            (change)="imagePreviewOnDirectorsIDProof($event)" />
-                                          <div class="error-message"
-                                            *ngIf="getErrorMessage4('idProof')">
-                                            {{ getErrorMessage4('idProof') }}
-                                          </div>
-                                          <div *ngIf="imagePreviewDirectorsId"
-                                            class="mt-4">
-                                            <img [src]="imagePreviewDirectorsId"
-                                              alt="ID Proof Preview"
-                                              class="h-32 w-32 rounded-md border" />
-                                          </div>
-                                        </div>
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </div>
-                              <div class="relative w-full">
-                                <table class="w-full caption-bottom text-sm">
-                                  <thead class="[&amp;_tr]:border-b">
-                                    <tr
-                                      class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                                      <th
-                                        class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                                        <label
-                                          class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                          for="address">Address / Upload a
-                                          Copy</label>
-                                      </th>
-                                      <th
-                                        class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                                        <label
-                                          class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                          for="email">Email</label>
-                                      </th>
-                                      <th
-                                        class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                                        <label
-                                          class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                          for="phone">Phone</label>
-                                      </th>
-                                    </tr>
-                                  </thead>
-                                  <tbody class="[&amp;_tr:last-child]:border-0">
-                                    <tr
-                                      class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                                      <td
-                                        class="p-2 align-middle [&amp;:has([role=checkbox])]:pr-0 space-y-6">
-                                        <div class="space-y-3">
-                                          <!-- Address Input -->
-                                          <div class="space-y-2">
-                                            <input
-                                              class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                              placeholder="Flat / Floor / Block"
-                                              formControlName="address"
-                                              id="address"
-                                              name="address"
-                                              value />
-                                            <div
-                                              *ngIf="(directorInformationForm.get('address')?.touched || directorInformationForm.get('address')?.dirty) && directorInformationForm.get('address')?.invalid"
-                                              class="error-message">
-                                              <small>{{
-                                                getErrorMessage4("address")
-                                                }}</small>
-                                            </div>
-                                          </div>
 
-                                          <!-- <div class="space-y-2">
+                                        <!-- <div class="space-y-2">
                                         <input
                                           class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                           placeholder="Building"
@@ -3366,301 +3426,289 @@
                                           name="presentorCountry"
                                           value="Hong Kong" />
                                       </div> -->
+                                      </div>
+                                      <div class="space-y-3"
+                                        *ngIf="directorInformationForm.get('type')?.value !== 'company'">
+                                        <input
+                                          class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:me-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                                          placeholder="Upload a Copy"
+                                          type="file"
+                                          name="addressProof"
+                                          formControlName="addressProof"
+                                          (change)="imagePreviewOnDirectorsAddressProof($event)" />
+                                        <div class="error-message"
+                                          *ngIf="getErrorMessage4('addressProof')">
+                                          {{ getErrorMessage4("addressProof")
+                                          }}
                                         </div>
-                                        <div class="space-y-3"
-                                          *ngIf="directorInformationForm.get('type')?.value !== 'company'">
+                                        <div
+                                          *ngIf="imagePreviewDirectorsAddressProof"
+                                          class="mt-2">
+                                          <img
+                                            [src]="imagePreviewDirectorsAddressProof"
+                                            alt="Address Proof Preview"
+                                            class="h-20 w-20 object-cover rounded-md" />
+                                        </div>
+                                      </div>
+
+                                    </td>
+                                    <td colspan="2" class="p-4 align-middle">
+                                      <div
+                                        class="flex flex-col sm:flex-row gap-4">
+                                        <!-- Email Input -->
+                                        <div class="w-full">
                                           <input
-                                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:me-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                                            placeholder="Upload a Copy"
-                                            type="file"
-                                            name="addressProof"
-                                            formControlName="addressProof"
-                                            (change)="imagePreviewOnDirectorsAddressProof($event)" />
-                                          <div class="error-message"
-                                            *ngIf="getErrorMessage4('addressProof')">
-                                            {{ getErrorMessage4("addressProof")
-                                            }}
+                                            class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                                            placeholder="Eg: email1@gmail.com"
+                                            id="email"
+                                            type="email"
+                                            name="email"
+                                            formControlName="email" />
+                                          <div
+                                            class="error-message text-danger"
+                                            *ngIf="getErrorMessage4('email')">
+                                            {{ getErrorMessage4("email") }}
+                                          </div>
+                                        </div>
+
+                                        <!-- Phone Input -->
+                                        <div class="w-full">
+                                          <div class="flex relative">
+                                            <button
+                                              class="items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border border-input bg-transparent hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 flex gap-1 rounded-e-none rounded-s-lg pr-1 pl-3"
+                                              type="button"
+                                              aria-haspopup="dialog"
+                                              aria-expanded="false"
+                                              (click)="toggleDropdown('telephone4')">
+                                              <span
+                                                class="flex h-4 w-6 overflow-hidden rounded-sm bg-foreground/20"
+                                                *ngIf="!dropdowns['telephone4'].selected">
+                                                <svg viewBox="0 0.5 21 14"
+                                                  xmlns="http://www.w3.org/2000/svg">
+                                                  <title>HK</title>
+                                                  <g fill="none"
+                                                    fill-rule="evenodd">
+                                                    <path fill="#FFF"
+                                                      d="M0 0h21v15H0z"></path>
+                                                    <path fill="#ee1c25"
+                                                      d="M0 0h21v15H0z"></path>
+                                                  </g>
+                                                </svg>
+                                              </span>
+                                              <p
+                                                *ngIf="dropdowns['telephone4'].selected">{{
+                                                dropdowns['telephone4'].selected
+                                                }}</p>
+                                            </button>
+                                            <input
+                                              class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-s-none rounded-e-lg"
+                                              autocomplete="tel"
+                                              placeholder="Enter a phone number"
+                                              formControlName="phone"
+                                              type="tel"
+                                              (keypress)="onlyNumber($event)" />
+                                            <ul
+                                              *ngIf="dropdowns['telephone4'].isOpen"
+                                              class="absolute left-0 mt-2 w-40 bg-white border border-gray-200 rounded shadow-lg z-50 top-8">
+                                              <li
+                                                *ngFor="let item of countries"
+                                                (click)="selectItem('telephone4', item.code)"
+                                                class="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                                                ({{ item.code }}) {{ item.name
+                                                }}
+                                              </li>
+                                            </ul>
                                           </div>
                                           <div
-                                            *ngIf="imagePreviewDirectorsAddressProof"
-                                            class="mt-2">
-                                            <img
-                                              [src]="imagePreviewDirectorsAddressProof"
-                                              alt="Address Proof Preview"
-                                              class="h-20 w-20 object-cover rounded-md" />
+                                            class="error-message text-danger"
+                                            *ngIf="getErrorMessage4('phone')">
+                                            {{ getErrorMessage4("phone") }}
                                           </div>
                                         </div>
-
-                                      </td>
-                                      <td colspan="2" class="p-4 align-middle">
-                                        <div
-                                          class="flex flex-col sm:flex-row gap-4">
-                                          <!-- Email Input -->
-                                          <div class="w-full">
-                                            <input
-                                              class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                                              placeholder="Eg: email1@gmail.com"
-                                              id="email"
-                                              type="email"
-                                              name="email"
-                                              formControlName="email" />
-                                            <div
-                                              class="error-message text-danger"
-                                              *ngIf="getErrorMessage4('email')">
-                                              {{ getErrorMessage4("email") }}
-                                            </div>
-                                          </div>
-
-                                          <!-- Phone Input -->
-                                          <div class="w-full">
-                                            <div class="flex relative">
-                                              <button
-                                                class="items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border border-input bg-transparent hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 flex gap-1 rounded-e-none rounded-s-lg pr-1 pl-3"
-                                                type="button"
-                                                aria-haspopup="dialog"
-                                                aria-expanded="false"
-                                                (click)="toggleDropdown('telephone4')">
-                                                <span
-                                                  class="flex h-4 w-6 overflow-hidden rounded-sm bg-foreground/20"
-                                                  *ngIf="!dropdowns['telephone4'].selected">
-                                                  <svg viewBox="0 0.5 21 14"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <title>HK</title>
-                                                    <g fill="none"
-                                                      fill-rule="evenodd">
-                                                      <path fill="#FFF"
-                                                        d="M0 0h21v15H0z"></path>
-                                                      <path fill="#ee1c25"
-                                                        d="M0 0h21v15H0z"></path>
-                                                    </g>
-                                                  </svg>
-                                                </span>
-                                                <p
-                                                  *ngIf="dropdowns['telephone4'].selected">{{
-                                                  dropdowns['telephone4'].selected
-                                                  }}</p>
-                                              </button>
-                                              <input
-                                                class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-s-none rounded-e-lg"
-                                                autocomplete="tel"
-                                                placeholder="Enter a phone number"
-                                                formControlName="phone"
-                                                type="tel"
-                                                (keypress)="onlyNumber($event)" />
-                                              <ul
-                                                *ngIf="dropdowns['telephone4'].isOpen"
-                                                class="absolute left-0 mt-2 w-40 bg-white border border-gray-200 rounded shadow-lg z-50 top-8">
-                                                <li
-                                                  *ngFor="let item of countries"
-                                                  (click)="selectItem('telephone4', item.code)"
-                                                  class="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                                                  ({{ item.code }}) {{ item.name
-                                                  }}
-                                                </li>
-                                              </ul>
-                                            </div>
-                                            <div
-                                              class="error-message text-danger"
-                                              *ngIf="getErrorMessage4('phone')">
-                                              {{ getErrorMessage4("phone") }}
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </div>
-                              <div>
-                                <button
-                                  class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-white h-10 px-4 py-2 cursor-pointer"
-                                  type="submit"
-                                  [disabled]="isDirectorLoading">
-                                  <span *ngIf="isDirectorLoading" class="mr-2">
-                                    <svg class="animate-spin h-4 w-4 text-white"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      fill="none" viewBox="0 0 24 24">
-                                      <circle class="opacity-25" cx="12" cy="12"
-                                        r="10" stroke="currentColor"
-                                        stroke-width="4"></circle>
-                                      <path class="opacity-75"
-                                        fill="currentColor"
-                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                    </svg>
-                                  </span>
-                                  {{ isDirectorLoading ? 'Processing...' :
-                                  'Add Director' }}
-                                </button>
-                              </div>
-                            </form>
-                          </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div>
+                              <button
+                                class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-white h-10 px-4 py-2 cursor-pointer"
+                                type="submit"
+                                [disabled]="isDirectorLoading">
+                                <span *ngIf="isDirectorLoading" class="mr-2">
+                                  <svg class="animate-spin h-4 w-4 text-white"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12"
+                                      r="10" stroke="currentColor"
+                                      stroke-width="4"></circle>
+                                    <path class="opacity-75"
+                                      fill="currentColor"
+                                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                  </svg>
+                                </span>
+                                {{ isDirectorLoading ? 'Processing...' :
+                                'Add Director' }}
+                              </button>
+                            </div>
+                          </form>
                         </div>
                       </div>
+                    </div>
 
-                      <div class="py-10">
-                        <h3
-                          class="text-2xl font-semibold leading-none tracking-tight mb-4">
-                          Invited Directors
-                        </h3>
-                        <p class="text-sm text-muted-foreground">
-                          Here are the details on invited Directors
-                        </p>
-                        <table class="w-full caption-bottom text-sm">
-                          <thead class="[&_tr]:border-b">
-                            <tr
-                              class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                              <th
-                                class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
-                                <label
-                                  class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                  for="n">
-                                  Name
-                                </label>
-                              </th>
-                              <th
-                                class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
-                                <label
-                                  class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                  for="e">
-                                  Email
-                                </label>
-                              </th>
-                              <th
-                                class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
-                                <label
-                                  class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                  for="s">
-                                  Status
-                                </label>
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody class="[&_tr:last-child]:border-0">
-                            <tr
-                              class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
-                              *ngFor="let data of invitedDirectors">
-                              <td
-                                class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                                {{data.name}}
-                              </td>
-                              <td
-                                class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                                {{data.email}}
-                              </td>
-                              <td
-                                class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                                {{data.status}}
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div *ngIf="!isInvited"
-                        class="flex items-center space-x-2 py-6">
-                        <input
-                          type="radio"
-                          id="r2"
-                          name="directorInviteType"
-                          value="invite"
-                          [checked]="directorInvateOpen"
-                          (click)="openDirectorInvateForm()"
-                          class="h-4 w-4 rounded border-2 border-gray-400 bg-white 
+                    <div class="py-10">
+                      <h3
+                        class="text-2xl font-semibold leading-none tracking-tight mb-4">
+                        Invited Directors
+                      </h3>
+                      <p class="text-sm text-muted-foreground">
+                        Here are the details on invited Directors
+                      </p>
+                      <table class="w-full caption-bottom text-sm">
+                        <thead class="[&_tr]:border-b">
+                          <tr
+                            class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                            <th
+                              class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                              <label
+                                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                for="n">
+                                Name
+                              </label>
+                            </th>
+                            <th
+                              class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                              <label
+                                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                for="e">
+                                Email
+                              </label>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody class="[&_tr:last-child]:border-0">
+                          <tr
+                            class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+                            *ngFor="let data of invitedDirectors">
+                            <td
+                              class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                              {{data.name}}
+                            </td>
+                            <td
+                              class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                              {{data.email}}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div *ngIf="!isInvited"
+                      class="flex items-center space-x-2 py-6">
+                      <input
+                        type="radio"
+                        id="r2"
+                        name="directorInviteType"
+                        value="invite"
+                        [checked]="directorInvateOpen"
+                        (click)="openDirectorInvateForm()"
+                        class="h-4 w-4 rounded border-2 border-gray-400 bg-white 
       checked:border-blue-600 checked:bg-blue-600 
       hover:border-blue-500 cursor-pointer
       focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
       transition-colors duration-200" />
-                        <label
-                          for="r2"
-                          class="font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-2xl">
-                          Invite a Director to fill in the details.
-                        </label>
-                      </div>
-                      <div *ngIf="directorInvateOpen">
-                        <div
-                          class="rounded-lg border bg-card text-card-foreground shadow-sm">
-                          <div class="flex flex-col space-y-1.5 p-6">
-                            <h3
-                              class="text-2xl font-semibold leading-none tracking-tight">
-                              Invite Director
-                            </h3>
-                            <p class="text-sm text-muted-foreground">
-                              Please enter information to invite Director to
-                              fill
-                              the form.
-                            </p>
-                          </div>
-                          <div class="p-6 pt-0">
-                            <form [formGroup]="InviteDirectorsForm"
-                              (ngSubmit)="invateDirectorSubmit()"
-                              class="space-y-8">
-                              <div class="relative w-full overflow-auto">
-                                <table class="w-full caption-bottom text-sm">
-                                  <thead class="[&amp;_tr]:border-b">
-                                    <tr
-                                      class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                                      <th
-                                        class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                                        <label
-                                          class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                          for="name">Name</label>
-                                      </th>
-                                      <th
-                                        class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                                        <label
-                                          class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                          for="email">Email</label>
-                                      </th>
-                                    </tr>
-                                  </thead>
-                                  <tbody
-                                    class="[&amp;_tr:last-child]:border-0">
-                                    <tr
-                                      class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                                      <td
-                                        class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                                        <div class="space-y-2">
-                                          <input
-                                            class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                            placeholder="Name Eg: James"
-                                            id="name"
-                                            formControlName="name" />
-                                          <div
-                                            class="error-message"
-                                            *ngIf="
+                      <label
+                        for="r2"
+                        class="font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-2xl">
+                        Invite a Director to fill in the details.
+                      </label>
+                    </div>
+                    <div *ngIf="directorInvateOpen">
+                      <div
+                        class="rounded-lg border bg-card text-card-foreground shadow-sm">
+                        <div class="flex flex-col space-y-1.5 p-6">
+                          <h3
+                            class="text-2xl font-semibold leading-none tracking-tight">
+                            Invite Director
+                          </h3>
+                          <p class="text-sm text-muted-foreground">
+                            Please enter information to invite Director to
+                            fill
+                            the form.
+                          </p>
+                        </div>
+                        <div class="p-6 pt-0">
+                          <form [formGroup]="InviteDirectorsForm"
+                            (ngSubmit)="invateDirectorSubmit()"
+                            class="space-y-8">
+                            <div class="relative w-full overflow-auto">
+                              <table class="w-full caption-bottom text-sm">
+                                <thead class="[&amp;_tr]:border-b">
+                                  <tr
+                                    class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                    <th
+                                      class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                      <label
+                                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                        for="name">Name</label>
+                                    </th>
+                                    <th
+                                      class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                      <label
+                                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                        for="email">Email</label>
+                                    </th>
+                                  </tr>
+                                </thead>
+                                <tbody
+                                  class="[&amp;_tr:last-child]:border-0">
+                                  <tr
+                                    class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                    <td
+                                      class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                                      <div class="space-y-2">
+                                        <input
+                                          class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                          placeholder="Name Eg: James"
+                                          id="name"
+                                          formControlName="name" />
+                                        <div
+                                          class="error-message"
+                                          *ngIf="
                                               getErrorMessage5('name')
                                             ">
-                                            {{
-                                            getErrorMessage5("name")
-                                            }}
-                                          </div>
+                                          {{
+                                          getErrorMessage5("name")
+                                          }}
                                         </div>
-                                      </td>
-                                      <td
-                                        class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                                        <div class="space-y-2">
-                                          <input
-                                            class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                            placeholder="Eg: xyz@email.com"
-                                            id="email"
-                                            type="email"
-                                            formControlName="email" />
-                                          <div
-                                            class="error-message"
-                                            *ngIf="
+                                      </div>
+                                    </td>
+                                    <td
+                                      class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                                      <div class="space-y-2">
+                                        <input
+                                          class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                          placeholder="Eg: xyz@email.com"
+                                          id="email"
+                                          type="email"
+                                          formControlName="email" />
+                                        <div
+                                          class="error-message"
+                                          *ngIf="
                                               getErrorMessage5('email')
                                             ">
-                                            {{
-                                            getErrorMessage5("email")
-                                            }}
-                                          </div>
+                                          {{
+                                          getErrorMessage5("email")
+                                          }}
                                         </div>
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
 
-                              <!-- <div class="relative w-full overflow-auto">
+                            <!-- <div class="relative w-full overflow-auto">
                               <table class="w-full caption-bottom text-sm">
                                 <thead class="[&amp;_tr]:border-b">
                                   <tr
@@ -3819,335 +3867,335 @@
                               </table>
                             </div> -->
 
-                              <div class="flex justify-end">
-                                <button
-                                  type="submit"
-                                  [disabled]=" isInviteLoading"
-                                  class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-white h-10 px-4 py-2 cursor-pointer">
-                                  <span *ngIf="isInviteLoading" class="mr-2">
-                                    <svg
-                                      class="animate-spin h-4 w-4 text-white"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      fill="none" viewBox="0 0 24 24">
-                                      <circle class="opacity-25" cx="12"
-                                        cy="12"
-                                        r="10" stroke="currentColor"
-                                        stroke-width="4"></circle>
-                                      <path class="opacity-75"
-                                        fill="currentColor"
-                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                    </svg>
-                                  </span>
-                                  {{ isInviteLoading ? 'Processing...' :
-                                  'Submit' }}
-                                </button>
-                              </div>
-                            </form>
-                          </div>
+                            <div class="flex justify-end">
+                              <button
+                                type="submit"
+                                [disabled]=" isInviteLoading"
+                                class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-white h-10 px-4 py-2 cursor-pointer">
+                                <span *ngIf="isInviteLoading" class="mr-2">
+                                  <svg
+                                    class="animate-spin h-4 w-4 text-white"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12"
+                                      cy="12"
+                                      r="10" stroke="currentColor"
+                                      stroke-width="4"></circle>
+                                    <path class="opacity-75"
+                                      fill="currentColor"
+                                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                  </svg>
+                                </span>
+                                {{ isInviteLoading ? 'Processing...' :
+                                'Submit' }}
+                              </button>
+                            </div>
+                          </form>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="p-6 pt-0 flex justify-end items-center">
-                    <button
-                      type="button"
-                      (click)="changeTab(1)"
-                      class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-600 text-white hover:bg-gray-700 h-10 px-4 py-2">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                        height="16" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round"
-                        class="mr-2">
-                        <path d="m15 18-6-6 6-6" />
-                      </svg>
-                      Back
-                    </button>
-                    <button
-                      (click)="changeTab(3)"
-                      class="m-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-red-600 text-white hover:bg-red-700 h-10 px-4 py-2">
-                      Save & Next
-                    </button>
-                  </div>
+                </div>
+                <div class="p-6 pt-0 flex justify-end items-center">
+                  <button
+                    type="button"
+                    (click)="changeTab(1)"
+                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-600 text-white hover:bg-gray-700 h-10 px-4 py-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                      height="16" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round"
+                      class="mr-2">
+                      <path d="m15 18-6-6 6-6" />
+                    </svg>
+                    Back
+                  </button>
+                  <button
+                    (click)="changeTab(3)"
+                    class="m-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-red-600 text-white hover:bg-red-700 h-10 px-4 py-2">
+                    Save & Next
+                  </button>
                 </div>
               </div>
             </div>
           </div>
-          <!-- Director info End -->
-          <!-- Secratort info start -->
-          <div class="container" [ngClass]="{ hidden: activeTabIndex != 3 }">
+        </div>
+        <!-- Director info End -->
+        <!-- Secratort info start -->
+        <div class="container" [ngClass]="{ hidden: activeTabIndex != 3 }">
+          <div
+            data-state="active"
+            data-orientation="horizontal"
+            role="tabpanel"
+            aria-labelledby="radix-:R5f9la:-trigger-CS"
+            id="radix-:R5f9la:-content-CS"
+            tabindex="0"
+            class="mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
             <div
-              data-state="active"
-              data-orientation="horizontal"
-              role="tabpanel"
-              aria-labelledby="radix-:R5f9la:-trigger-CS"
-              id="radix-:R5f9la:-content-CS"
-              tabindex="0"
-              class="mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-              <div
-                class="rounded-lg border bg-card text-card-foreground shadow-sm">
-                <div class="flex flex-col space-y-1.5 p-6">
-                  <h3
-                    class="text-2xl font-semibold leading-none tracking-tight">
-                    Company Secretary
-                  </h3>
-                  <p class="text-sm text-muted-foreground">
-                    Please enter information on Company Secretary
-                  </p>
-                </div>
-                <div class="p-6 pt-0 space-y-6">
-                  <form class="space-y-8" [formGroup]="comapnySecretaryForm"
-                    (ngSubmit)="comapnySecretarySubmission()">
-                    <div
-                      class="grid sm:grid-cols-2 grid-cols-1 items-center gap-6">
-                      <div class="space-y-2">
-                        <label
-                          class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                          for=":rlp:-form-item">TCSP license No:</label><input
-                          class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                          placeholder="TCSP License No..."
-                          id=":rlp:-form-item"
-                          aria-describedby=":rlp:-form-item-description"
-                          aria-invalid="false"
-                          name="tcspLicenseNo"
-                          formControlName="tcspLicenseNo" />
-                        <div class="error-message"
-                          *ngIf="getErrorMessage6('tcspLicenseNo')">
-                          {{ getErrorMessage6('tcspLicenseNo') }}
-                        </div>
-                      </div>
-                      <div class="space-y-2">
-                        <label
-                          class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                          for=":rlq:-form-item">If you do not have License,
-                          Please explain the
-                          reason:</label><input
-                          class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                          placeholder="Write your reason here..."
-                          id=":rlq:-form-item"
-                          aria-describedby=":rlq:-form-item-description"
-                          aria-invalid="false"
-                          name="tcspReason"
-                          formControlName="tcspReason" />
-                        <div class="error-message"
-                          *ngIf="getErrorMessage6('tcspReason')">
-                          {{ getErrorMessage6('tcspReason') }}
-                        </div>
+              class="rounded-lg border bg-card text-card-foreground shadow-sm">
+              <div class="flex flex-col space-y-1.5 p-6">
+                <h3
+                  class="text-2xl font-semibold leading-none tracking-tight">
+                  Company Secretary
+                </h3>
+                <p class="text-sm text-muted-foreground">
+                  Please enter information on Company Secretary
+                </p>
+              </div>
+              <div class="p-6 pt-0 space-y-6">
+                <form class="space-y-8" [formGroup]="comapnySecretaryForm"
+                  (ngSubmit)="comapnySecretarySubmission()">
+                  <div
+                    class="grid sm:grid-cols-2 grid-cols-1 items-center gap-6">
+                    <div class="space-y-2">
+                      <label
+                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        for=":rlp:-form-item">TCSP license No:</label><input
+                        class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        placeholder="TCSP License No..."
+                        id=":rlp:-form-item"
+                        aria-describedby=":rlp:-form-item-description"
+                        aria-invalid="false"
+                        name="tcspLicenseNo"
+                        formControlName="tcspLicenseNo" />
+                      <div class="error-message"
+                        *ngIf="getErrorMessage6('tcspLicenseNo')">
+                        {{ getErrorMessage6('tcspLicenseNo') }}
                       </div>
                     </div>
-                    <div class="relative w-full overflow-x-auto">
-                      <table class="w-full caption-bottom text-sm">
-                        <thead class="[&_tr]:border-b">
-                          <tr
-                            class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                            <th
-                              class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
-                              <label
-                                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                for="type">
-                                Person/Company
-                              </label>
-                            </th>
-                            <th
-                              class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0"
-                              *ngIf="comapnySecretaryForm.get('type')?.value === 'person'">
-                              <label
-                                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                for="surname">
-                                Surname
-                              </label>
-                            </th>
-                            <th
-                              class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
-                              <label
-                                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                for="name">
-                                {{ comapnySecretaryForm.get('type')?.value ===
-                                'person' ? 'Name' : 'Company Name' }}
-                              </label>
-                            </th>
-                            <th
-                              class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0"
-                              *ngIf="comapnySecretaryForm.get('type')?.value === 'person'">
-                              <label
-                                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                for="chineeseName">
-                                Chinese Name
-                              </label>
-                            </th>
-                            <th
-                              class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
-                              <label
-                                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                for="idNo">
-                                {{ comapnySecretaryForm.get('type')?.value ===
-                                'person' ? 'ID/Passport No.' : 'Company No.'
-                                }}
-                                / Upload a Copy
-                              </label>
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody class="[&_tr:last-child]:border-0">
-                          <tr
-                            class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                            <td
-                              class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                              <div role="radiogroup"
-                                class="flex justify-start items-center gap-5">
-                                <div class="space-y-1 flex items-center">
-                                  <label class="flex items-center gap-2">
-                                    <input type="radio" formControlName="type"
-                                      class="bg-transparent hidden peer"
-                                      value="person" />
-                                    <span
-                                      class="w-5 h-5 border rounded-full flex items-center justify-center peer-checked:bg-blue-600 peer-checked:border-transparent">
-                                      <span
-                                        class="w-3 h-3 rounded-full bg-white peer-checked:block hidden"></span>
-                                    </span>
-                                    Person
-                                  </label>
-                                </div>
-                                <div class="space-y-1 flex items-center">
-                                  <label class="flex items-center gap-2">
-                                    <input type="radio" formControlName="type"
-                                      class="bg-transparent hidden peer"
-                                      value="company" />
-                                    <span
-                                      class="w-5 h-5 border rounded-full flex items-center justify-center peer-checked:bg-blue-600 peer-checked:border-transparent">
-                                      <span
-                                        class="w-3 h-3 rounded-full bg-white peer-checked:block hidden"></span>
-                                    </span>
-                                    Company
-                                  </label>
-                                </div>
-                              </div>
-                            </td>
-                            <td
-                              class="p-4 align-middle [&:has([role=checkbox])]:pr-0"
-                              *ngIf="comapnySecretaryForm.get('type')?.value === 'person'">
-                              <div class="space-y-2">
-                                <input
-                                  class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                  placeholder="Surname Eg: Bond"
-                                  formControlName="surname" />
-                                <div class="error-message"
-                                  *ngIf="comapnySecretaryForm.get('surname')?.touched && comapnySecretaryForm.get('surname')?.errors">
-                                  {{ getErrorMessage6('surname') }}
-                                </div>
-                              </div>
-                            </td>
-                            <td
-                              class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                              <div class="space-y-2">
-                                <input
-                                  class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                  [placeholder]="comapnySecretaryForm.get('type')?.value === 'person' ? 'Name Eg: James' : 'Company Name'"
-                                  formControlName="name" />
-                                <div class="error-message"
-                                  *ngIf="comapnySecretaryForm.get('name')?.touched && comapnySecretaryForm.get('name')?.errors">
-                                  {{ getErrorMessage6('name') }}
-                                </div>
-                              </div>
-                            </td>
-                            <td
-                              class="p-4 align-middle [&:has([role=checkbox])]:pr-0"
-                              *ngIf="comapnySecretaryForm.get('type')?.value === 'person'">
-                              <div class="space-y-2">
-                                <input
-                                  class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                  placeholder="Chinese Name (optional)"
-                                  formControlName="chineeseName" />
-                                <div class="error-message"
-                                  *ngIf="comapnySecretaryForm.get('chineeseName')?.touched && comapnySecretaryForm.get('chineeseName')?.errors">
-                                  {{ getErrorMessage6('chineeseName') }}
-                                </div>
-                              </div>
-                            </td>
-                            <td
-                              class="p-4 align-middle [&:has([role=checkbox])]:pr-0 space-y-6">
-                              <div class="space-y-2">
-                                <input
-                                  class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                  [placeholder]="comapnySecretaryForm.get('type')?.value === 'person' ? 'ID No. Eg: S313XX31X' : 'Company No. Eg: S313XX31X'"
-                                  formControlName="idNo" />
-                                <div class="error-message"
-                                  *ngIf="comapnySecretaryForm.get('idNo')?.touched && comapnySecretaryForm.get('idNo')?.errors">
-                                  {{ getErrorMessage6('idNo') }}
-                                </div>
-                              </div>
-                              <div class="space-y-2">
-                                <input
-                                  class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:me-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                                  placeholder="Upload a Copy"
-                                  type="file"
-                                  accept="image/*,application/pdf"
-                                  formControlName="idProof"
-                                  (change)="imagePreviewOnCompanySecretaryIDProof($event)" />
-                                <div class="error-message"
-                                  *ngIf="comapnySecretaryForm.get('idProof')?.touched && comapnySecretaryForm.get('idProof')?.errors">
-                                  {{ getErrorMessage6('idProof') }}
-                                </div>
-                                <div *ngIf="imagePreviewCompanySecretaryId"
-                                  class="mt-4">
-                                  <img [src]="imagePreviewCompanySecretaryId"
-                                    alt="ID Proof Preview"
-                                    class="h-32 w-32 rounded-md border" />
-                                </div>
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
+                    <div class="space-y-2">
+                      <label
+                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        for=":rlq:-form-item">If you do not have License,
+                        Please explain the
+                        reason:</label><input
+                        class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        placeholder="Write your reason here..."
+                        id=":rlq:-form-item"
+                        aria-describedby=":rlq:-form-item-description"
+                        aria-invalid="false"
+                        name="tcspReason"
+                        formControlName="tcspReason" />
+                      <div class="error-message"
+                        *ngIf="getErrorMessage6('tcspReason')">
+                        {{ getErrorMessage6('tcspReason') }}
+                      </div>
                     </div>
-                    <div class="relative w-full">
-                      <table class="w-full caption-bottom text-sm">
-                        <thead class="[&amp;_tr]:border-b">
-                          <tr
-                            class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                            <th
-                              class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                              <label
-                                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                for="address">Address / Upload a Copy</label>
-                            </th>
-                            <th
-                              class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                              <label
-                                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                for="email">Email</label>
-                            </th>
-                            <th
-                              class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                              <label
-                                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                for="phone">Phone</label>
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody class="[&amp;_tr:last-child]:border-0">
-                          <tr
-                            class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                            <td
-                              class="p-2 align-middle [&amp;:has([role=checkbox])]:pr-0 space-y-6">
-                              <div class="space-y-3">
-                                <!-- Address Input -->
-                                <div class="space-y-2">
-                                  <input
-                                    class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                    placeholder="Flat / Floor / Block"
-                                    formControlName="address"
-                                    id="address"
-                                    name="address"
-                                    value />
-                                  <div
-                                    *ngIf="(comapnySecretaryForm.get('address')?.touched || comapnySecretaryForm.get('address')?.dirty) && comapnySecretaryForm.get('address')?.invalid"
-                                    class="error-message">
-                                    <small>{{ getErrorMessage6("address")
-                                      }}</small>
-                                  </div>
+                  </div>
+                  <div class="relative w-full overflow-x-auto">
+                    <table class="w-full caption-bottom text-sm">
+                      <thead class="[&_tr]:border-b">
+                        <tr
+                          class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                          <th
+                            class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                            <label
+                              class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              for="type">
+                              Person/Company
+                            </label>
+                          </th>
+                          <th
+                            class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0"
+                            *ngIf="comapnySecretaryForm.get('type')?.value === 'person'">
+                            <label
+                              class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              for="surname">
+                              Surname
+                            </label>
+                          </th>
+                          <th
+                            class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                            <label
+                              class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              for="name">
+                              {{ comapnySecretaryForm.get('type')?.value ===
+                              'person' ? 'Name' : 'Company Name' }}
+                            </label>
+                          </th>
+                          <th
+                            class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0"
+                            *ngIf="comapnySecretaryForm.get('type')?.value === 'person'">
+                            <label
+                              class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              for="chineeseName">
+                              Chinese Name
+                            </label>
+                          </th>
+                          <th
+                            class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                            <label
+                              class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              for="idNo">
+                              {{ comapnySecretaryForm.get('type')?.value ===
+                              'person' ? 'ID/Passport No.' : 'Company No.'
+                              }}
+                              / Upload a Copy
+                            </label>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody class="[&_tr:last-child]:border-0">
+                        <tr
+                          class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                          <td
+                            class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                            <div role="radiogroup"
+                              class="flex justify-start items-center gap-5">
+                              <div class="space-y-1 flex items-center">
+                                <label class="flex items-center gap-2">
+                                  <input type="radio" formControlName="type"
+                                    class="bg-transparent hidden peer"
+                                    value="person" />
+                                  <span
+                                    class="w-5 h-5 border rounded-full flex items-center justify-center peer-checked:bg-blue-600 peer-checked:border-transparent">
+                                    <span
+                                      class="w-3 h-3 rounded-full bg-white peer-checked:block hidden"></span>
+                                  </span>
+                                  Person
+                                </label>
+                              </div>
+                              <div class="space-y-1 flex items-center">
+                                <label class="flex items-center gap-2">
+                                  <input type="radio" formControlName="type"
+                                    class="bg-transparent hidden peer"
+                                    value="company" />
+                                  <span
+                                    class="w-5 h-5 border rounded-full flex items-center justify-center peer-checked:bg-blue-600 peer-checked:border-transparent">
+                                    <span
+                                      class="w-3 h-3 rounded-full bg-white peer-checked:block hidden"></span>
+                                  </span>
+                                  Company
+                                </label>
+                              </div>
+                            </div>
+                          </td>
+                          <td
+                            class="p-4 align-middle [&:has([role=checkbox])]:pr-0"
+                            *ngIf="comapnySecretaryForm.get('type')?.value === 'person'">
+                            <div class="space-y-2">
+                              <input
+                                class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                placeholder="Surname Eg: Bond"
+                                formControlName="surname" />
+                              <div class="error-message"
+                                *ngIf="comapnySecretaryForm.get('surname')?.touched && comapnySecretaryForm.get('surname')?.errors">
+                                {{ getErrorMessage6('surname') }}
+                              </div>
+                            </div>
+                          </td>
+                          <td
+                            class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                            <div class="space-y-2">
+                              <input
+                                class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                [placeholder]="comapnySecretaryForm.get('type')?.value === 'person' ? 'Name Eg: James' : 'Company Name'"
+                                formControlName="name" />
+                              <div class="error-message"
+                                *ngIf="comapnySecretaryForm.get('name')?.touched && comapnySecretaryForm.get('name')?.errors">
+                                {{ getErrorMessage6('name') }}
+                              </div>
+                            </div>
+                          </td>
+                          <td
+                            class="p-4 align-middle [&:has([role=checkbox])]:pr-0"
+                            *ngIf="comapnySecretaryForm.get('type')?.value === 'person'">
+                            <div class="space-y-2">
+                              <input
+                                class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                placeholder="Chinese Name (optional)"
+                                formControlName="chineeseName" />
+                              <div class="error-message"
+                                *ngIf="comapnySecretaryForm.get('chineeseName')?.touched && comapnySecretaryForm.get('chineeseName')?.errors">
+                                {{ getErrorMessage6('chineeseName') }}
+                              </div>
+                            </div>
+                          </td>
+                          <td
+                            class="p-4 align-middle [&:has([role=checkbox])]:pr-0 space-y-6">
+                            <div class="space-y-2">
+                              <input
+                                class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                [placeholder]="comapnySecretaryForm.get('type')?.value === 'person' ? 'ID No. Eg: S313XX31X' : 'Company No. Eg: S313XX31X'"
+                                formControlName="idNo" />
+                              <div class="error-message"
+                                *ngIf="comapnySecretaryForm.get('idNo')?.touched && comapnySecretaryForm.get('idNo')?.errors">
+                                {{ getErrorMessage6('idNo') }}
+                              </div>
+                            </div>
+                            <div class="space-y-2">
+                              <input
+                                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:me-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                                placeholder="Upload a Copy"
+                                type="file"
+                                accept="image/*,application/pdf"
+                                formControlName="idProof"
+                                (change)="imagePreviewOnCompanySecretaryIDProof($event)" />
+                              <div class="error-message"
+                                *ngIf="comapnySecretaryForm.get('idProof')?.touched && comapnySecretaryForm.get('idProof')?.errors">
+                                {{ getErrorMessage6('idProof') }}
+                              </div>
+                              <div *ngIf="imagePreviewCompanySecretaryId"
+                                class="mt-4">
+                                <img [src]="imagePreviewCompanySecretaryId"
+                                  alt="ID Proof Preview"
+                                  class="h-32 w-32 rounded-md border" />
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="relative w-full">
+                    <table class="w-full caption-bottom text-sm">
+                      <thead class="[&amp;_tr]:border-b">
+                        <tr
+                          class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                          <th
+                            class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                            <label
+                              class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              for="address">Address / Upload a Copy</label>
+                          </th>
+                          <th
+                            class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                            <label
+                              class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              for="email">Email</label>
+                          </th>
+                          <th
+                            class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                            <label
+                              class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              for="phone">Phone</label>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody class="[&amp;_tr:last-child]:border-0">
+                        <tr
+                          class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                          <td
+                            class="p-2 align-middle [&amp;:has([role=checkbox])]:pr-0 space-y-6">
+                            <div class="space-y-3">
+                              <!-- Address Input -->
+                              <div class="space-y-2">
+                                <input
+                                  class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                  placeholder="Flat / Floor / Block"
+                                  formControlName="address"
+                                  id="address"
+                                  name="address"
+                                  value />
+                                <div
+                                  *ngIf="(comapnySecretaryForm.get('address')?.touched || comapnySecretaryForm.get('address')?.dirty) && comapnySecretaryForm.get('address')?.invalid"
+                                  class="error-message">
+                                  <small>{{ getErrorMessage6("address")
+                                    }}</small>
                                 </div>
+                              </div>
 
-                                <!-- <div class="space-y-2">
+                              <!-- <div class="space-y-2">
                               <input
                                 class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                 placeholder="Building"
@@ -4192,139 +4240,139 @@
                               </div>
                             </div> -->
 
-                                <div class="space-y-3"
-                                  *ngIf="comapnySecretaryForm.get('type')?.value !== 'company'">
-                                  <input
-                                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:me-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                                    type="file"
-                                    name="addressProof"
-                                    formControlName="addressProof"
-                                    (change)="imagePreviewOnCompanySecretaryAddressProof($event)" />
-                                  <div class="error-message"
-                                    *ngIf="getErrorMessage6('addressProof')">
-                                    {{ getErrorMessage6("addressProof") }}
-                                  </div>
-                                  <div
-                                    *ngIf="imagePreviewCompanySecretaryAddressProof"
-                                    class="mt-2">
-                                    <img
-                                      [src]="imagePreviewCompanySecretaryAddressProof"
-                                      alt="Address Proof Preview"
-                                      class="h-20 w-20 object-cover rounded-md" />
-                                  </div>
+                              <div class="space-y-3"
+                                *ngIf="comapnySecretaryForm.get('type')?.value !== 'company'">
+                                <input
+                                  class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:me-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                                  type="file"
+                                  name="addressProof"
+                                  formControlName="addressProof"
+                                  (change)="imagePreviewOnCompanySecretaryAddressProof($event)" />
+                                <div class="error-message"
+                                  *ngIf="getErrorMessage6('addressProof')">
+                                  {{ getErrorMessage6("addressProof") }}
+                                </div>
+                                <div
+                                  *ngIf="imagePreviewCompanySecretaryAddressProof"
+                                  class="mt-2">
+                                  <img
+                                    [src]="imagePreviewCompanySecretaryAddressProof"
+                                    alt="Address Proof Preview"
+                                    class="h-20 w-20 object-cover rounded-md" />
                                 </div>
                               </div>
-                            </td>
-                            <td colspan="2" class="p-4 align-middle">
-                              <div class="flex flex-col sm:flex-row gap-4">
-                                <!-- Email Input -->
-                                <div class="w-full">
-                                  <input
-                                    class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                                    placeholder="Eg: email1@gmail.com"
-                                    formControlName="email"
-                                    type="email" />
-                                  <div class="error-message text-danger"
-                                    *ngIf="getErrorMessage6('email')">
-                                    {{ getErrorMessage6("email") }}
-                                  </div>
+                            </div>
+                          </td>
+                          <td colspan="2" class="p-4 align-middle">
+                            <div class="flex flex-col sm:flex-row gap-4">
+                              <!-- Email Input -->
+                              <div class="w-full">
+                                <input
+                                  class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                                  placeholder="Eg: email1@gmail.com"
+                                  formControlName="email"
+                                  type="email" />
+                                <div class="error-message text-danger"
+                                  *ngIf="getErrorMessage6('email')">
+                                  {{ getErrorMessage6("email") }}
                                 </div>
+                              </div>
 
-                                <!-- Phone Input -->
-                                <div class="w-full">
-                                  <div class="flex relative">
-                                    <button
-                                      class="items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border border-input bg-transparent hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 flex gap-1 rounded-e-none rounded-s-lg pr-1 pl-3"
-                                      type="button"
-                                      aria-haspopup="dialog"
-                                      aria-expanded="false"
-                                      (click)="toggleDropdown('telephone5')">
-                                      <span
-                                        class="flex h-4 w-6 overflow-hidden rounded-sm bg-foreground/20"
-                                        *ngIf="!dropdowns['telephone5'].selected">
-                                        <svg viewBox="0 0.5 21 14"
-                                          xmlns="http://www.w3.org/2000/svg">
-                                          <title>HK</title>
-                                          <g fill="none" fill-rule="evenodd">
-                                            <path fill="#FFF"
-                                              d="M0 0h21v15H0z"></path>
-                                            <path fill="#ee1c25"
-                                              d="M0 0h21v15H0z"></path>
-                                          </g>
-                                        </svg>
-                                      </span>
-                                      <p
-                                        *ngIf="dropdowns['telephone5'].selected">{{
-                                        dropdowns['telephone5'].selected
-                                        }}</p>
-                                    </button>
-                                    <input
-                                      class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-s-none rounded-e-lg"
-                                      autocomplete="tel"
-                                      placeholder="Enter a phone number"
-                                      formControlName="phone"
-                                      type="tel"
-                                      (keypress)="onlyNumber($event)" />
-                                    <ul
-                                      *ngIf="dropdowns['telephone5'].isOpen"
-                                      class="absolute left-0 mt-2 w-40 bg-white border border-gray-200 rounded shadow-lg z-50 top-8">
-                                      <li
-                                        *ngFor="let item of countries"
-                                        (click)="selectItem('telephone5', item.code)"
-                                        class="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                                        ({{ item.code }}) {{ item.name }}
-                                      </li>
-                                    </ul>
-                                  </div>
-                                  <div class="error-message text-danger"
-                                    *ngIf="getErrorMessage6('phone')">
-                                    {{ getErrorMessage6("phone") }}
-                                  </div>
+                              <!-- Phone Input -->
+                              <div class="w-full">
+                                <div class="flex relative">
+                                  <button
+                                    class="items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border border-input bg-transparent hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 flex gap-1 rounded-e-none rounded-s-lg pr-1 pl-3"
+                                    type="button"
+                                    aria-haspopup="dialog"
+                                    aria-expanded="false"
+                                    (click)="toggleDropdown('telephone5')">
+                                    <span
+                                      class="flex h-4 w-6 overflow-hidden rounded-sm bg-foreground/20"
+                                      *ngIf="!dropdowns['telephone5'].selected">
+                                      <svg viewBox="0 0.5 21 14"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <title>HK</title>
+                                        <g fill="none" fill-rule="evenodd">
+                                          <path fill="#FFF"
+                                            d="M0 0h21v15H0z"></path>
+                                          <path fill="#ee1c25"
+                                            d="M0 0h21v15H0z"></path>
+                                        </g>
+                                      </svg>
+                                    </span>
+                                    <p
+                                      *ngIf="dropdowns['telephone5'].selected">{{
+                                      dropdowns['telephone5'].selected
+                                      }}</p>
+                                  </button>
+                                  <input
+                                    class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-s-none rounded-e-lg"
+                                    autocomplete="tel"
+                                    placeholder="Enter a phone number"
+                                    formControlName="phone"
+                                    type="tel"
+                                    (keypress)="onlyNumber($event)" />
+                                  <ul
+                                    *ngIf="dropdowns['telephone5'].isOpen"
+                                    class="absolute left-0 mt-2 w-40 bg-white border border-gray-200 rounded shadow-lg z-50 top-8">
+                                    <li
+                                      *ngFor="let item of countries"
+                                      (click)="selectItem('telephone5', item.code)"
+                                      class="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                                      ({{ item.code }}) {{ item.name }}
+                                    </li>
+                                  </ul>
+                                </div>
+                                <div class="error-message text-danger"
+                                  *ngIf="getErrorMessage6('phone')">
+                                  {{ getErrorMessage6("phone") }}
                                 </div>
                               </div>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="flex items-center justify-end">
-                      <button
-                        type="button"
-                        (click)="changeTab(5)"
-                        class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-600 text-white hover:bg-gray-700 h-10 px-4 py-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                          height="16" viewBox="0 0 24 24" fill="none"
-                          stroke="currentColor" stroke-width="2"
-                          stroke-linecap="round" stroke-linejoin="round"
-                          class="mr-2">
-                          <path d="m15 18-6-6 6-6" />
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="flex items-center justify-end">
+                    <button
+                      type="button"
+                      (click)="changeTab(5)"
+                      class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-600 text-white hover:bg-gray-700 h-10 px-4 py-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                        height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round"
+                        class="mr-2">
+                        <path d="m15 18-6-6 6-6" />
+                      </svg>
+                      Back
+                    </button>
+                    <button
+                      type="submit"
+                      [disabled]="isSubmitLoading"
+                      class="m-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-white h-10 px-4 py-2 cursor-pointer">
+                      <span *ngIf="isSubmitLoading" class="mr-2">
+                        <svg class="animate-spin h-4 w-4 text-white"
+                          xmlns="http://www.w3.org/2000/svg" fill="none"
+                          viewBox="0 0 24 24">
+                          <circle class="opacity-25" cx="12" cy="12" r="10"
+                            stroke="currentColor" stroke-width="4"></circle>
+                          <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
-                        Back
-                      </button>
-                      <button
-                        type="submit"
-                        [disabled]="isSubmitLoading"
-                        class="m-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-white h-10 px-4 py-2 cursor-pointer">
-                        <span *ngIf="isSubmitLoading" class="mr-2">
-                          <svg class="animate-spin h-4 w-4 text-white"
-                            xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10"
-                              stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor"
-                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                          </svg>
-                        </span>
-                        {{ isSubmitLoading ? 'Processing...' : 'Submit' }}
-                      </button>
-                    </div>
-                  </form>
-                </div>
+                      </span>
+                      {{ isSubmitLoading ? 'Processing...' : 'Submit' }}
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
-          <!-- Secratort info End -->
         </div>
+        <!-- Secratort info End -->
       </div>
     </div>
   </div>
+</div>

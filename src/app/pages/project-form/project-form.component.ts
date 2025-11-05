@@ -127,6 +127,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
   isLoading = false;
   selectedShareClass: string = '';
   invitedDirectors: any[] = [];
+  invitedShareholders: any[] = [];
 
   selectedShareClass1: string = '';
   selectedUnpaidAmount1: number | null = null;
@@ -575,6 +576,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
     //this.addDefaultShareCapital();
     this.initializeEditShareForm();
     this.getInvideDirectosList()
+    this.getInvitedShareholdersList()
 
     // Subscribe to theme changes
     this.themeService.isDarkTheme$.subscribe((isDark) => {
@@ -2717,6 +2719,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
         this.addressProofPreview = null;
         this.idProofPreview = null;
         this.getShareHoldersList();
+        this.getInvitedShareholdersList()
       },
       error: (error) => {
         console.error('Error occurred during share creation:', error);
@@ -2733,6 +2736,22 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
         });
       },
     });
+  }
+
+  getInvitedShareholdersList() {
+    const userId = localStorage.getItem('userId');
+    const companyId = localStorage.getItem('companyId');
+    if (companyId) {
+      this.companyService.shareholdersInvites(companyId).subscribe({
+        next: (response) => {
+          this.invitedShareholders = response.data;
+          console.log('invited Shareholders', this.invitedShareholders);
+        },
+        error: (error) => {
+          console.error('Error fetching invited Shareholders:', error);
+        }
+      })
+    }
   }
 
   clearInvateShareHoldersForm() {
@@ -3222,7 +3241,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
             timerProgressBar: true,
           });
           this.directorInvateOpen = false;
-
+          this.getInvideDirectosList();
           this.InviteDirectorsForm.reset();
         },
         error: (error) => {

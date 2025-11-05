@@ -233,6 +233,17 @@ updateCurrentStage(payload: any): Observable<any>  {
     );
   }
 
+  shareholdersInvites(companyId:string):Observable<any>{
+    console.log('companyId from holders service', companyId);
+    return this.http.get<any>(`${this.baseUrl}company/getShareholderInvites/${companyId}`).pipe(
+      catchError((error) => {
+        console.error("Shareholders Invite error:", error);
+        const errorMessage = error.error?.message || "Failed to Invite Director.";
+        return throwError(() => new Error(errorMessage));
+      })
+    );
+  }
+
   companySecretaryCreation(data: any): Observable<{ message: string }> {
     return this.http.post<{ message: string }>(`${this.baseUrl}company/companySecretary`, data).pipe(
       catchError((error) => {

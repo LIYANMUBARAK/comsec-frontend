@@ -126,7 +126,7 @@ export class UserDashboardComponent {
   }
 
   get totalPages(): number {
-    return Math.ceil(this.displayedCompanies.length / this.itemsPerPage);
+    return Math.ceil(this.companyIds.length / this.itemsPerPage);
   }
 
   getUserDatas() {
