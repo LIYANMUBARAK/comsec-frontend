@@ -186,6 +186,11 @@ export class UserDashboardComponent {
     this.router.navigate(['/project-form']);
   }
 
+  navigateToCompanyForm() {
+    localStorage.removeItem('companyId');
+    this.router.navigate(['/add-company']);
+  }
+
   // New method to handle resume functionality
   resumeProject(company: any) {
     console.log('Resuming project for company:', company);
