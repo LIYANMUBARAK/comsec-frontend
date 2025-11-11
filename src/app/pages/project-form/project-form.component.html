@@ -1287,10 +1287,12 @@
                                 <td class="p-4 align-middle">{{
                                   share?.total_share || '-' }}</td>
                                 <td class="p-4 align-middle">{{ share?.currency
-                                  || '-' }}</td> <td class="p-4 align-middle">{{
+                                  || '-' }}</td>
+                                <td class="p-4 align-middle">{{
                                   share?.amount_share || '-' }}</td>
                                 <td class="p-4 align-middle">{{
-                                  share?.total_capital_subscribed || '-' }}</td>
+                                  share?.total_share * share?.amount_share ||
+                                  '-' }}</td>
                                 <td class="p-4 align-middle">{{
                                   share?.total_capital_subscribed || '-' }}</td>
                                 <td class="p-4 align-middle">{{
@@ -1918,63 +1920,6 @@
                                   (click)="viewShareDetails(shareholder)">View
                                   Shares</button>
 
-                                <!-- Modal (only shown when isModalOpen is true) -->
-                                <div *ngIf="isViewModalOpen"
-                                  class="fixed inset-0 flex items-center justify-center z-50">
-                                  <div class="fixed inset-0 bg-black opacity-50"
-                                    (click)="closeShareModal()"></div>
-                                  <div
-                                    class="bg-white rounded-lg p-6 max-w-md w-full relative z-10">
-                                    <!-- Close button -->
-                                    <button (click)="closeShareModal()"
-                                      class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
-                                      <!-- X icon -->
-                                    </button>
-
-                                    <!-- Modal content -->
-                                    <h2 class="text-xl font-semibold mb-2">{{
-                                      selectedShareholder.name }} {{
-                                      selectedShareholder.surname }}</h2>
-                                    <p class="text-gray-600 mb-4">Here are the
-                                      share details of {{
-                                      selectedShareholder.name }} {{
-                                      selectedShareholder.surname }}:</p>
-
-                                    <!-- Share details table -->
-                                    <table
-                                      class="min-w-full border border-gray-200 rounded-md">
-                                      <thead class="bg-gray-100">
-                                        <tr>
-                                          <th
-                                            class="text-left py-2 px-4 font-medium text-gray-600 border-b">
-                                            Class of Shares
-                                          </th>
-                                          <th
-                                            class="text-left py-2 px-4 font-medium text-gray-600 border-b">
-                                            No of Shares
-                                          </th>
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        <tr
-                                          *ngFor="let share of selectedShareholder.shareDetails"
-                                          class="hover:bg-gray-50 transition-colors">
-                                          <td class="py-2 px-4 border-b">
-                                            {{ share.shareDetailsClassOfShares
-                                            }}
-                                          </td>
-                                          <td class="py-2 px-4 border-b">
-                                            {{ share.shareDetailsNoOfShares }}
-                                          </td>
-                                        </tr>
-                                      </tbody>
-                                    </table>
-
-                                    <p class="text-center text-gray-600">Share
-                                      Details of {{ selectedShareholder.name }}
-                                      {{ selectedShareholder.surname }}</p>
-                                  </div>
-                                </div>
                               </td>
                               <td class="p-4 align-middle">
                                 <button
@@ -2029,6 +1974,64 @@
                       </app-shareholder-edit-modal>
                     </div>
                   </div>
+
+                  <div *ngIf="isViewModalOpen"
+                    class="fixed inset-0 flex items-center justify-center z-50">
+                    <div class="fixed inset-0 bg-black opacity-50"
+                      (click)="closeShareModal()"></div>
+                    <div
+                      class="bg-white rounded-lg p-6 max-w-md w-full relative z-10">
+                      <!-- Close button -->
+                      <button (click)="closeShareModal()"
+                        class="absolute top-6 right-6 text-gray-500 hover:text-gray-700">
+                        <!-- X icon -->X
+                      </button>
+
+                      <!-- Modal content -->
+                      <h2 class="text-xl font-semibold mb-2">{{
+                        selectedShareholder.name }} {{
+                        selectedShareholder.surname }}</h2>
+                      <p class="text-gray-600 mb-4">Here are the
+                        share details of {{
+                        selectedShareholder.name }} {{
+                        selectedShareholder.surname }}:</p>
+
+                      <!-- Share details table -->
+                      <table
+                        class="min-w-full border border-gray-200 rounded-md">
+                        <thead class="bg-gray-100">
+                          <tr>
+                            <th
+                              class="text-left py-2 px-4 font-medium text-gray-600 border-b">
+                              Class of Shares
+                            </th>
+                            <th
+                              class="text-left py-2 px-4 font-medium text-gray-600 border-b">
+                              No of Shares
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            *ngFor="let share of selectedShareholder.shareDetails"
+                            class="hover:bg-gray-50 transition-colors">
+                            <td class="py-2 px-4 border-b">
+                              {{ share.shareDetailsClassOfShares
+                              }}
+                            </td>
+                            <td class="py-2 px-4 border-b">
+                              {{ share.shareDetailsNoOfShares }}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      <p class="text-center text-gray-600">Share
+                        Details of {{ selectedShareholder.name }}
+                        {{ selectedShareholder.surname }}</p>
+                    </div>
+                  </div>
+
                   <div
                     role="radiogroup"
                     aria-required="false"
@@ -2503,9 +2506,10 @@
                                         [(ngModel)]="row.unpaidAmount"
                                         [ngModelOptions]="{ standalone: true }"
                                         (ngModelChange)="onShareAmountChange($event, i)"
+                                        [max]="row.maxAmount"
+                                        (input)="restrictToMax($event, row.maxAmount)"
                                         placeholder="Enter Number of Shares"
                                         class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" />
-
                                     </td>
 
                                     <td
@@ -2806,6 +2810,8 @@
                                         [(ngModel)]="row.unpaidAmount"
                                         [ngModelOptions]="{ standalone: true }"
                                         (ngModelChange)="onShareAmountChange2($event, i)"
+                                        [max]="row.maxAmount"
+                                        (input)="restrictToMax($event, row.maxAmount)"
                                         placeholder="Enter Number of Shares"
                                         class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" />
                                     </td>

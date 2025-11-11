@@ -109,6 +109,8 @@ export class UserDashboardComponent {
       startIndex,
       startIndex + this.itemsPerPage
     );
+
+    console.log('Displayed Companies............', this.displayedCompanies);
   }
 
   nextPage() {

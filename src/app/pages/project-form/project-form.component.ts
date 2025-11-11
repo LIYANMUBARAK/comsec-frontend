@@ -148,13 +148,13 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
 
 
   // Add these properties to your component class
-  shareRows: { shareClass: string; unpaidAmount: number | null }[] = [
-    { shareClass: '', unpaidAmount: null },
+  shareRows: { shareClass: string; unpaidAmount: number | null, maxAmount: number | null }[] = [
+    { shareClass: '', unpaidAmount: null, maxAmount: null },
   ];
 
   // For second form (if you have another similar table)
-  shareRows2: { shareClass: string; unpaidAmount: number | null }[] = [
-    { shareClass: '', unpaidAmount: null },
+  shareRows2: { shareClass: string; unpaidAmount: number | null, maxAmount: number | null }[] = [
+    { shareClass: '', unpaidAmount: null, maxAmount: null },
   ];
 
   selectedShareUnpaidAmount: any = '';
@@ -569,6 +569,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
     this.initializeAddSharesForm();
     this.initializeSharesHoldersForm();
     this.initializeInvateSharesHoldersForm();
+    this.getInvitedShareholdersList()
     this.initializeDirectorInfoForm();
     this.initializeInvateDirectorForm();
     this.initializeCompanySecretaryForm();
@@ -576,7 +577,6 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
     //this.addDefaultShareCapital();
     this.initializeEditShareForm();
     this.getInvideDirectosList()
-    this.getInvitedShareholdersList()
 
     // Subscribe to theme changes
     this.themeService.isDarkTheme$.subscribe((isDark) => {
@@ -2241,7 +2241,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
         this.currentHolder = formData;
 
         // Reset share rows
-        this.shareRows = [{ shareClass: '', unpaidAmount: null }];
+        this.shareRows = [{ shareClass: '', unpaidAmount: null, maxAmount: null }];
 
         this.initializeSharesHoldersForm();
 
@@ -2606,6 +2606,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
   }
 
   viewShareDetails(shareholder: any) {
+    console.log('Viewing details for shareholder:', shareholder);
     // Set the selected shareholder
     this.selectedShareholder = shareholder;
 
@@ -2744,6 +2745,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
     if (companyId) {
       this.companyService.shareholdersInvites(companyId).subscribe({
         next: (response) => {
+          console.log("working........................")
           this.invitedShareholders = response.data;
           console.log('invited Shareholders', this.invitedShareholders);
         },
@@ -3523,6 +3525,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
     this.shareRows.push({
       shareClass: '',
       unpaidAmount: null,
+      maxAmount: null,
     });
 
   }
@@ -3547,7 +3550,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
       }
     } else {
       // If it's the last row, just clear its values
-      this.shareRows[0] = { shareClass: '', unpaidAmount: null };
+      this.shareRows[0] = { shareClass: '', unpaidAmount: null, maxAmount: null };
       this.shareHoldersForm.patchValue({
         shareDetailsClassOfShares: '',
         shareDetailsNoOfShares: null,
@@ -3561,7 +3564,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
     // Convert to number and handle empty strings
     const numericAmount =
       amount === '' || amount === null ? null : Number(amount);
-
+    alert(numericAmount);
     this.shareRows[index].unpaidAmount = numericAmount;
 
     // Sync the first row to form fields for validation
@@ -3584,15 +3587,16 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
     const selectedShare = this.shareCapitalList.find(
       (share) => share.share_class === selectedClass
     );
-
     // Update the row data
     this.shareRows[index].shareClass = selectedClass;
 
     if (selectedShare) {
       // Auto-populate the unpaid amount from share capital
-      this.shareRows[index].unpaidAmount = selectedShare.unpaid_amount;
+      this.shareRows[index].unpaidAmount = selectedShare.total_share;
+      this.shareRows[index].maxAmount = selectedShare.total_share;
     } else {
       this.shareRows[index].unpaidAmount = null;
+      this.shareRows[index].maxAmount = null;
     }
 
     // Sync the first row to form fields for validation (this is crucial)
@@ -3631,6 +3635,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
     this.shareRows2.push({
       shareClass: '',
       unpaidAmount: null,
+      maxAmount: null
     });
   }
 
@@ -3650,8 +3655,10 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
     this.shareRows2[index].shareClass = selectedClass;
 
     if (selectedShare) {
-      this.shareRows2[index].unpaidAmount = selectedShare.unpaid_amount;
+      this.shareRows2[index].unpaidAmount = selectedShare.total_share;
+      this.shareRows2[index].maxAmount = selectedShare.total_share;
     } else {
+      this.shareRows2[index].maxAmount = null;
       this.shareRows2[index].unpaidAmount = null;
     }
 
@@ -3688,9 +3695,19 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
     this.selectedUnpaidAmount1 = selected ? selected.unpaid_amount : null;
   }
 
+  restrictToMax(event: any, max: number | null) {
+    const input = event.target as HTMLInputElement;
+    const value = Number(input.value);
+
+    if (max && value > max) {
+      input.value = max.toString(); // reset input display
+      input.dispatchEvent(new Event('input')); // update ngModel
+    }
+  }
+
   // 7. Method to clear all share rows
   clearAllForms1() {
-    this.shareRows = [{ shareClass: '', unpaidAmount: null }];
+    this.shareRows = [{ shareClass: '', unpaidAmount: null, maxAmount: null }];
 
     // Clear form validation fields
     this.shareHoldersForm.patchValue({
@@ -3703,14 +3720,14 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
   initializeShareRows() {
     // Initialize with one empty share row if not already initialized
     if (!this.shareRows || this.shareRows.length === 0) {
-      this.shareRows = [{ shareClass: '', unpaidAmount: null }];
+      this.shareRows = [{ shareClass: '', unpaidAmount: null, maxAmount: null }];
     }
 
     console.log('Share rows initialized:', this.shareRows);
   }
 
   clearAllForms2() {
-    this.shareRows2 = [{ shareClass: '', unpaidAmount: null }];
+    this.shareRows2 = [{ shareClass: '', unpaidAmount: null, maxAmount: null }];
   }
 
   // Add this method to your component

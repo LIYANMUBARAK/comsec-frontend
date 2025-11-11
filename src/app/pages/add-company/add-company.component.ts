@@ -124,14 +124,14 @@ private companyService = inject(CompanyService);
   };
 
 
-  // Add these properties to your component class
-  shareRows: { shareClass: string; unpaidAmount: number | null }[] = [
-    { shareClass: '', unpaidAmount: null },
+// Add these properties to your component class
+  shareRows: { shareClass: string; unpaidAmount: number | null, maxAmount: number | null }[] = [
+    { shareClass: '', unpaidAmount: null, maxAmount: null },
   ];
 
   // For second form (if you have another similar table)
-  shareRows2: { shareClass: string; unpaidAmount: number | null }[] = [
-    { shareClass: '', unpaidAmount: null },
+  shareRows2: { shareClass: string; unpaidAmount: number | null, maxAmount: number | null }[] = [
+    { shareClass: '', unpaidAmount: null, maxAmount: null },
   ];
 
   selectedShareUnpaidAmount: any = '';
@@ -2218,7 +2218,7 @@ private companyService = inject(CompanyService);
         this.currentHolder = formData;
 
         // Reset share rows
-        this.shareRows = [{ shareClass: '', unpaidAmount: null }];
+        this.shareRows = [{ shareClass: '', unpaidAmount: null, maxAmount: null }];
 
         this.initializeSharesHoldersForm();
 
@@ -3500,6 +3500,7 @@ private companyService = inject(CompanyService);
     this.shareRows.push({
       shareClass: '',
       unpaidAmount: null,
+      maxAmount: null
     });
 
   }
@@ -3524,7 +3525,7 @@ private companyService = inject(CompanyService);
       }
     } else {
       // If it's the last row, just clear its values
-      this.shareRows[0] = { shareClass: '', unpaidAmount: null };
+      this.shareRows[0] = { shareClass: '', unpaidAmount: null, maxAmount: null };
       this.shareHoldersForm.patchValue({
         shareDetailsClassOfShares: '',
         shareDetailsNoOfShares: null,
@@ -3567,9 +3568,12 @@ private companyService = inject(CompanyService);
 
     if (selectedShare) {
       // Auto-populate the unpaid amount from share capital
-      this.shareRows[index].unpaidAmount = selectedShare.unpaid_amount;
+      this.shareRows[index].unpaidAmount = selectedShare.total_share;
+      this.shareRows[index].maxAmount = selectedShare.total_share;
     } else {
       this.shareRows[index].unpaidAmount = null;
+      this.shareRows[index].maxAmount = null;
+
     }
 
     // Sync the first row to form fields for validation (this is crucial)
@@ -3608,6 +3612,7 @@ private companyService = inject(CompanyService);
     this.shareRows2.push({
       shareClass: '',
       unpaidAmount: null,
+      maxAmount: null,
     });
   }
 
@@ -3627,9 +3632,11 @@ private companyService = inject(CompanyService);
     this.shareRows2[index].shareClass = selectedClass;
 
     if (selectedShare) {
-      this.shareRows2[index].unpaidAmount = selectedShare.unpaid_amount;
+      this.shareRows2[index].unpaidAmount = selectedShare.total_share;
+      this.shareRows2[index].maxAmount = selectedShare.total_share;
     } else {
       this.shareRows2[index].unpaidAmount = null;
+      this.shareRows2[index].maxAmount = null;
     }
 
     if (index === 0) {
@@ -3656,6 +3663,15 @@ private companyService = inject(CompanyService);
     }
   }
 
+   restrictToMax(event: any, max: number | null) {
+    const input = event.target as HTMLInputElement;
+    const value = Number(input.value);
+
+    if (max && value > max) {
+      input.value = max.toString(); // reset input display
+      input.dispatchEvent(new Event('input')); // update ngModel
+    }
+  }
 
   // Keep your existing individual functions if still needed
   onShareClassChange1(event: any) {
@@ -3667,7 +3683,7 @@ private companyService = inject(CompanyService);
 
   // 7. Method to clear all share rows
   clearAllForms1() {
-    this.shareRows = [{ shareClass: '', unpaidAmount: null }];
+    this.shareRows = [{ shareClass: '', unpaidAmount: null, maxAmount: null }];
 
     // Clear form validation fields
     this.shareHoldersForm.patchValue({
@@ -3680,14 +3696,14 @@ private companyService = inject(CompanyService);
   initializeShareRows() {
     // Initialize with one empty share row if not already initialized
     if (!this.shareRows || this.shareRows.length === 0) {
-      this.shareRows = [{ shareClass: '', unpaidAmount: null }];
+      this.shareRows = [{ shareClass: '', unpaidAmount: null, maxAmount: null }];
     }
 
     console.log('Share rows initialized:', this.shareRows);
   }
 
   clearAllForms2() {
-    this.shareRows2 = [{ shareClass: '', unpaidAmount: null }];
+    this.shareRows2 = [{ shareClass: '', unpaidAmount: null, maxAmount: null }];
   }
 
   // Add this method to your component

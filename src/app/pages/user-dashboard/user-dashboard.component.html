@@ -236,7 +236,7 @@
                             getCompanyStatusLabel(company.currentStage) }}</td>
                           <td class="px-4 py-2">{{ company.business_name }}</td>
                           <td class="px-4 py-2">{{ company.project }}</td>
-                          <td class="px-4 py-2 text-right">{{ company.startDate
+                          <td class="px-4 py-2 text-right">{{ company.updatedAt
                             | date:'MMM d, y' }}</td>
                           <td class="px-4 py-2 text-right">{{ company.dueEndDate
                             | date:'MMM d, y' }}</td>
@@ -348,23 +348,23 @@
                           <th
                             class="h-12 px-4 font-medium text-muted-foreground ">
                             <div
-                              class="">
+                              class>
                               Company
                             </div>
                           </th>
                           <th
                             class="h-12 px-4 font-medium text-muted-foreground ">
-                            <div class="">Incorporated Date</div>
+                            <div class>Incorporated Date</div>
                           </th>
                           <th
                             class="h-12 px-4 font-medium text-muted-foreground ">
-                            <div class="">
+                            <div class>
                               Next Annual Return Date
                             </div>
                           </th>
                           <th
                             class="h-12 px-4 font-medium text-muted-foreground ">
-                            <div class="">Financial Date</div>
+                            <div class>Financial Date</div>
                           </th>
                         </tr>
                       </thead>
@@ -379,7 +379,7 @@
 
                           <!-- Incorporated Date -->
                           <td class="px-4 py-2">
-                            {{ company.incorporate_date | date: 'MMM d, y' }}
+                            {{ company.updatedAt | date: 'MMM d, y' }}
                           </td>
 
                           <!-- Next Annual Return Date (example: 1 year after incorporate_date) -->
@@ -402,18 +402,23 @@
                           </td>
                         </tr>
                       </tbody>
-
                     </table>
                   </div>
                 </div>
                 <div class="flex items-center justify-end space-x-2 py-4">
                   <div class="space-x-2">
                     <button
-                      class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"
-                      disabled>
-                      Previous</button><button
-                      class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"
-                      disabled>
+                      (click)="prevPage()"
+                      [disabled]="currentPage === 1"
+                      class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
+                      Previous
+                    </button>
+                    <span class="text-sm font-medium"> Page {{ currentPage }} of
+                      {{ totalPages == 0? 1 : totalPages }} </span>
+                    <button
+                      (click)="nextPage()"
+                      [disabled]="currentPage >= totalPages"
+                      class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
                       Next
                     </button>
                   </div>
