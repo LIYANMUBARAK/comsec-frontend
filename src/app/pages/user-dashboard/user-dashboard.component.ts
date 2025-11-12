@@ -29,7 +29,7 @@ export class UserDashboardComponent {
   companies: any[] = [];
   displayedCompanies: any[] = [];
   currentPage = 1;
-  itemsPerPage = 5;
+  itemsPerPage = 10;
   userData: any;
   isRestrictedUser: boolean = false;
   companyIds: string[] = [];
@@ -223,20 +223,12 @@ export class UserDashboardComponent {
               currentStage: company.currentStage,
             },
           });
-
-          // Or navigate to a specific resume route if you have one
-          // this.router.navigate(['/resume-project', company.id]);
-
           Swal.fire(
             'Resumed!',
             'Project has been resumed successfully.',
             'success'
           );
-        } else if (company.currentStage == 4) {
-          this.router.navigate([`/summary/${company._id}`]);
-        } else if (company.currentStage == 5) {
-          this.router.navigate([`/summary/${company._id}`]);
-        } else if (company.currentStage == 6) {
+        } else {
           this.router.navigate([`/summary/${company._id}`]);
         }
       }

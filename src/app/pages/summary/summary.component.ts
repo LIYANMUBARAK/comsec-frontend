@@ -17,9 +17,8 @@ export interface ShareCapital {
   share_class: string;
   share_right: string;
 
-  
-}
 
+}
 
 @Component({
   selector: 'app-summary',
@@ -36,9 +35,9 @@ export class SummaryComponent {
   ShareCapitalList: ShareCapital[] = [];
   shareholders: any[] = []
   directorsData: any[] = []
-  secretoryData:any[]= [] 
-  isViewModalOpen=false;
-  selectedShareholder:any
+  secretoryData: any[] = []
+  isViewModalOpen = false;
+  selectedShareholder: any
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -126,8 +125,8 @@ export class SummaryComponent {
       confirmButtonText: 'Yes, Save and Proceed',
       cancelButtonText: 'No, Cancel',
       customClass: {
-        confirmButton: 'btn btn-primary', 
-        cancelButton: 'btn btn-secondary', 
+        confirmButton: 'btn btn-primary',
+        cancelButton: 'btn btn-secondary',
       },
     }).then((result) => {
       if (result.isConfirmed) {
@@ -147,16 +146,16 @@ export class SummaryComponent {
     });
   }
 
-  viewShareDetails(shareholder:any) {
+  viewShareDetails(shareholder: any) {
     // Set the selected shareholder
-    console.log("00,",shareholder);
+    console.log("00,", shareholder);
     this.selectedShareholder = shareholder;
-    console.log("00,", this.selectedShareholder );
-    
+    console.log("00,", this.selectedShareholder);
+
     // Show the modal
     this.isViewModalOpen = true;
   }
-  
+
   closeShareModal() {
     this.isViewModalOpen = false;
   }
@@ -168,22 +167,22 @@ export class SummaryComponent {
       shareCapital: this.ShareCapitalList,
       shareholders: this.shareholders,
       directors: this.directorsData,
-      secretary : this.secretoryData
+      secretary: this.secretoryData
     };
-    console.log("payloads",payload);
-    
+    console.log("payloads", payload);
+
 
     this.companyService.setPayload(payload);
-    console.log("companyInfo  ",payload)
-    const updateStagePayload = {companyId : payload.companyInfo[0]._id,index : 6}
+    console.log("companyInfo  ", payload)
+    const updateStagePayload = { companyId: payload.companyInfo[0]._id, index: 6 }
     console.log("updating current stage in summary", updateStagePayload)
     this.companyService.updateCurrentStage(updateStagePayload).subscribe((response: any) => {
-        try {
-          console.log('response from updateCurrentStage : ', response);
-        } catch (error) {
-          console.log(error);
-        }
-      });
+      try {
+        console.log('response from updateCurrentStage : ', response);
+      } catch (error) {
+        console.log(error);
+      }
+    });
 
     Swal.fire({
       position: 'top-end',
@@ -196,6 +195,28 @@ export class SummaryComponent {
       timerProgressBar: true,
     }).then(() => {
       this.router.navigate(['/document-status', this.companyId]);
+    });
+  }
+
+  getCompanyStatusLabel(stage: number): string {
+    if (stage >= 1 && stage <= 5) {
+      return 'Data Entering';
+    } else if (stage === 6) {
+      return 'Documentation';
+    } else if (stage === 7) {
+      return 'Final Stage';
+    } else if (stage === 0) {
+      return 'Completed';
+    }
+    return 'Unknown';
+  }
+
+  onEditClicks() {
+    this.router.navigate(['/project-form'], {
+      queryParams: {
+        companyId: this.companyId,
+        resume: true,
+      },
     });
   }
 

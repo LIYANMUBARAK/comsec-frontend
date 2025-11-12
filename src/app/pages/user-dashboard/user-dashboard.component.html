@@ -222,16 +222,15 @@
                           <th
                             class="h-12 px-4 text-right align-middle font-medium text-muted-foreground">Published
                             Documents</th>
-                          <th
-                            class="h-12 px-4 text-right align-middle font-medium text-muted-foreground">Processed
-                            By</th>
-                          <th
-                            class="h-12 px-4 text-center align-middle font-medium text-muted-foreground">Actions</th>
                         </tr>
                       </thead>
+
                       <tbody>
-                        <tr *ngFor="let company of displayedCompanies"
-                          class="border-b hover:bg-muted/50">
+                        <tr
+                          *ngFor="let company of displayedCompanies"
+                          class="border-b hover:bg-muted/50 cursor-pointer transition-colors hover:bg-gray-50"
+                          (click)="resumeProject(company)"
+                          [title]="'Resume project from stage ' + company.currentStage">
                           <td class="px-4 py-2">{{
                             getCompanyStatusLabel(company.currentStage) }}</td>
                           <td class="px-4 py-2">{{ company.business_name }}</td>
@@ -242,41 +241,10 @@
                             | date:'MMM d, y' }}</td>
                           <td class="px-4 py-2 text-right">{{
                             company.publishedDocuments }}</td>
-                          <td class="px-4 py-2 text-right">{{
-                            company.proceededBy }}</td>
-                          <td class="px-4 py-2 text-center">
-                            <button
-                              *ngIf="shouldShowResumeButton(company)"
-                              (click)="resumeProject(company)"
-                              class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border border-green-500 bg-green-50 text-green-700 hover:bg-green-100 hover:text-green-800 h-8 px-3 py-1"
-                              [ngClass]="{
-                                'border-green-400 bg-green-900/20 text-green-400 hover:bg-green-900/30 hover:text-green-300': isDarkTheme
-                              }"
-                              title="Resume project from stage {{ company.currentStage }}">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                class="lucide lucide-play mr-1">
-                                <polygon points="5,3 19,12 5,21"></polygon>
-                              </svg>
-                              Resume
-                            </button>
-                            <span
-                              *ngIf="!shouldShowResumeButton(company)"
-                              class="text-xs text-gray-400">
-                              -
-                            </span>
-                          </td>
                         </tr>
                       </tbody>
                     </table>
+
                   </div>
                 </div>
                 <div class="flex items-center justify-end space-x-2 py-4">
@@ -342,37 +310,43 @@
                 <div class="rounded-md border">
                   <div class="relative w-full overflow-auto">
                     <table class="w-full caption-bottom text-sm">
-                      <thead class="[&amp;_tr]:border-b">
+                      <thead class="[&_tr]:border-b">
                         <tr
                           class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
                           <th
-                            class="h-12 px-4 font-medium text-muted-foreground ">
-                            <div
-                              class>
-                              Company
-                            </div>
+                            class="h-12 px-4 font-medium text-muted-foreground">
+                            <div>Status</div>
                           </th>
                           <th
-                            class="h-12 px-4 font-medium text-muted-foreground ">
-                            <div class>Incorporated Date</div>
+                            class="h-12 px-4 font-medium text-muted-foreground">
+                            <div>Company</div>
                           </th>
                           <th
-                            class="h-12 px-4 font-medium text-muted-foreground ">
-                            <div class>
-                              Next Annual Return Date
-                            </div>
+                            class="h-12 px-4 font-medium text-muted-foreground">
+                            <div>Incorporated Date</div>
                           </th>
                           <th
-                            class="h-12 px-4 font-medium text-muted-foreground ">
-                            <div class>Financial Date</div>
+                            class="h-12 px-4 font-medium text-muted-foreground">
+                            <div>Next Annual Return Date</div>
+                          </th>
+                          <th
+                            class="h-12 px-4 font-medium text-muted-foreground">
+                            <div>Financial Date</div>
                           </th>
                         </tr>
                       </thead>
-                      <tbody class="[&_tr:last-child]:border-0 ">
+
+                      <tbody class="[&_tr:last-child]:border-0">
                         <tr
                           *ngFor="let company of displayedCompanies"
-                          class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                          class="border-b transition-colors hover:bg-gray-50 cursor-pointer data-[state=selected]:bg-muted"
+                          (click)="resumeProject(company)"
+                          [title]="'Resume project for ' + (company.business_name || 'this company')">
                           <!-- Company Name -->
+                          <td class="px-4 py-2">
+                            {{ company.status || '-' }}
+                          </td>
+
                           <td class="px-4 py-2">
                             {{ company.business_name || '-' }}
                           </td>
@@ -382,19 +356,19 @@
                             {{ company.updatedAt | date: 'MMM d, y' }}
                           </td>
 
-                          <!-- Next Annual Return Date (example: 1 year after incorporate_date) -->
+                          <!-- Next Annual Return Date -->
                           <td class="px-4 py-2">
                             {{ getNextAnnualReturnDate(company.incorporate_date)
                             | date: 'MMM d, y' }}
                           </td>
 
-                          <!-- Financial Date (example: same as startDate if not defined) -->
+                          <!-- Financial Date -->
                           <td class="px-4 py-2">
                             {{ company.startDate | date: 'MMM d, y' }}
                           </td>
                         </tr>
 
-                        <!-- Optional: if no data -->
+                        <!-- No Data Row -->
                         <tr *ngIf="!displayedCompanies?.length">
                           <td colspan="4"
                             class="text-center py-4 text-gray-400">
@@ -403,6 +377,7 @@
                         </tr>
                       </tbody>
                     </table>
+
                   </div>
                 </div>
                 <div class="flex items-center justify-end space-x-2 py-4">

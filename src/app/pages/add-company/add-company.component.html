@@ -1056,8 +1056,8 @@
 
                           <!-- File input (hidden when preview is shown) -->
                           <input
-                            #fileInput
                             type="file"
+                            accept="image/*,application/pdf"
                             class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                             placeholder="Upload a Copy"
                             id="companyLogo"
@@ -2098,7 +2098,7 @@
                                       class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
                                       {{ shareHoldersForm.get('userType')?.value
                                       === 'person' ? 'ID/Passport No.' :
-                                      'Company No.' }} / Upload a Copy
+                                      'BR No.' }} / Upload a Copy
                                     </th>
                                   </tr>
                                 </thead>
@@ -2192,7 +2192,7 @@
                                         <input
                                           class="flex h-10 w-full rounded-md border px-3 py-2 text-sm"
                                           [formControlName]="shareHoldersForm.get('userType')?.value === 'person' ? 'idNo' : 'companyNo'"
-                                          [placeholder]="shareHoldersForm.get('userType')?.value === 'person' ? 'ID No. Eg: S313XX31X' : 'Company No. Eg: S313XX31X'" />
+                                          [placeholder]="shareHoldersForm.get('userType')?.value === 'person' ? 'ID No. Eg: S313XX31X' : 'BR No. Eg: S313XX31X'" />
                                         <div class="error-message"
                                           *ngIf="shareHoldersForm.get(shareHoldersForm.get('userType')?.value === 'person' ? 'idNo' : 'companyNo')?.touched && 
                                                                                  shareHoldersForm.get(shareHoldersForm.get('userType')?.value === 'person' ? 'idNo' : 'companyNo')?.errors">
@@ -2204,6 +2204,7 @@
                                       </div>
                                       <div class="space-y-2">
                                         <input type="file"
+                                          accept="image/*,application/pdf"
                                           class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:me-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                                           formControlName="idProof"
                                           (change)="onSelectIDProofImage($event)"
@@ -2331,10 +2332,11 @@
                                       </div>
                                       <div class="space-y-3"
                                         *ngIf="shareHoldersForm.get('userType')?.value !== 'company'">
-                                        <input type="file"
+                                        <input
                                           class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:me-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                                           placeholder="Upload a Copy"
                                           type="file"
+                                          accept="image/*,application/pdf"
                                           name="addressProof"
                                           formControlName="addressProof"
                                           (change)="onImageSelectedAddress($event)" />
@@ -3307,7 +3309,7 @@
                                           class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:me-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                                           placeholder="Upload a Copy"
                                           type="file"
-                                          accept="image/*"
+                                          accept="image/*,application/pdf"
                                           formControlName="idProof"
                                           (change)="imagePreviewOnDirectorsIDProof($event)" />
                                         <div class="error-message"
@@ -3437,6 +3439,7 @@
                                           class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:me-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                                           placeholder="Upload a Copy"
                                           type="file"
+                                          accept="image/*,application/pdf"
                                           name="addressProof"
                                           formControlName="addressProof"
                                           (change)="imagePreviewOnDirectorsAddressProof($event)" />
@@ -4249,6 +4252,7 @@
                                 <input
                                   class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:me-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                                   type="file"
+                                  accept="image/*,application/pdf"
                                   name="addressProof"
                                   formControlName="addressProof"
                                   (change)="imagePreviewOnCompanySecretaryAddressProof($event)" />

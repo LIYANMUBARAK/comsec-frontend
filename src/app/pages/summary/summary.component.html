@@ -84,6 +84,27 @@
                                     Details:</h1>
                                 <div class="grid grid-cols-2 gap-3">
                                     <div class="flex items-center gap-3">
+                                        <p
+                                            class="font-medium text-base">Address:</p>
+                                        <p>
+                                            <span class="text-base"
+                                                *ngIf="companyData.office_address">{{companyData.office_address
+                                                + ", "}}</span>
+                                            <span class="text-base"
+                                                *ngIf="companyData.office_address1">{{companyData.office_address1
+                                                + ", "}}</span>
+                                            <span class="text-base"
+                                                *ngIf="companyData.office_city">{{companyData.office_city
+                                                + ", "}}</span>
+                                            <span class="text-base"
+                                                *ngIf="companyData.office_state">{{companyData.office_state
+                                                + ", "}}</span>
+                                            <span class="text-base"
+                                                *ngIf="companyData.office_country">{{companyData.office_country
+                                                }}</span>
+                                        </p>
+                                    </div>
+                                    <!-- <div class="flex items-center gap-3">
                                         <p class="font-medium text-base">Flat /
                                             Floor / Block:</p>
                                         <p
@@ -112,7 +133,7 @@
                                             class="font-medium text-base">Country:</p>
                                         <p
                                             class="text-base">{{companyData.office_country}}</p>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="flex items-center gap-3">
@@ -175,6 +196,28 @@
                                     <div class="grid grid-cols-2 gap-3">
                                         <div class="flex items-center gap-3">
                                             <p
+                                                class="font-medium text-base">Address:
+                                            </p>
+                                            <p
+                                                class="text-base">
+                                                <span class="text-base"
+                                                    *ngIf="companyData.presentorAddress">{{companyData.presentorAddress
+                                                    + ", "}}</span>
+                                                <span class="text-base"
+                                                    *ngIf="companyData.presentorBuilding">{{companyData.presentorBuilding
+                                                    + ", "}}</span>
+                                                <span class="text-base"
+                                                    *ngIf="companyData.presentorStreet">{{companyData.presentorStreet
+                                                    + ", "}}</span>
+                                                <span class="text-base"
+                                                    *ngIf="companyData.presentorDistrict">{{companyData.presentorDistrict
+                                                    + ", "}}</span>
+                                                <span class="text-base"
+                                                    *ngIf="companyData.office_country">{{companyData.office_country}}</span>
+                                            </p>
+                                        </div>
+                                        <!-- <div class="flex items-center gap-3">
+                                            <p
                                                 class="font-medium text-base">Flat
                                                 / Floor / Block:</p>
                                             <p
@@ -203,7 +246,7 @@
                                                 class="font-medium text-base">Country:</p>
                                             <p
                                                 class="text-base">{{companyData.office_country}}</p>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="grid grid-cols-2 gap-3">
                                         <div class="flex items-center gap-3">
@@ -744,9 +787,12 @@
                     </div>
                 </div>
                 <div class="items-center p-6 pt-0 flex justify-between">
+                    <div>
+                        <button
+                            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-white h-10 px-4 py-2 cursor-pointer" 
+                            (click)="onEditClicks()">Edit</button> 
+                    </div>
                     <a
-                        class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-white h-10 px-4 py-2 cursor-pointer"
-                        href="/">Edit</a> <a
                         class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-red-500 text-white h-10 px-4 py-2 cursor-pointer"
                         (click)="confirmNavigation()">Confirm</a>
                 </div>
