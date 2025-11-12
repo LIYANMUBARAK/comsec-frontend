@@ -344,7 +344,7 @@
                           [title]="'Resume project for ' + (company.business_name || 'this company')">
                           <!-- Company Name -->
                           <td class="px-4 py-2">
-                            {{ company.status || '-' }}
+                            {{ getCompanyStatusLabel(company.currentStage) || '-' }}
                           </td>
 
                           <td class="px-4 py-2">
