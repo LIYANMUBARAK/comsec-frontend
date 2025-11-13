@@ -1,33 +1,75 @@
 <app-header></app-header>
-<div class="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[250px_1fr]">
+<div
+  class="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[250px_1fr]">
   <app-sidebar></app-sidebar>
 
   <div class="documents-container">
-    <div class="header">
+    <div class="header flex justify-between">
       <div class="header-content">
         <h1>E-mail Template Preview</h1>
-        <p class="subtitle">This is the preview of E-mail Template which will be sent to new account users</p>
+        <p class="subtitle">This is the preview of E-mail Template which will be
+          sent to new account users</p>
       </div>
+
+      <button
+        (click)="toggleEditMode()"
+        class="bg-blue-600 text-white px-4 py-2 h-fit rounded-md hover:bg-blue-700 transition">
+        {{ isEditMode ? 'Cancel' : 'Edit Template' }}
+      </button>
     </div>
 
-  <div class="email-preview-card">
-  <div *ngIf="loading">Loading preview...</div>
-  <div *ngIf="error" class="text-red-500">{{ error }}</div>
+    <div class="email-preview-card">
+      <div *ngIf="loading">Loading preview...</div>
+      <div *ngIf="error" class="text-red-500">{{ error }}</div>
 
-  <div *ngIf="!loading && !error">
-    <h2 class="text-xl font-semibold mb-2">{{ subject }}</h2>
-    <div [innerHTML]="emailHtml"></div>
-  </div>
+      <div *ngIf="!isEditMode && !loading && !error">
+        <h2 class="text-xl font-semibold mb-2">{{ subject }}</h2>
+        <div [innerHTML]="emailHtml"></div>
+        <p>
+          For any further queries contact at:
+          <a
+            href="mailto:support&#64;comsec360.com">support&#64;comsec360.com</a>
+        </p>
+        <p class="footer-note">
+          Note: This is only a preview of the E-mail Template
+        </p>
+      </div>
 
-  <hr />
-  <p>
-    For any further queries contact at: 
-<a href="mailto:support&#64;comsec360.com">support&#64;comsec360.com</a>
-  </p>
-  <p class="footer-note">
-    Note: This is only a preview of the E-mail Template
-  </p>
-</div>
+      <div *ngIf="isEditMode && !loading && !error"
+        class="w-full flex">
+        <!-- Edit Inputs -->
+        <div class="w-1/2 pr-4">
+          <label class="block font-medium mb-1">Subject</label>
+          <input
+            [(ngModel)]="subject"
+            class="w-full border px-3 py-2 rounded-md mb-4"
+            placeholder="Enter email subject" />
 
+          <label class="block font-medium mb-1">HTML Content</label>
+          <textarea
+            [(ngModel)]="template.html"
+            rows="15"
+            class="w-full border px-3 py-2 rounded-md font-mono text-sm"
+            placeholder="Enter HTML template here..."></textarea>
+
+          <div class="flex justify-end space-x-2 mt-4">
+            <button (click)="toggleEditMode()"
+              class="px-4 py-2 border rounded-md">Cancel</button>
+            <button (click)="confirmSaveTemplate()"
+              class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+              Save Template
+            </button>
+          </div>
+        </div>
+
+        <!-- Live Preview -->
+        <div class="w-1/2 pl-4">
+          <h3 class="font-semibold mb-2">Live Preview</h3>
+          <div class="border rounded-md p-4 bg-gray-50">
+            <div [innerHTML]="getPreviewHtml()"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

@@ -97,6 +97,18 @@ export class AdminService {
     );
   }
 
+  updateEmailTemplate(templateName: string, data: { subject: string; html: string }): Observable<any> {
+    return this.http
+      .put<any>(`${this.baseUrl}user/update-incorporation-email-template/${templateName}`, data)
+      .pipe(
+        catchError((error) => {
+          console.error('Error updating incorporation email template', error);
+          return throwError(() => new Error('Failed to update incorporation email template. Please try again.'));
+        })
+      );
+  }
+
+
   getUserById(userId: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}user/getUser/${userId}`).pipe(
       catchError((error) => {
