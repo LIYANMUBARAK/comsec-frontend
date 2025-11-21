@@ -344,7 +344,7 @@
                           [title]="'Resume project for ' + (company.business_name || 'this company')">
                           <!-- Company Name -->
                           <td class="px-4 py-2">
-                            {{ getCompanyStatusLabel(company.currentStage) || '-' }}
+                            {{ getCompanyStatusLabel2(company.currentStage) || '-' }}
                           </td>
 
                           <td class="px-4 py-2">
@@ -352,19 +352,15 @@
                           </td>
 
                           <!-- Incorporated Date -->
-                          <td class="px-4 py-2">
-                            {{ company.updatedAt | date: 'MMM d, y' }}
+                          <td class="px-4 py-2">-
                           </td>
 
                           <!-- Next Annual Return Date -->
-                          <td class="px-4 py-2">
-                            {{ getNextAnnualReturnDate(company.incorporate_date)
-                            | date: 'MMM d, y' }}
+                          <td class="px-4 py-2">-
                           </td>
 
                           <!-- Financial Date -->
-                          <td class="px-4 py-2">
-                            {{ company.startDate | date: 'MMM d, y' }}
+                          <td class="px-4 py-2">-
                           </td>
                         </tr>
 

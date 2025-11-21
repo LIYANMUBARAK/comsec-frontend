@@ -2606,7 +2606,6 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
   }
 
   viewShareDetails(shareholder: any) {
-    console.log('Viewing details for shareholder:', shareholder);
     // Set the selected shareholder
     this.selectedShareholder = shareholder;
 
@@ -2745,7 +2744,6 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
     if (companyId) {
       this.companyService.shareholdersInvites(companyId).subscribe({
         next: (response) => {
-          console.log("working........................")
           this.invitedShareholders = response.data;
           console.log('invited Shareholders', this.invitedShareholders);
         },
@@ -3564,7 +3562,6 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
     // Convert to number and handle empty strings
     const numericAmount =
       amount === '' || amount === null ? null : Number(amount);
-    alert(numericAmount);
     this.shareRows[index].unpaidAmount = numericAmount;
 
     // Sync the first row to form fields for validation
@@ -3824,6 +3821,12 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
     if (!pattern.test(inputChar)) {
       event.preventDefault();
     }
+  }
+
+  getShareCapitalData(className: string) {
+    return this.shareCapitalList?.find(
+      (item) => item.share_class === className
+    );
   }
 
 

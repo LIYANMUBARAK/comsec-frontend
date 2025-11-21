@@ -99,6 +99,19 @@ export class UserDashboardComponent {
     return 'Unknown'; // fallback if stage is missing
   }
 
+  getCompanyStatusLabel2(stage: number): string {
+    if (stage >= 1 && stage <= 5) {
+      return 'Pending';
+    } else if (stage === 6) {
+      return 'Pending';
+    } else if (stage === 7) {
+      return 'Pending';
+    } else if (stage === 0) {
+      return 'Completed';
+    }
+    return 'Unknown'; // fallback if stage is missing
+  }
+
   updateDisplayedCompanies() {
     const filteredCompanies = this.companies.filter((company) =>
       this.companyIds.includes(company._id)
