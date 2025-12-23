@@ -17,6 +17,9 @@ import {
   FormsModule,
   ReactiveFormsModule,
   Validators,
+  AbstractControl,
+  ValidationErrors,
+  ValidatorFn
 } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
@@ -80,6 +83,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
   editShareForm!: FormGroup;
   isEditing: boolean = false;
   isViewModalOpen: boolean = false;
+  isSubscribedModalOpen: boolean = false;
   currentShareId: string = '';
   tabs: any[] = [
     'Company Info',
@@ -128,6 +132,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
   selectedShareClass: string = '';
   invitedDirectors: any[] = [];
   invitedShareholders: any[] = [];
+  subscribedShares: any[] = [];
 
   selectedShareClass1: string = '';
   selectedUnpaidAmount1: number | null = null;
@@ -1501,7 +1506,14 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
       currency: ['HKD', Validators.required],
       unit_price: [null, [Validators.required, Validators.min(0)]],
       total_amount: [{ value: null, disabled: true }],
-      total_capital_subscribed: ['', Validators.required],
+      total_capital_subscribed: [
+        null,
+        [
+          this.maxValueValidator(() =>
+            this.addShareForm?.get('total_shares_proposed')?.value || 0
+          )
+        ]
+      ],
       unpaid_amount: [{ value: 0, disabled: true }],
       particulars_of_rights: [''],
     });
@@ -1514,8 +1526,11 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
     this.addShareForm
       .get('total_shares_proposed')
       ?.valueChanges.subscribe(() => {
-        this.calculateTotalAmount();
+        this.addShareForm
+          .get('total_capital_subscribed')
+          ?.updateValueAndValidity();
       });
+
 
     // Subscribe to changes in total amount and total capital subscribed to calculate unpaid amount
     this.addShareForm.get('total_amount')?.valueChanges.subscribe(() => {
@@ -1553,16 +1568,20 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
       parseFloat(this.addShareForm.get('total_amount')?.value) || 0;
     let totalCapitalSubscribed =
       parseFloat(this.addShareForm.get('total_capital_subscribed')?.value) || 0;
+    let unitPrice =
+      parseFloat(this.addShareForm.get('unit_price')?.value) || 0;
+    let totalShares =
+      parseFloat(this.addShareForm.get('total_shares_proposed')?.value) || 0;
 
     // Ensure totalCapitalSubscribed does not exceed totalAmount
-    if (totalCapitalSubscribed > totalAmount) {
+    if ((totalCapitalSubscribed * unitPrice) > totalAmount) {
       totalCapitalSubscribed = totalAmount;
       this.addShareForm
         .get('total_capital_subscribed')
-        ?.setValue(totalAmount.toFixed(2), { emitEvent: false });
+        ?.setValue(totalShares, { emitEvent: false });
     }
 
-    let unpaidAmount = totalAmount - totalCapitalSubscribed;
+    let unpaidAmount = totalAmount - (totalCapitalSubscribed * unitPrice);
     unpaidAmount = unpaidAmount < 0 ? 0 : unpaidAmount; // Ensure unpaid amount is not negative
 
     this.addShareForm
@@ -1570,16 +1589,30 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
       ?.setValue(unpaidAmount.toFixed(2), { emitEvent: false });
   }
 
+  maxValueValidator(getMax: () => number): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = Number(control.value);
+      const max = Number(getMax());
+
+      if (value > max) {
+        return { maxExceeded: { max } };
+      }
+      return null;
+    };
+  }
+
   validateTotalCapitalSubscribed() {
     const totalAmount =
       parseFloat(this.addShareForm.get('total_amount')?.value) || 0;
     let totalCapitalSubscribed =
       parseFloat(this.addShareForm.get('total_capital_subscribed')?.value) || 0;
+    let totalShares =
+      parseFloat(this.addShareForm.get('total_shares_proposed')?.value) || 0;
 
     if (totalCapitalSubscribed > totalAmount) {
       this.addShareForm
         .get('total_capital_subscribed')
-        ?.setValue(totalAmount.toFixed(2), { emitEvent: false });
+        ?.setValue(totalShares, { emitEvent: false });
     }
 
     this.calculateUnpaidAmount();
@@ -3837,6 +3870,32 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
   //     this.isTelephoneOpen = false;
   //   }
   // }
+
+  onSubscribedClicks(classOfShare: string) {
+    this.isSubscribedModalOpen = true
+    this.shareholders.map((shareholder: any) => {
+      if (shareholder.shareDetails.length > 0) {
+        shareholder.shareDetails.map((share: any) => {
+          if (share.shareDetailsClassOfShares == classOfShare)
+            this.subscribedShares.push(share)
+        })
+      }
+    })
+    this.invitedShareholders.map((shareholder: any) => {
+      if (shareholder.shareDetails.length > 0) {
+        shareholder.shareDetails.map((share: any) => {
+          if (share.shareDetailsClassOfShares == classOfShare)
+            this.subscribedShares.push(share)
+        })
+      }
+    })
+    console.log('subscribed shares', this.subscribedShares);
+  }
+
+  closeCapitalModal() {
+    this.isSubscribedModalOpen = false
+    this.subscribedShares = []
+  }
 
   ngOnDestroy(): void {
     if (this.isNavigatingAway) {

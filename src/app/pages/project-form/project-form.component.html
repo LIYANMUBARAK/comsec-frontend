@@ -1293,8 +1293,14 @@
                                 <td class="p-4 align-middle">{{
                                   share?.total_share * share?.amount_share ||
                                   '-' }}</td>
-                                <td class="p-4 align-middle">{{
-                                  share?.total_capital_subscribed || '-' }}</td>
+                                <td class="p-4 align-middle">
+                                  <a
+                                    (click)="onSubscribedClicks(share?.share_class)"
+                                    class="text-blue-500 hover:underline cursor-pointer">
+                                    {{
+                                    share?.total_capital_subscribed || '-' }}
+                                  </a>
+                                </td>
                                 <td class="p-4 align-middle">{{
                                   share?.unpaid_amount || '-' }}</td>
                                 <td class="p-4 align-middle">{{
@@ -1347,6 +1353,80 @@
                                 </td>
                               </tr>
 
+                              <div *ngIf="isSubscribedModalOpen"
+                                    class="fixed inset-0 flex items-center justify-center z-50">
+                                    <div
+                                      class="fixed inset-0 bg-black opacity-50"
+                                      (click)="closeCapitalModal()"></div>
+                                    <div
+                                      class="w-full bg-white rounded-xl p-6 max-w-xl relative z-10">
+                                      <!-- Close button -->
+                                      <button (click)="closeCapitalModal()"
+                                        class="absolute top-6 right-6 text-gray-500 hover:text-gray-700">
+                                        <!-- X icon -->X
+                                      </button>
+
+                                      <!-- Modal content -->
+                                      <h2
+                                        class="text-xl font-semibold mb-2">{{subscribedShares[0].shareDetailsClassOfShares}}</h2>
+                                      <!-- <p class="text-gray-600 mb-4">Total Amount:
+                                        {{ share?.total_share * share?.amount_share }} </p> -->
+
+                                      <!-- Share details table -->
+                                      <table
+                                        class="min-w-full border border-gray-200 rounded-md">
+                                        <thead class="bg-gray-100">
+                                          <tr>
+                                            <th
+                                              class="text-left py-2 px-4 border-b">No
+                                              of
+                                              Shares</th>
+                                            <th
+                                              class="text-left py-2 px-4 border-b">Currency</th>
+                                            <th
+                                              class="text-left py-2 px-4 border-b">Unit
+                                              Price</th>
+                                            <th
+                                              class="text-left py-2 px-4 border-b">Total
+                                              Amount</th>
+                                          </tr>
+                                        </thead>
+
+                                        <tbody>
+                                          <tr
+                                            *ngFor="let share of subscribedShares">
+
+                                            <td class="py-2 px-4 border-b">
+                                              {{ share.shareDetailsNoOfShares
+                                              }}
+                                            </td>
+
+                                            <!-- Match with shareCapitalList -->
+                                            <td class="py-2 px-4 border-b">
+                                              {{
+                                              getShareCapitalData(share.shareDetailsClassOfShares)?.currency
+                                              || '-' }}
+                                            </td>
+
+                                            <td class="py-2 px-4 border-b">
+                                              {{
+                                              getShareCapitalData(share.shareDetailsClassOfShares)?.amount_share
+                                              || '-' }}
+                                            </td>
+
+                                            <td class="py-2 px-4 border-b">
+                                              {{
+                                              share.shareDetailsNoOfShares *
+                                              (getShareCapitalData(share.shareDetailsClassOfShares)?.amount_share
+                                              || 0)
+                                              }}
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+
                               <!-- Show "No Data Available" when list is empty -->
                               <tr
                                 *ngIf="!shareCapitalList || shareCapitalList.length === 0">
@@ -1362,6 +1442,7 @@
                       </div>
                     </div>
                   </div>
+
                   <form
                     class="space-y-8"
                     [formGroup]="addShareForm"
