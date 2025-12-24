@@ -133,6 +133,10 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
   invitedDirectors: any[] = [];
   invitedShareholders: any[] = [];
   subscribedShares: any[] = [];
+  totalSubscribedShares: number = 0;
+  totalSubscribedAmount: number = 0;
+  private shareCapitalMap = new Map<string, any>();
+  selectedShareCapital: any = null;
 
   selectedShareClass1: string = '';
   selectedUnpaidAmount1: number | null = null;
@@ -3605,31 +3609,33 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
       this.shareHoldersForm.get('shareDetailsNoOfShares')?.markAsTouched();
     }
 
-    console.log('Share amount updated for row', index, ':', numericAmount);
-    console.log(
-      'Form noOfShares value:',
-      this.shareHoldersForm.get('shareDetailsNoOfShares')?.value
-    );
   }
 
   onShareClassChange(event: any, index: number): void {
     const selectedClass = event.target.value;
+
     const selectedShare = this.shareCapitalList.find(
       (share) => share.share_class === selectedClass
     );
-    // Update the row data
+
     this.shareRows[index].shareClass = selectedClass;
 
     if (selectedShare) {
-      // Auto-populate the unpaid amount from share capital
-      this.shareRows[index].unpaidAmount = selectedShare.total_share;
-      this.shareRows[index].maxAmount = selectedShare.total_share;
+      const allocatedShares =
+        this.getAllocatedSharesForClass(selectedClass);
+
+      const remainingShares =
+        selectedShare.total_share - allocatedShares;
+
+      this.shareRows[index].maxAmount =
+        remainingShares > 0 ? remainingShares : 0;
+
+      this.shareRows[index].unpaidAmount = 0;
     } else {
       this.shareRows[index].unpaidAmount = null;
       this.shareRows[index].maxAmount = null;
     }
 
-    // Sync the first row to form fields for validation (this is crucial)
     if (index === 0) {
       this.shareHoldersForm.patchValue({
         shareDetailsClassOfShares: this.shareRows[0].shareClass,
@@ -3637,17 +3643,10 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
       });
     }
 
-    // Mark the form controls as touched to trigger validation
     this.shareHoldersForm.get('shareDetailsClassOfShares')?.markAsTouched();
     this.shareHoldersForm.get('shareDetailsNoOfShares')?.markAsTouched();
-
-    console.log('Share row updated:', this.shareRows[index]);
-    console.log('Form values after sync:', {
-      classOfShares: this.shareHoldersForm.get('shareDetailsClassOfShares')
-        ?.value,
-      noOfShares: this.shareHoldersForm.get('shareDetailsNoOfShares')?.value,
-    });
   }
+
 
   // 3. Add a method to validate share rows
   validateShareRows(): boolean {
@@ -3685,23 +3684,34 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
     this.shareRows2[index].shareClass = selectedClass;
 
     if (selectedShare) {
-      this.shareRows2[index].unpaidAmount = selectedShare.total_share;
-      this.shareRows2[index].maxAmount = selectedShare.total_share;
+      const allocatedShares =
+        this.getAllocatedSharesForClass(selectedClass);
+
+      const remainingShares =
+        selectedShare.total_share - allocatedShares;
+
+      this.shareRows2[index].maxAmount =
+        remainingShares > 0 ? remainingShares : 0;
+
+      // reset input when class changes
+      this.shareRows2[index].unpaidAmount = 0;
     } else {
-      this.shareRows2[index].maxAmount = null;
       this.shareRows2[index].unpaidAmount = null;
+      this.shareRows2[index].maxAmount = null;
     }
 
+    // Sync first row with form (important for validation)
     if (index === 0) {
-      this.inviteShareholderForm.patchValue({
+      this.shareHoldersForm.patchValue({
         shareDetailsClassOfShares: this.shareRows2[0].shareClass,
         shareDetailsNoOfShares: this.shareRows2[0].unpaidAmount,
       });
-
-      this.inviteShareholderForm.get('shareDetailsClassOfShares')?.markAsTouched();
-      this.inviteShareholderForm.get('shareDetailsNoOfShares')?.markAsTouched();
     }
+
+    this.shareHoldersForm.get('shareDetailsClassOfShares')?.markAsTouched();
+    this.shareHoldersForm.get('shareDetailsNoOfShares')?.markAsTouched();
   }
+
 
   onShareAmountChange2(amount: any, index: number): void {
     const numericAmount = amount === '' || amount === null ? null : Number(amount);
@@ -3862,7 +3872,6 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
     );
   }
 
-
   // @HostListener('document:click', ['$event'])
   // onDocumentClick(event: Event) {
   //   const target = event.target as HTMLElement;
@@ -3871,31 +3880,90 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
   //   }
   // }
 
-  onSubscribedClicks(classOfShare: string) {
-    this.isSubscribedModalOpen = true
-    this.shareholders.map((shareholder: any) => {
-      if (shareholder.shareDetails.length > 0) {
-        shareholder.shareDetails.map((share: any) => {
-          if (share.shareDetailsClassOfShares == classOfShare)
-            this.subscribedShares.push(share)
-        })
-      }
-    })
-    this.invitedShareholders.map((shareholder: any) => {
-      if (shareholder.shareDetails.length > 0) {
-        shareholder.shareDetails.map((share: any) => {
-          if (share.shareDetailsClassOfShares == classOfShare)
-            this.subscribedShares.push(share)
-        })
-      }
-    })
-    console.log('subscribed shares', this.subscribedShares);
-  }
-
   closeCapitalModal() {
     this.isSubscribedModalOpen = false
     this.subscribedShares = []
   }
+
+  buildShareCapitalMap(): void {
+    this.shareCapitalMap.clear();
+    this.shareCapitalList.forEach((capital: any) => {
+      this.shareCapitalMap.set(capital.share_class, capital);
+    });
+  }
+
+  openSubscribedModal(classOfShare: string): void {
+    this.isSubscribedModalOpen = true;
+    this.subscribedShares = [];
+
+    this.selectedShareCapital =
+      this.shareCapitalList.find(
+        (sc: any) => sc.share_class === classOfShare
+      ) || null;
+
+    this.buildShareCapitalMap()
+    this.collectShares(this.shareholders, classOfShare, false);
+    this.collectShares(this.invitedShareholders, classOfShare, true);
+
+    this.calculateTotals();
+  }
+
+  collectShares(shareholders: any[], classOfShare: string, isInvited: boolean): void {
+    shareholders.forEach((holder: any) => {
+      holder.shareDetails?.forEach((share: any) => {
+        if (share.shareDetailsClassOfShares === classOfShare) {
+          const capital = this.shareCapitalMap.get(classOfShare);
+          this.subscribedShares.push({
+            classOfShares: classOfShare,
+            shareholderName: holder.name,
+            isInvited,
+            noOfShares: share.shareDetailsNoOfShares,
+            currency: capital?.currency ?? '-',
+            unitPrice: capital?.amount_share ?? 0,
+            totalAmount:
+              share.shareDetailsNoOfShares * (capital?.amount_share ?? 0)
+          });
+        }
+      });
+    });
+  }
+
+  private calculateTotals(): void {
+    this.totalSubscribedShares = this.subscribedShares.reduce(
+      (sum, row) => sum + row.noOfShares,
+      0
+    );
+
+    this.totalSubscribedAmount = this.subscribedShares.reduce(
+      (sum, row) => sum + row.totalAmount,
+      0
+    );
+  }
+
+  getAllocatedSharesForClass(classOfShare: string): number {
+    let total = 0;
+
+    // Existing shareholders
+    this.shareholders.forEach((holder: any) => {
+      holder.shareDetails?.forEach((share: any) => {
+        if (share.shareDetailsClassOfShares === classOfShare) {
+          total += Number(share.shareDetailsNoOfShares) || 0;
+        }
+      });
+    });
+
+    // Invited shareholders
+    this.invitedShareholders.forEach((holder: any) => {
+      holder.shareDetails?.forEach((share: any) => {
+        if (share.shareDetailsClassOfShares === classOfShare) {
+          total += Number(share.shareDetailsNoOfShares) || 0;
+        }
+      });
+    });
+
+    return total;
+  }
+
 
   ngOnDestroy(): void {
     if (this.isNavigatingAway) {

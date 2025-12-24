@@ -16,7 +16,7 @@ export interface ShareCapital {
   unpaid_amount: number;
   share_class: string;
   share_right: string;
-
+  currency: string;
 
 }
 
@@ -32,12 +32,21 @@ export class SummaryComponent {
   private companyService = inject(CompanyService);
   private router = inject(Router);
   companyInformation: any[] = [];
-  ShareCapitalList: ShareCapital[] = [];
+  ShareCapitalList: any[] = [];
   shareholders: any[] = []
   directorsData: any[] = []
   secretoryData: any[] = []
   isViewModalOpen = false;
   selectedShareholder: any
+  selectedShareClass: string = '';
+  invitedDirectors: any[] = [];
+  invitedShareholders: any[] = [];
+  subscribedShares: any[] = [];
+  totalSubscribedShares: number = 0;
+  totalSubscribedAmount: number = 0;
+  private shareCapitalMap = new Map<string, any>();
+  selectedShareCapital: any = null;
+  isSubscribedModalOpen: boolean = false;
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -218,6 +227,66 @@ export class SummaryComponent {
         resume: true,
       },
     });
+  }
+
+  closeCapitalModal() {
+    this.isSubscribedModalOpen = false
+    this.subscribedShares = []
+  }
+
+  buildShareCapitalMap(): void {
+    this.shareCapitalMap.clear();
+    this.ShareCapitalList.forEach((capital: any) => {
+      this.shareCapitalMap.set(capital.share_class, capital);
+    });
+  }
+
+  openSubscribedModal(classOfShare: string): void {
+    this.isSubscribedModalOpen = true;
+    this.subscribedShares = [];
+
+    this.selectedShareCapital =
+      this.ShareCapitalList.find(
+        (sc: any) => sc.share_class === classOfShare
+      ) || null;
+
+    this.buildShareCapitalMap()
+    this.collectShares(this.shareholders, classOfShare, false);
+    this.collectShares(this.invitedShareholders, classOfShare, true);
+
+    this.calculateTotals();
+  }
+
+  collectShares(shareholders: any[], classOfShare: string, isInvited: boolean): void {
+    shareholders.forEach((holder: any) => {
+      holder.shareDetails?.forEach((share: any) => {
+        if (share.shareDetailsClassOfShares === classOfShare) {
+          const capital = this.shareCapitalMap.get(classOfShare);
+          this.subscribedShares.push({
+            classOfShares: classOfShare,
+            shareholderName: holder.name,
+            isInvited,
+            noOfShares: share.shareDetailsNoOfShares,
+            currency: capital?.currency ?? '-',
+            unitPrice: capital?.amount_share ?? 0,
+            totalAmount:
+              share.shareDetailsNoOfShares * (capital?.amount_share ?? 0)
+          });
+        }
+      });
+    });
+  }
+
+  private calculateTotals(): void {
+    this.totalSubscribedShares = this.subscribedShares.reduce(
+      (sum, row) => sum + row.noOfShares,
+      0
+    );
+
+    this.totalSubscribedAmount = this.subscribedShares.reduce(
+      (sum, row) => sum + row.totalAmount,
+      0
+    );
   }
 
 }
