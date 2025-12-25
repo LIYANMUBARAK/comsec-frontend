@@ -1507,49 +1507,34 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
   }
   initializeAddSharesForm() {
     this.addShareForm = this.fb.group({
-      class_of_shares: ['Ordinary', Validators.required],
+      class_of_shares: ['', Validators.required],
       total_shares_proposed: [null, Validators.required],
       currency: ['HKD', Validators.required],
       unit_price: [null, [Validators.required, Validators.min(0)]],
       total_amount: [{ value: 0, disabled: true }],
-      total_capital_subscribed: [
-        null,
-        [this.maxSubscribedValidator()]
-      ],
+      total_capital_subscribed: [null, Validators.required],
       unpaid_amount: [{ value: 0, disabled: true }],
       particulars_of_rights: [''],
     });
 
     // Subscribe to changes in unit price and total shares to calculate total amount
-    this.addShareForm.get('unit_price')?.valueChanges.subscribe(() => {
-      this.calculateTotalAmount();
-    });
+    const recalc = () => {
+      const maxAmount = this.updateTotalAmount();
 
-    this.addShareForm
-      .get('total_shares_proposed')
-      ?.valueChanges.subscribe(totalShares => {
-        if (this.lastValidSubscribed > totalShares) {
-          this.lastValidSubscribed = totalShares;
-          this.addShareForm
-            .get('total_capital_subscribed')
-            ?.setValue(totalShares, { emitEvent: false });
-        }
-
+      if (this.lastValidSubscribed > maxAmount) {
+        this.lastValidSubscribed = maxAmount;
         this.addShareForm
-          .get('unpaid_amount')
-          ?.setValue(
-            totalShares - this.lastValidSubscribed,
-            { emitEvent: false }
-          );
-      });
+          .get('total_capital_subscribed')
+          ?.setValue(maxAmount, { emitEvent: false });
+      }
 
+      this.addShareForm
+        .get('unpaid_amount')
+        ?.setValue(maxAmount - this.lastValidSubscribed, { emitEvent: false });
+    };
 
-
-
-    // Subscribe to changes in total amount and total capital subscribed to calculate unpaid amount
-    this.addShareForm.get('total_amount')?.valueChanges.subscribe(() => {
-      this.calculateUnpaidAmount();
-    });
+    this.addShareForm.get('total_shares_proposed')?.valueChanges.subscribe(recalc);
+    this.addShareForm.get('unit_price')?.valueChanges.subscribe(recalc);
 
     this.addShareForm
       .get('total_capital_subscribed')
@@ -1557,33 +1542,27 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
         const totalShares =
           Number(this.addShareForm.get('total_shares_proposed')?.value) || 0;
 
+        const unitPrice =
+          Number(this.addShareForm.get('unit_price')?.value) || 0;
+
+        const maxAmount = totalShares * unitPrice;
         const current = Number(value) || 0;
 
-        if (current > totalShares) {
+        if (current > maxAmount) {
           this.addShareForm
             .get('total_capital_subscribed')
-            ?.setValue(this.lastValidSubscribed, {
-              emitEvent: false
-            });
-
+            ?.setValue(this.lastValidSubscribed, { emitEvent: false });
           return;
         }
 
         this.lastValidSubscribed = current;
 
-        // Update unpaid amount
-        const unpaid = totalShares - current;
+        // update unpaid amount
         this.addShareForm
           .get('unpaid_amount')
-          ?.setValue(unpaid, { emitEvent: false });
+          ?.setValue(maxAmount - current, { emitEvent: false });
       });
 
-
-
-    // Ensure unpaid amount does not exceed total amount
-    this.addShareForm.get('unpaid_amount')?.valueChanges.subscribe(() => {
-      this.validateUnpaidAmount();
-    });
   }
 
   maxSubscribedValidator(): ValidatorFn {
@@ -1597,87 +1576,20 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
     };
   }
 
-
-  calculateTotalAmount() {
-    const unitPrice = this.addShareForm.get('unit_price')?.value || 0;
+  private updateTotalAmount(): number {
     const totalShares =
-      this.addShareForm.get('total_shares_proposed')?.value || 0;
+      Number(this.addShareForm.get('total_shares_proposed')?.value) || 0;
 
-    const totalAmount = unitPrice * totalShares;
+    const unitPrice =
+      Number(this.addShareForm.get('unit_price')?.value) || 0;
+
+    const totalAmount = totalShares * unitPrice;
+
     this.addShareForm
       .get('total_amount')
-      ?.setValue(totalAmount.toFixed(2), { emitEvent: false });
+      ?.setValue(totalAmount, { emitEvent: false });
 
-    // Recalculate unpaid amount when total amount changes
-    this.calculateUnpaidAmount();
-  }
-
-  calculateUnpaidAmount() {
-    const totalAmount =
-      parseFloat(this.addShareForm.get('total_amount')?.value) || 0;
-    let totalCapitalSubscribed =
-      parseFloat(this.addShareForm.get('total_capital_subscribed')?.value) || 0;
-    let unitPrice =
-      parseFloat(this.addShareForm.get('unit_price')?.value) || 0;
-    let totalShares =
-      parseFloat(this.addShareForm.get('total_shares_proposed')?.value) || 0;
-
-    // Ensure totalCapitalSubscribed does not exceed totalAmount
-    if ((totalCapitalSubscribed * unitPrice) > totalAmount) {
-      totalCapitalSubscribed = totalAmount;
-      this.addShareForm
-        .get('total_capital_subscribed')
-        ?.setValue(totalShares, { emitEvent: false });
-    }
-
-    let unpaidAmount = totalAmount - (totalCapitalSubscribed * unitPrice);
-    unpaidAmount = unpaidAmount < 0 ? 0 : unpaidAmount; // Ensure unpaid amount is not negative
-
-    this.addShareForm
-      .get('unpaid_amount')
-      ?.setValue(unpaidAmount.toFixed(2), { emitEvent: false });
-  }
-
-  maxValueValidator(getMax: () => number): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const value = Number(control.value);
-      const max = Number(getMax());
-
-      if (value > max) {
-        return { maxExceeded: { max } };
-      }
-      return null;
-    };
-  }
-
-  validateTotalCapitalSubscribed() {
-    const totalAmount =
-      parseFloat(this.addShareForm.get('total_amount')?.value) || 0;
-    let totalCapitalSubscribed =
-      parseFloat(this.addShareForm.get('total_capital_subscribed')?.value) || 0;
-    let totalShares =
-      parseFloat(this.addShareForm.get('total_shares_proposed')?.value) || 0;
-
-    if (totalCapitalSubscribed > totalAmount) {
-      this.addShareForm
-        .get('total_capital_subscribed')
-        ?.setValue(totalShares, { emitEvent: false });
-    }
-
-    this.calculateUnpaidAmount();
-  }
-
-  validateUnpaidAmount() {
-    const unpaidAmount =
-      parseFloat(this.addShareForm.get('unpaid_amount')?.value) || 0;
-    const totalAmount =
-      parseFloat(this.addShareForm.get('total_amount')?.value) || 0;
-
-    if (unpaidAmount > totalAmount) {
-      this.addShareForm
-        .get('unpaid_amount')
-        ?.setValue(totalAmount.toFixed(2), { emitEvent: false });
-    }
+    return totalAmount;
   }
 
   addSharesSubmit() {
