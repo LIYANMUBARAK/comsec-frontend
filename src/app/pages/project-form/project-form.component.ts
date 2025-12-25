@@ -39,6 +39,7 @@ import { Location } from '@angular/common';
 import { ThemeService } from '../../core/services/theme.service';
 import { ShareholderEditModalComponent } from '../edit/shareholder-edit-modal/shareholder-edit-modal.component';
 import { DirectorEditModalComponent } from '../edit/director-edit-modal/director-edit-modal.component';
+import { InfoDropdownComponent } from '../../shared/info-dropdown/info-dropdown.component';
 
 interface BuisnessNature {
   value: string;
@@ -57,6 +58,7 @@ interface BuisnessNature {
     SelectModule,
     ShareholderEditModalComponent,
     DirectorEditModalComponent,
+    InfoDropdownComponent
   ],
   templateUrl: './project-form.component.html',
   styleUrl: './project-form.component.css',
@@ -575,6 +577,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
   isDarkTheme: Boolean = false;
   private fb = inject(FormBuilder);
   isAuthenticated: Boolean = false;
+  
   ngOnInit() {
     this.initializeCompanyInfoForm();
     this.initializeAddSharesForm();
@@ -3922,4 +3925,5 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
       console.log('LocalStorage item removed on page exit.');
     }
   }
+  
 }

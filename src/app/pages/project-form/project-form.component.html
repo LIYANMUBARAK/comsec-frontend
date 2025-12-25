@@ -110,22 +110,32 @@
                         <label
                           class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 inline-flex items-center gap-2"
                           for=":R8pdf9la:-form-item"><span>Company Name
-                            (English):</span><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="lucide lucide-info"
-                            data-state="closed">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <path d="M12 16v-4"></path>
-                            <path d="M12 8h.01"></path>
-                          </svg>
+                            (English):</span>
+                          <app-info-dropdown>
+                            <div infoContent>
+                              <ul class="pl-5 list-disc space-y-2">
+                                <li>
+                                  A company name may be in English or in
+                                  Chinese. A company may also adopt both an
+                                  English name and a Chinese name. Please refer
+                                  to the
+                                  'Guideline on Registration of Company Names for Hong Kong Companies'
+                                  for the points to note when choosing a company
+                                  name.
+                                </li>
+                                <li>
+                                  The company name(s) stated in this Section
+                                  should be identical to the name(s) stated in
+                                  the Name Clause of the articles of the company
+                                  as required under section 81 of the Companies
+                                  Ordinance. An application for incorporation
+                                  with errors in the proposed company name(s)
+                                  may be rejected by the Companies Registry and
+                                  the lodgement fee paid will not be refunded.
+                                </li>
+                              </ul>
+                            </div>
+                          </app-info-dropdown>
                         </label>
                         <input
                           class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
@@ -174,15 +184,25 @@
                           class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 inline-flex items-center gap-2"
                           for=":R99df9la:-form-item">
                           <span>Select Type of Company:</span>
-                          <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                            height="20" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-info" data-state="closed">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <path d="M12 16v-4"></path>
-                            <path d="M12 8h.01"></path>
-                          </svg>
+                          <app-info-dropdown>
+                            <div infoContent>
+                              <ul class="space-y-2">
+                                <li>
+                                  A company is a 'private company' if its
+                                  articles restrict a member's right to transfer
+                                  shares, limit the number of members to 50, and
+                                  prohibit any invitation to the public to
+                                  subscribe for any shares or debentures of the
+                                  company; and it is not a company limited by
+                                  guarantee. A company is a 'public company' if
+                                  it is not a private company and not a company
+                                  limited by guarantee. Please seek independent
+                                  legal advice on the choice of an appropriate
+                                  type of company, if necessary.
+                                </li>
+                              </ul>
+                            </div>
+                          </app-info-dropdown>
                         </label>
                         <div role="radiogroup" aria-required="false" dir="ltr"
                           class="flex justify-start items-center gap-10"
@@ -315,21 +335,23 @@
                       <div class="space-y-2">
                         <label
                           class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 inline-flex items-center gap-2"
-                          for=":R9pdf9la:-form-item"><span>Address: </span><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="lucide lucide-info"
-                            data-state="closed">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <path d="M12 16v-4"></path>
-                            <path d="M12 8h.01"></path></svg></label><input
+                          for=":R9pdf9la:-form-item"><span>Address:
+                          </span><app-info-dropdown>
+                            <div infoContent>
+                              <ul class="space-y-2">
+                                <li>
+                                  Please provide the code and description of the
+                                  nature of proposed business of the company in
+                                  accordance with the categories of business
+                                  nature which are available from the Companies
+                                  Registry's website (www.cr.gov.hk). If the
+                                  company proposes to carry on more than one
+                                  category of business, please provide the major
+                                  category.
+                                </li>
+                              </ul>
+                            </div>
+                          </app-info-dropdown></label><input
                           class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                           placeholder="Flat / Floor / Block"
                           formControlName="Flat_Address"
@@ -592,21 +614,24 @@
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 inline-flex items-center gap-2"
                         for=":R39df9la:-form-item"><span>Choose how long period
                           of Business Registration
-                          Fee:</span><svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="20"
-                          height="20"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          class="lucide lucide-info"
-                          data-state="closed">
-                          <circle cx="12" cy="12" r="10"></circle>
-                          <path d="M12 16v-4"></path>
-                          <path d="M12 8h.01"></path></svg></label>
+                          Fee:</span>
+                        <app-info-dropdown>
+                          <div infoContent>
+                            <ul class="space-y-2">
+                              <li>
+                                According to sections 5A(1) and 5D(2) of the
+                                Business Registration Ordinance (Cap. 310), an
+                                applicant for company incorporation must deliver
+                                a Notice to Business Registration Office (IRBR1)
+                                and the prescribed business registration fee and
+                                levy together with this form. Otherwise, the
+                                application will be rejected by the Companies
+                                Registry
+                              </li>
+                            </ul>
+                          </div>
+                        </app-info-dropdown>
+                      </label>
                       <div
                         role="radiogroup"
                         aria-required="false"
@@ -668,22 +693,25 @@
                       <div class="flex flex-col space-y-1.5 p-6">
                         <h3
                           class="text-2xl font-semibold leading-none tracking-tight inline-flex items-center gap-2">
-                          <span>Presentor‘s Referance</span><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="28"
-                            height="28"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="lucide lucide-info"
-                            data-state="closed">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <path d="M12 16v-4"></path>
-                            <path d="M12 8h.01"></path>
-                          </svg>
+                          <span>Presentor‘s Referance</span>
+                          <app-info-dropdown>
+                            <div infoContent>
+                              <ul class="space-y-2">
+                                <li>
+                                  Please complete the Presentor's Reference.
+                                  Unless the presentor needs to raise a specific
+                                  issue for the attention of the Companies
+                                  Registry, no covering letter is required. The
+                                  Companies Registry will notify the presentor
+                                  by email or fax to collect the Certificate of
+                                  Incorporation and Business Registration
+                                  Certificate in person. A written authorization
+                                  will be required if the presentor sends a
+                                  representative to collect the certificates.
+                                </li>
+                              </ul>
+                            </div>
+                          </app-info-dropdown>
                         </h3>
                         <p class="text-sm text-muted-foreground">
                           Please enter info on Presentor‘s Referance
@@ -752,17 +780,6 @@
                               class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 inline-flex items-center gap-2"
                               for="presentorFlatFloor">
                               <span>Address: </span>
-                              <svg xmlns="http://www.w3.org/2000/svg"
-                                width="20" height="20" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round"
-                                class="lucide lucide-info"
-                                data-state="closed">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <path d="M12 16v-4"></path>
-                                <path d="M12 8h.01"></path>
-                              </svg>
                             </label>
                             <input
                               class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
@@ -1383,7 +1400,8 @@
 
                                       <span>
                                         <strong>Total Amount:</strong>
-                                        {{ selectedShareCapital?.total_share * selectedShareCapital?.amount_share }}
+                                        {{ selectedShareCapital?.total_share *
+                                        selectedShareCapital?.amount_share }}
                                       </span>
                                     </div>
                                   </div>

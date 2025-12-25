@@ -1,0 +1,31 @@
+<span
+  class="relative inline-flex"
+  (mouseenter)="onEnter()"
+  (mouseleave)="onLeave()"
+>
+
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    class="lucide lucide-info text-gray-700"
+  >
+    <circle cx="12" cy="12" r="10"></circle>
+    <path d="M12 16v-4"></path>
+    <path d="M12 8h.01"></path>
+  </svg>
+
+  <!-- Dropdown -->
+  <div
+    *ngIf="isOpen"
+    class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-96 bg-white border border-gray-200 rounded-md shadow-lg py-4 px-2 text-sm text-gray-700 z-50"
+  >
+    <ng-content select="[infoContent]"></ng-content>
+  </div>
+</span>
