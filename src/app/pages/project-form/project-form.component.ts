@@ -137,6 +137,8 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
   totalSubscribedAmount: number = 0;
   private shareCapitalMap = new Map<string, any>();
   selectedShareCapital: any = null;
+  private lastValidSubscribed = 0;
+
 
   selectedShareClass1: string = '';
   selectedUnpaidAmount1: number | null = null;
@@ -1506,17 +1508,13 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
   initializeAddSharesForm() {
     this.addShareForm = this.fb.group({
       class_of_shares: ['Ordinary', Validators.required],
-      total_shares_proposed: ['', Validators.required],
+      total_shares_proposed: [null, Validators.required],
       currency: ['HKD', Validators.required],
       unit_price: [null, [Validators.required, Validators.min(0)]],
-      total_amount: [{ value: null, disabled: true }],
+      total_amount: [{ value: 0, disabled: true }],
       total_capital_subscribed: [
         null,
-        [
-          this.maxValueValidator(() =>
-            this.addShareForm?.get('total_shares_proposed')?.value || 0
-          )
-        ]
+        [this.maxSubscribedValidator()]
       ],
       unpaid_amount: [{ value: 0, disabled: true }],
       particulars_of_rights: [''],
@@ -1529,11 +1527,23 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
 
     this.addShareForm
       .get('total_shares_proposed')
-      ?.valueChanges.subscribe(() => {
+      ?.valueChanges.subscribe(totalShares => {
+        if (this.lastValidSubscribed > totalShares) {
+          this.lastValidSubscribed = totalShares;
+          this.addShareForm
+            .get('total_capital_subscribed')
+            ?.setValue(totalShares, { emitEvent: false });
+        }
+
         this.addShareForm
-          .get('total_capital_subscribed')
-          ?.updateValueAndValidity();
+          .get('unpaid_amount')
+          ?.setValue(
+            totalShares - this.lastValidSubscribed,
+            { emitEvent: false }
+          );
       });
+
+
 
 
     // Subscribe to changes in total amount and total capital subscribed to calculate unpaid amount
@@ -1543,15 +1553,50 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
 
     this.addShareForm
       .get('total_capital_subscribed')
-      ?.valueChanges.subscribe(() => {
-        this.validateTotalCapitalSubscribed();
+      ?.valueChanges.subscribe(value => {
+        const totalShares =
+          Number(this.addShareForm.get('total_shares_proposed')?.value) || 0;
+
+        const current = Number(value) || 0;
+
+        if (current > totalShares) {
+          this.addShareForm
+            .get('total_capital_subscribed')
+            ?.setValue(this.lastValidSubscribed, {
+              emitEvent: false
+            });
+
+          return;
+        }
+
+        this.lastValidSubscribed = current;
+
+        // Update unpaid amount
+        const unpaid = totalShares - current;
+        this.addShareForm
+          .get('unpaid_amount')
+          ?.setValue(unpaid, { emitEvent: false });
       });
+
+
 
     // Ensure unpaid amount does not exceed total amount
     this.addShareForm.get('unpaid_amount')?.valueChanges.subscribe(() => {
       this.validateUnpaidAmount();
     });
   }
+
+  maxSubscribedValidator(): ValidatorFn {
+    return (control: AbstractControl) => {
+      const totalShares =
+        Number(this.addShareForm?.get('total_shares_proposed')?.value) || 0;
+
+      return Number(control.value) > totalShares
+        ? { exceedsTotalShares: true }
+        : null;
+    };
+  }
+
 
   calculateTotalAmount() {
     const unitPrice = this.addShareForm.get('unit_price')?.value || 0;
@@ -1636,12 +1681,6 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
   }
 
   addSharesSubmit() {
-    console.log('Form Values: ', this.addShareForm.value);
-    console.log('Form Raw Values: ', this.addShareForm.getRawValue());
-    console.log(
-      'Currency Control Value: ',
-      this.addShareForm.get('currency')?.value
-    );
     const userId = localStorage.getItem('userId');
     Object.keys(this.addShareForm.controls).forEach((key) => {
       const control = this.addShareForm.get(key);
