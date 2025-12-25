@@ -577,7 +577,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
   isDarkTheme: Boolean = false;
   private fb = inject(FormBuilder);
   isAuthenticated: Boolean = false;
-  
+
   ngOnInit() {
     this.initializeCompanyInfoForm();
     this.initializeAddSharesForm();
@@ -3584,7 +3584,8 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
       this.shareRows[index].maxAmount =
         remainingShares > 0 ? remainingShares : 0;
 
-      this.shareRows[index].unpaidAmount = 0;
+      this.shareRows[index].unpaidAmount =
+        remainingShares > 0 ? remainingShares : 0;
     } else {
       this.shareRows[index].unpaidAmount = null;
       this.shareRows[index].maxAmount = null;
@@ -3648,7 +3649,8 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
         remainingShares > 0 ? remainingShares : 0;
 
       // reset input when class changes
-      this.shareRows2[index].unpaidAmount = 0;
+      this.shareRows2[index].unpaidAmount =
+        remainingShares > 0 ? remainingShares : 0;
     } else {
       this.shareRows2[index].unpaidAmount = null;
       this.shareRows2[index].maxAmount = null;
@@ -3925,5 +3927,5 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
       console.log('LocalStorage item removed on page exit.');
     }
   }
-  
+
 }
