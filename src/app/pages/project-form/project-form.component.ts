@@ -201,6 +201,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
     { name: 'Egypt', code: '+20' },
     { name: 'France', code: '+33' },
     { name: 'Germany', code: '+49' },
+    { name: 'Hong Kong', code: '+852' },
     { name: 'India', code: '+91' },
     { name: 'Japan', code: '+81' },
     { name: 'Spain', code: '+34' },
@@ -3668,7 +3669,6 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
     this.shareHoldersForm.get('shareDetailsNoOfShares')?.markAsTouched();
   }
 
-
   onShareAmountChange2(amount: any, index: number): void {
     const numericAmount = amount === '' || amount === null ? null : Number(amount);
 
@@ -3681,7 +3681,6 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
       this.inviteShareholderForm.get('shareDetailsNoOfShares')?.markAsTouched();
     }
   }
-
 
   // Keep your existing individual functions if still needed
   onShareClassChange1(event: any) {
