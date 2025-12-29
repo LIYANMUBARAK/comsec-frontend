@@ -245,8 +245,8 @@
                     </div>
 
                     <!-- Phone Input -->
-                    <div class="w-full">
-                      <div class="flex">
+                    <div class="flex flex-col PhoneInput">
+                      <!-- <div class="flex">
                         <button
                           class="items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border border-input bg-transparent hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 flex gap-1 rounded-e-none rounded-s-lg pr-1 pl-3"
                           type="button"
@@ -274,6 +274,66 @@
                       <div class="error-message text-red-500 text-xs"
                         *ngIf="editShareholderForm.get('phone')?.touched && editShareholderForm.get('phone')?.errors">
                         {{ getErrorMessage("phone") }}
+                      </div> -->
+                      <div class="flex relative">
+                        <button
+                          class="items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-transparent hover:bg-accent hover:text-accent-foreground h-10 px-2 py-2 flex gap-1 rounded-e-none rounded-s-lg"
+                          type="button"
+                          aria-haspopup="dialog"
+                          aria-expanded="false"
+                          aria-controls="radix-:Rdapdf9la:"
+                          data-state="closed"
+                          (click)="toggleDropdown('telephone1')">
+                          <p
+                            *ngIf="dropdowns['telephone1'].selected">{{
+                            dropdowns['telephone1'].selected }}</p>
+                          <!-- Dropdown Arrow -->
+                          <svg
+                            class="pointer-events-none text-gray-500 w-4 h-4"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </button>
+
+                        <ul
+                          *ngIf="dropdowns['telephone1'].isOpen"
+                          class="absolute left-0 mt-2 w-40 bg-white border border-gray-200 rounded shadow-lg z-50 top-8">
+                          <li
+                            *ngFor="let item of countries"
+                            (click)="selectItem('telephone1', item.code)"
+                            class="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                            ({{ item.code }}) {{ item.name }}
+                          </li>
+                        </ul>
+
+                        <input
+                          type="tel"
+                          class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 rounded-s-none rounded-e-lg PhoneInputInput"
+                          autocomplete="tel"
+                          placeholder="Enter a phone number"
+                          formControlName="phone"
+                          id="companyTel"
+                          name="companyTel"
+                          (keypress)="onlyNumber($event)" />
+
+                      </div>
+
+                      <!-- Error message should appear below the input -->
+                      <div
+                        *ngIf="
+                              (editShareholderForm.get('phone')?.touched ||
+                                editShareholderForm.get('phone')?.dirty) &&
+                              editShareholderForm.get('phone')?.invalid
+                            "
+                        class="text-danger">
+                        <small>{{ getErrorMessage('phone')
+                          }}</small>
                       </div>
                     </div>
                   </div>
@@ -300,12 +360,13 @@
             <!-- Class of Shares Dropdown -->
             <select
               id="editClass-{{ i }}"
-              formControlName="shareDetailsNoOfShares"
-              class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm">
-              <option value disabled selected>Select Class of Shares</option>
+              formControlName="shareDetailsClassOfShares"
+              class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm"
+              (change)="onShareClassChange(i)">
+              <option value disabled>Select Class of Shares</option>
               <option
                 *ngFor="let share of shareholder.shareDetails"
-                [value]="share.share_class || share.shareDetailsNoOfShares">
+                [value]="share.share_class || share.shareDetailsClassOfShares">
                 {{ share.share_class || share.shareDetailsClassOfShares }}
               </option>
             </select>

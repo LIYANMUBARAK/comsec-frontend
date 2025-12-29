@@ -40,7 +40,7 @@ export class ShareholderEditModalComponent implements OnInit {
     this.editShareholderForm = this.fb.group({
       surname: ["", [Validators.required, Validators.minLength(3)]],
       name: ["", [Validators.required, Validators.minLength(3)]],
-      chineeseName: ["", [Validators.minLength(3)]],
+      chineeseName: [""],
       idNo: [""],
       idProof: [""],
       userType: ["person", Validators.required],
@@ -63,6 +63,7 @@ export class ShareholderEditModalComponent implements OnInit {
   }
 
   ngOnChanges(): void {
+    console.log(this.shareholder)
     if (this.shareholder) {
       const shareDetailsArray = this.editShareholderForm.get('shareDetails') as FormArray;
       shareDetailsArray.clear();
@@ -71,6 +72,7 @@ export class ShareholderEditModalComponent implements OnInit {
           this.fb.group({
             shareDetailsClassOfShares: [detail.shareDetailsClassOfShares],
             shareDetailsNoOfShares: [detail.shareDetailsNoOfShares],
+            maxAllowedShares: [0]
           })
         );
       });
@@ -93,6 +95,14 @@ export class ShareholderEditModalComponent implements OnInit {
         shareDetails: this.shareholder.shareDetails,
       })
 
+      this.shareDetailsFormArray.controls.forEach((row, index) => {
+        row
+          .get('shareDetailsNoOfShares')
+          ?.valueChanges.subscribe((value) => {
+            this.enforceShareLimit(index, value);
+          });
+      });
+
       console.log("Form after patching:", this.editShareholderForm.value);
       // Set image previews if available
       if (this.shareholder.idProof) {
@@ -104,6 +114,48 @@ export class ShareholderEditModalComponent implements OnInit {
 
       // Update form validation based on user type
       this.updateFormValidation(this.shareholder.userType)
+    }
+
+    this.applyInitialShareLimits();
+  }
+
+  applyInitialShareLimits(): void {
+    const remainingByClass = this.shareholder.total;
+
+    this.shareDetailsFormArray.controls.forEach((row) => {
+      const selectedClass = row.get('shareDetailsClassOfShares')?.value;
+      if (!selectedClass) return;
+
+      const remaining = remainingByClass[selectedClass] || 0;
+      const currentValue = Number(row.get('shareDetailsNoOfShares')?.value) || 0;
+      row.patchValue(
+        {
+          maxAllowedShares: remaining,
+          shareDetailsNoOfShares: Math.min(currentValue, remaining)
+        },
+        { emitEvent: false }
+      );
+    });
+  }
+
+  enforceShareLimit(index: number, value: number): void {
+    const row = this.shareDetailsFormArray.at(index);
+    const max = row.get('maxAllowedShares')?.value;
+
+    if (max == null || value == null) return;
+
+    if (value > max) {
+      row.patchValue(
+        { shareDetailsNoOfShares: max },
+        { emitEvent: false }
+      );
+    }
+
+    if (value < 0) {
+      row.patchValue(
+        { shareDetailsNoOfShares: 0 },
+        { emitEvent: false }
+      );
     }
   }
 
@@ -131,9 +183,6 @@ export class ShareholderEditModalComponent implements OnInit {
     } else {
       surnameControl?.setValidators([Validators.required, Validators.minLength(3)]);
       nameControl?.setValidators([Validators.required, Validators.minLength(3)]);
-
-      // Restore validation for address proof
-      addressProofControl?.setValidators([Validators.required]);
     }
 
     // Update all controls
@@ -141,6 +190,23 @@ export class ShareholderEditModalComponent implements OnInit {
     chineseNameControl?.updateValueAndValidity();
     addressProofControl?.updateValueAndValidity();
     nameControl?.updateValueAndValidity();
+  }
+
+  onShareClassChange(index: number): void {
+    const row = this.shareDetailsFormArray.at(index);
+    const selectedClass = row.get('shareDetailsClassOfShares')?.value;
+    if (!selectedClass) return;
+
+    const remainingByClass = this.shareholder.total;
+    const remaining = remainingByClass[selectedClass] || 0;
+
+    row.patchValue(
+      {
+        maxAllowedShares: remaining,
+        shareDetailsNoOfShares: 0
+      },
+      { emitEvent: false }
+    );
   }
 
 
@@ -200,10 +266,6 @@ export class ShareholderEditModalComponent implements OnInit {
       control?.markAsTouched();
     });
 
-    // Check overall form validity
-    console.log("Form Errors:", this.editShareholderForm.value);
-    console.log("Form Valid:", !this.editShareholderForm.invalid); // Should be true if valid
-
     // Identify specific invalid fields
     const invalidFields: any = {};
     Object.keys(this.editShareholderForm.controls).forEach((key) => {
@@ -212,9 +274,6 @@ export class ShareholderEditModalComponent implements OnInit {
         invalidFields[key] = control.errors;
       }
     });
-
-    // Log invalid fields and their errors
-    console.log("Invalid Fields:", invalidFields);
 
     if (this.editShareholderForm.invalid) {
       this.isLoading = false;
@@ -262,6 +321,53 @@ export class ShareholderEditModalComponent implements OnInit {
         });
       },
     });
+  }
+
+  dropdowns: { [key: string]: { isOpen: boolean; selected: string | null } } = {
+    telephone1: { isOpen: false, selected: '+91' },
+    telephone2: { isOpen: false, selected: '+91' },
+  };
+
+  countries = [
+    { name: 'Australia', code: '+61' },
+    { name: 'Brazil', code: '+55' },
+    { name: 'China', code: '+86' },
+    { name: 'Egypt', code: '+20' },
+    { name: 'France', code: '+33' },
+    { name: 'Germany', code: '+49' },
+    { name: 'Hong Kong', code: '+852' },
+    { name: 'India', code: '+91' },
+    { name: 'Japan', code: '+81' },
+    { name: 'Spain', code: '+34' },
+    { name: 'United States', code: '+1' },
+  ];
+
+  toggleDropdown(field: string) {
+    this.dropdowns[field].isOpen = !this.dropdowns[field].isOpen;
+
+    Object.keys(this.dropdowns).forEach(key => {
+      if (key !== field) this.dropdowns[key].isOpen = false;
+    });
+  }
+
+  selectItem(field: string, item: string) {
+    this.dropdowns[field].selected = item;
+    this.dropdowns[field].isOpen = false;
+
+    switch (field) {
+      case 'telephone1':
+        this.editShareholderForm.patchValue({ phone: item });
+        break;
+    }
+  }
+
+  onlyNumber(event: KeyboardEvent) {
+    const pattern = /[0-9]/;
+    const inputChar = event.key;
+
+    if (!pattern.test(inputChar)) {
+      event.preventDefault();
+    }
   }
 
   close() {

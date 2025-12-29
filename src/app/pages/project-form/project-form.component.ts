@@ -1964,6 +1964,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
   }
 
   openEditModal(shareholder: any) {
+    shareholder.total = this.getRemainingSharesByClass()
     this.selectedShareholder = shareholder;
     this.isEditModalOpen = true;
   }
@@ -2137,11 +2138,6 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // Debug: Log form status and errors
-    console.log('Form valid:', this.shareHoldersForm.valid);
-    console.log('Form values:', this.shareHoldersForm.value);
-    console.log('Share rows:', this.shareRows);
-
     const formErrors = this.getFormValidationErrors();
     console.log('Form validation errors:', formErrors);
 
@@ -2287,7 +2283,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
         this.companyService.deleteShareholder(shareholderId).subscribe({
           next: (response) => {
             Swal.fire('Deleted!', response.message, 'success');
-            this.getShareHoldersList(); // Refresh the list
+            this.getShareHoldersList();
           },
           error: (error) => {
             Swal.fire(
@@ -3546,8 +3542,6 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
         shareDetailsNoOfShares: null,
       });
     }
-
-    console.log('Removed share row. Remaining rows:', this.shareRows.length);
   }
 
   onShareAmountChange(amount: any, index: number): void {
@@ -3563,7 +3557,6 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
       });
       this.shareHoldersForm.get('shareDetailsNoOfShares')?.markAsTouched();
     }
-
   }
 
   onShareClassChange(event: any, index: number): void {
@@ -3572,7 +3565,6 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
     const selectedShare = this.shareCapitalList.find(
       (share) => share.share_class === selectedClass
     );
-
     this.shareRows[index].shareClass = selectedClass;
 
     if (selectedShare) {
@@ -3919,6 +3911,45 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
     return total;
   }
 
+  getAllocatedSharesByClass(): Record<string, number> {
+    const result: Record<string, number> = {};
+
+    const accumulate = (holders: any[]) => {
+      holders.forEach((holder: any) => {
+        holder.shareDetails?.forEach((share: any) => {
+          const className = share.shareDetailsClassOfShares;
+          const count = Number(share.shareDetailsNoOfShares) || 0;
+
+          if (!className) return;
+
+          result[className] = (result[className] || 0) + count;
+        });
+      });
+    };
+
+    // Existing shareholders
+    accumulate(this.shareholders);
+
+    // Invited shareholders
+    accumulate(this.invitedShareholders);
+
+    return result;
+  }
+
+  getRemainingSharesByClass(): Record<string, number> {
+    const allocated = this.getAllocatedSharesByClass();
+    const remaining: Record<string, number> = {};
+
+    this.shareCapitalList.forEach((capital: any) => {
+      const className = capital.share_class;
+      const totalShares = Number(capital.total_share) || 0;
+      const usedShares = allocated[className] || 0;
+
+      remaining[className] = Math.max(totalShares - usedShares, 0);
+    });
+
+    return remaining;
+  }
 
   ngOnDestroy(): void {
     if (this.isNavigatingAway) {
