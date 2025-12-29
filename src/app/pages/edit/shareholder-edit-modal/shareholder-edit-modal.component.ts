@@ -136,7 +136,6 @@ export class ShareholderEditModalComponent implements OnInit {
       row.patchValue(
         {
           maxAllowedShares: remaining,
-          shareDetailsNoOfShares: patchedValue
         },
         { emitEvent: false }
       );
