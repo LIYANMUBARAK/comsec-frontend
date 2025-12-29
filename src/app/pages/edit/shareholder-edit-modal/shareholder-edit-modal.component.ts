@@ -63,7 +63,6 @@ export class ShareholderEditModalComponent implements OnInit {
   }
 
   ngOnChanges(): void {
-    console.log(this.shareholder)
     if (this.shareholder) {
       const shareDetailsArray = this.editShareholderForm.get('shareDetails') as FormArray;
       shareDetailsArray.clear();
@@ -127,16 +126,23 @@ export class ShareholderEditModalComponent implements OnInit {
       if (!selectedClass) return;
 
       const remaining = remainingByClass[selectedClass] || 0;
-      const currentValue = Number(row.get('shareDetailsNoOfShares')?.value) || 0;
+      const currentValue = row.get('shareDetailsNoOfShares')?.value;
+
+      const patchedValue =
+        currentValue != null && currentValue > remaining
+          ? remaining
+          : currentValue;
+
       row.patchValue(
         {
           maxAllowedShares: remaining,
-          shareDetailsNoOfShares: Math.min(currentValue, remaining)
+          shareDetailsNoOfShares: patchedValue
         },
         { emitEvent: false }
       );
     });
   }
+
 
   enforceShareLimit(index: number, value: number): void {
     const row = this.shareDetailsFormArray.at(index);
