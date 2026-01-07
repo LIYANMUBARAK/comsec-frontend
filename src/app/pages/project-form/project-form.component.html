@@ -2087,9 +2087,20 @@
                                 <button class="h-10 px-4 py-2 hover:bg-accent"
                                   (click)="viewShareDetails(shareholder)">View
                                   Shares</button>
-
                               </td>
-                              <td class="p-4 align-middle"></td>
+                              <td class="p-4 align-middle">
+                                <button
+                                  class="h-10 px-4 py-2 border hover:bg-accent"
+                                  (click)="openInvitedEditModal(shareholder)">
+                                  <svg width="24" height="24" fill="none"
+                                    stroke="currentColor">
+
+                                    <path
+                                      d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
+                                    <path d="m15 5 4 4"></path>
+                                  </svg>
+                                </button>
+                              </td>
                               <td class="p-4 align-middle"></td>
                             </tr>
                           </ng-container>
@@ -2112,6 +2123,165 @@
                         (closeModal)="closeEditModal()"
                         (shareholderUpdated)="onShareholderUpdated($event)">
                       </app-shareholder-edit-modal>
+
+                      <ng-container *ngIf="isInvitedEditModalOpen">
+                        <div
+                          class="fixed inset-0 flex items-center justify-center z-50">
+                          <div class="fixed inset-0 bg-black opacity-50"
+                            (click)="closeInvitedEditModal()"></div>
+                          <div
+                            class="w-full bg-white rounded-xl p-6 max-w-xl relative z-10">
+                            <!-- Close button -->
+                            <button (click)="closeInvitedEditModal()"
+                              class="text-gray-500 hover:text-gray-700 absolute top-6 right-6">
+                              <svg width="24" height="24" fill="none"
+                                stroke="currentColor">
+                                <path d="M18 6L6 18M6 6l12 12" stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"></path>
+                              </svg>
+                            </button>
+
+                            <!-- Modal content -->
+                            <h2 class="text-xl font-semibold mb-2">Edit Invited
+                              Shareholder</h2>
+
+                            <!-- Share details table -->
+                            <form [formGroup]="inviteShareholderForm"
+                              (ngSubmit)="submitInvitedShareholder()">
+                              <!-- First Table -->
+                              <div class="relative w-full overflow-auto">
+                                <table class="w-full caption-bottom text-sm">
+                                  <thead class="[&amp;_tr]:border-b">
+                                    <tr
+                                      class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                      <th
+                                        class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                        <label
+                                          class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                          for="name">Name</label>
+                                      </th>
+                                      <th
+                                        class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                        <label
+                                          class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                          for="email">Email</label>
+                                      </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody class="[&amp;_tr:last-child]:border-0">
+                                    <tr
+                                      class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                      <td
+                                        class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                                        <div class="space-y-2">
+                                          <input
+                                            class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                            placeholder="Name Eg: James"
+                                            id=":rk2:-form-item"
+                                            aria-describedby=":rk2:-form-item-description"
+                                            aria-invalid="false"
+                                            name="name"
+                                            formControlName="name" />
+                                          <div
+                                            class="error-message"
+                                            *ngIf="getErrorMessage3('name')">
+                                            {{ getErrorMessage3("name") }}
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td
+                                        class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                                        <div class="space-y-2">
+                                          <input
+                                            class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                            placeholder="Eg: xyz@email.com"
+                                            id=":rk3:-form-item"
+                                            aria-describedby=":rk3:-form-item-description"
+                                            aria-invalid="false"
+                                            type="email"
+                                            name="email"
+                                            formControlName="email" />
+                                          <div
+                                            class="error-message"
+                                            *ngIf="getErrorMessage3('email')">
+                                            {{ getErrorMessage3("email") }}
+                                          </div>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+
+                              <!-- Share Details Section -->
+                              <div formArrayName="shareDetails"
+                                class="mt-6 space-y-4">
+                                <!-- Labels (show only once) -->
+                                <div
+                                  class="grid grid-cols-1 md:grid-cols-2 gap-4 font-medium text-sm text-gray-700">
+                                  <label>+ Class of Shares</label>
+                                  <label>Number of Shares</label>
+                                </div>
+
+                                <!-- Dynamic Rows -->
+                                <div
+                                  *ngFor="let detail of shareDetailsFormArray.controls; let i = index"
+                                  [formGroupName]="i"
+                                  class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+                                  <!-- Class of Shares Dropdown -->
+                                  <select
+                                    id="editClass-{{ i }}"
+                                    formControlName="shareDetailsClassOfShares"
+                                    class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm"
+                                    (change)="onInvitedShareClassChange(i)">
+                                    <option value disabled>Select Class of
+                                      Shares</option>
+                                    <option
+                                      *ngFor="let share of selectedShareholder.shareDetails"
+                                      [value]="share.share_class || share.shareDetailsClassOfShares">
+                                      {{ share.share_class ||
+                                      share.shareDetailsClassOfShares }}
+                                    </option>
+                                  </select>
+
+                                  <!-- Number of Shares Input -->
+                                  <input
+                                    class="flex h-10 w-full rounded-md border px-3 py-2 text-sm"
+                                    formControlName="shareDetailsNoOfShares"
+                                    placeholder="Number of Shares"
+                                    type="number" />
+                                </div>
+
+                                <!-- Optional Error Messages (per-row or global) -->
+                                <div
+                                  class="error-message text-red-500 text-xs"
+                                  *ngIf="inviteShareholderForm.get('shareDetails')?.invalid && inviteShareholderForm.touched">
+                                  Please fill all required fields.
+                                </div>
+                              </div>
+
+                              <!-- Form Actions -->
+                              <div class="mt-6 flex justify-end gap-4">
+                                <button
+                                  type="button"
+                                  class="px-4 py-2 border rounded-md hover:bg-gray-100"
+                                  (click)="closeInvitedEditModal()">
+                                  Cancel
+                                </button>
+                                <button
+                                  type="submit"
+                                  class="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90"
+                                  [disabled]="isLoading">
+                                  <span *ngIf="isLoading">Updating...</span>
+                                  <span *ngIf="!isLoading">Update
+                                    Shareholder</span>
+                                </button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </ng-container>
                     </div>
                   </div>
 
@@ -2250,8 +2420,10 @@
                                     </th>
                                     <th
                                       class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
-                                      {{ shareHoldersForm.get('userType')?.value
-                                      === 'person' ? 'Name' : 'Company Name' }}
+                                      {{
+                                      shareHoldersForm.get('userType')?.value
+                                      === 'person' ? 'Name' : 'Company Name'
+                                      }}
                                     </th>
                                     <th
                                       class="h-12 px-4 text-left align-middle font-medium text-muted-foreground"
@@ -2260,7 +2432,8 @@
                                     </th>
                                     <th
                                       class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
-                                      {{ shareHoldersForm.get('userType')?.value
+                                      {{
+                                      shareHoldersForm.get('userType')?.value
                                       === 'person' ? 'ID/Passport No.' :
                                       'BR No.' }} / Upload a Copy
                                     </th>
@@ -2507,7 +2680,8 @@
                                           (change)="onImageSelectedAddress($event)" />
                                         <div class="error-message"
                                           *ngIf="getErrorMessage2('addressProof')">
-                                          {{ getErrorMessage2("addressProof") }}
+                                          {{ getErrorMessage2("addressProof")
+                                          }}
                                         </div>
                                         <div *ngIf="addressProofPreview"
                                           class="mt-2">
@@ -2531,7 +2705,8 @@
                                             type="email"
                                             name="email"
                                             formControlName="email" />
-                                          <div class="error-message text-danger"
+                                          <div
+                                            class="error-message text-danger"
                                             *ngIf="getErrorMessage2('email')">
                                             {{ getErrorMessage2("email") }}
                                           </div>
@@ -2586,7 +2761,8 @@
                                               </li>
                                             </ul>
                                           </div>
-                                          <div class="error-message text-danger"
+                                          <div
+                                            class="error-message text-danger"
                                             *ngIf="getErrorMessage2('phone')">
                                             {{ getErrorMessage2("phone") }}
                                           </div>
@@ -2727,7 +2903,8 @@
                                     <circle class="opacity-25" cx="12" cy="12"
                                       r="10" stroke="currentColor"
                                       stroke-width="4"></circle>
-                                    <path class="opacity-75" fill="currentColor"
+                                    <path class="opacity-75"
+                                      fill="currentColor"
                                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                   </svg>
                                 </span>
@@ -3032,11 +3209,13 @@
                                     <circle class="opacity-25" cx="12" cy="12"
                                       r="10" stroke="currentColor"
                                       stroke-width="4"></circle>
-                                    <path class="opacity-75" fill="currentColor"
+                                    <path class="opacity-75"
+                                      fill="currentColor"
                                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                   </svg>
                                 </span>
-                                {{ isInviteLoading ? 'Processing...' : 'Invite'
+                                {{ isInviteLoading ? 'Processing...' :
+                                'Invite'
                                 }}
                               </button>
                             </div>

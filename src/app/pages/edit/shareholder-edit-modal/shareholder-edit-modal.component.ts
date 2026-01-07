@@ -119,6 +119,7 @@ export class ShareholderEditModalComponent implements OnInit {
   }
 
   applyInitialShareLimits(): void {
+    if (!this.shareholder.total) return;
     const remainingByClass = this.shareholder.total;
 
     this.shareDetailsFormArray.controls.forEach((row) => {

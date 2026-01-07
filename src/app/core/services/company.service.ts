@@ -360,4 +360,8 @@ updateCurrentStage(payload: any): Observable<any>  {
   getPayload(): any {
     return this.payloadSubject.asObservable();
   }
+
+  updateInvitedShareholderShares(shareholderId: string, shareDetails: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}company/updateInvitedShareholder/${shareholderId}`, { shareDetails });
+  }
 }

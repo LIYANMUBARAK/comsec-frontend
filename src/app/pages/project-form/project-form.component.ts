@@ -105,6 +105,7 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
   imagePreview: string | null = null;
   selectedShareholder: any | null = null;
   isEditModalOpen = false;
+  isInvitedEditModalOpen = false;
   imagePreviewDirectorsId: string | ArrayBuffer | null = null;
   imagePreviewDirectorsAddressProof: string | ArrayBuffer | null = null;
   imagePreviewCompanySecretaryId: string | ArrayBuffer | null = null;
@@ -1965,8 +1966,10 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
 
   openEditModal(shareholder: any) {
     shareholder.total = this.getRemainingSharesByClass()
-    this.selectedShareholder = shareholder;
-    this.isEditModalOpen = true;
+    if (shareholder.total) {
+      this.selectedShareholder = shareholder;
+      this.isEditModalOpen = true;
+    }
   }
 
   closeEditModal() {
@@ -2635,10 +2638,12 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
       name: ['', Validators.required],
       email: ['', Validators.required],
       password: [''],
-      shareDetails: this.fb.group([{
-        shareDetailsNoOfShares: ['', Validators.required],
-        shareDetailsClassOfShares: ['', Validators.required],
-      }]),
+      shareDetails: this.fb.array([
+        this.fb.group({
+          shareDetailsNoOfShares: ['', Validators.required],
+          shareDetailsClassOfShares: ['', Validators.required],
+        })
+      ]),
     });
   }
 
@@ -3951,9 +3956,147 @@ export class ProjectFormComponent implements OnInit, OnDestroy {
     return remaining;
   }
 
+  applyInitialShareLimits(): void {
+    const remainingByClass = this.selectedShareholder.total;
+    this.shareDetailsFormArray.controls.forEach((row) => {
+      const selectedClass = row.get('shareDetailsClassOfShares')?.value;
+      const remaining = remainingByClass[selectedClass] || 0;
+      const currentValue = row.get('shareDetailsNoOfShares')?.value;
+
+      const patchedValue =
+        currentValue != null && currentValue > remaining
+          ? remaining
+          : currentValue;
+
+      row.patchValue(
+        {
+          maxAllowedShares: remaining,
+        },
+        { emitEvent: false }
+      );
+    });
+  }
+
+  openInvitedEditModal(shareholder: any) {
+    this.selectedShareholder = shareholder;
+    const shareDetailsArray = this.inviteShareholderForm.get('shareDetails') as FormArray;
+    shareDetailsArray.clear();
+    if (this.selectedShareholder.shareDetails) {
+      this.selectedShareholder.shareDetails.forEach((detail: any) => {
+        shareDetailsArray.push(
+          this.fb.group({
+            shareDetailsClassOfShares: [detail.shareDetailsClassOfShares],
+            shareDetailsNoOfShares: [detail.shareDetailsNoOfShares],
+            maxAllowedShares: [0]
+          })
+        );
+      });
+    }
+    shareholder.total = this.getRemainingSharesByClass()
+    this.inviteShareholderForm.patchValue({
+      name: this.selectedShareholder.name,
+      email: this.selectedShareholder.email,
+      shareDetails: this.selectedShareholder.shareDetails,
+    })
+
+    this.shareDetailsFormArray.controls.forEach((row, index) => {
+      row
+        .get('shareDetailsNoOfShares')
+        ?.valueChanges.subscribe((value) => {
+          this.enforceShareLimit(index, value);
+        });
+    });
+    this.applyInitialShareLimits();
+    this.isInvitedEditModalOpen = true;
+  }
+
+  closeInvitedEditModal() {
+    this.isInvitedEditModalOpen = false;
+    this.selectedShareholder = null;
+  }
+
+  submitInvitedShareholder() {
+    if (this.inviteShareholderForm.invalid) {
+      this.inviteShareholderForm.markAllAsTouched();
+      return;
+    }
+    const formData = this.inviteShareholderForm.value;
+    const shareholderId = this.selectedShareholder._id;
+    this.companyService.updateInvitedShareholderShares(shareholderId, formData).subscribe({
+      next: (response:any) => {
+        console.log('Invited shareholder updated successfully:', response);
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Invited shareholder updated successfully!',
+          toast: true,
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+        });
+        this.closeInvitedEditModal();
+        this.getInvitedShareholdersList();
+      },
+      error: (error:Error) => {
+        console.error('Error updating invited shareholder:', error);
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: 'Failed to update invited shareholder. Please try again.',
+          toast: true,
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+        });
+      }
+    });
+
+  }
+
+  get shareDetailsFormArray(): FormArray {
+    return this.inviteShareholderForm.get('shareDetails') as FormArray;
+  }
+
+  enforceShareLimit(index: number, value: number): void {
+    const row = this.shareDetailsFormArray.at(index);
+    const max = row.get('maxAllowedShares')?.value;
+
+    if (max == null || value == null) return;
+
+    if (value > max) {
+      row.patchValue(
+        { shareDetailsNoOfShares: max },
+        { emitEvent: false }
+      );
+    }
+
+    if (value < 0) {
+      row.patchValue(
+        { shareDetailsNoOfShares: 0 },
+        { emitEvent: false }
+      );
+    }
+  }
+
+  onInvitedShareClassChange(index: number): void {
+    const row = this.shareDetailsFormArray.at(index);
+    const selectedClass = row.get('shareDetailsClassOfShares')?.value;
+
+    const remainingByClass = this.selectedShareholder.total;
+    const remaining = remainingByClass[selectedClass] || 0;
+
+    row.patchValue(
+      {
+        maxAllowedShares: remaining,
+        shareDetailsNoOfShares: 0
+      },
+      { emitEvent: false }
+    );
+  }
+
   ngOnDestroy(): void {
     if (this.isNavigatingAway) {
-      localStorage.removeItem('yourItemKey'); // Replace with actual key
+      localStorage.removeItem('yourItemKey');
       console.log('LocalStorage item removed on page exit.');
     }
   }
